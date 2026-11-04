@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04a638e45d6852046a9860d57e95c34f, type: 3}
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::CropData
-  cropName: Trigo
+  cropName: Carrot
   seedPrice: 3
   sellPrice: 5
-  harvestAmount: 3
+  harvestAmount: 4
   plantedSeconds: 4
-  growingSeconds: 8
-  initialHydration: 35
-  hydrationLossPerSecond: 3
+  growingSeconds: 12
+  initialHydration: 20
+  hydrationLossPerSecond: 2.4
   waterCost: 10
   hydrationPerWatering: 45
-  plantedPrefab: {fileID: 0}
-  growingPrefab: {fileID: 0}
-  grownPrefab: {fileID: 0}
+  plantedPrefab: {fileID: 8288439741033836697, guid: e2fb3892ea98aba4da6ab8de18858b67, type: 3}
+  growingPrefab: {fileID: 437313945380496271, guid: 1aa7bfd0c4ff1224aaa9618795035614, type: 3}
+  grownPrefab: {fileID: 3797734963280796673, guid: f931ddbcd8749a743b64fe5b152579fc, type: 3}
