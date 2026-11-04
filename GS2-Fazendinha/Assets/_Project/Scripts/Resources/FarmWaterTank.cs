@@ -6,8 +6,8 @@ public class FarmWaterTank : MonoBehaviour
     [SerializeField, Min(1f)] private float baseCapacity = 100f;
     [SerializeField, Min(0f)] private float startingWater = 70f;
     [Header("Captacao de agua (teste)")]
-    [SerializeField, Min(0.1f)] private float collectionCooldown = 30f;
-    [SerializeField, Min(0.1f)] private float collectionAmount = 25f;
+    [SerializeField, Min(0.1f)] private float collectionCooldown = 2f;
+    [SerializeField, Min(0.1f)] private float collectionAmount = 0.35f;
 
     private float nextCollectionTime;
     public float CurrentWater { get; private set; }
@@ -32,8 +32,7 @@ public class FarmWaterTank : MonoBehaviour
         return crop.waterCost * (1f - Mathf.Clamp(reduction, 0f, 0.8f));
     }
 
-    public bool CanWater(CropData crop) =>
-        crop != null && CurrentWater + 0.0001f >= WaterCost(crop);
+    public bool CanWater(CropData crop) => crop != null && CurrentWater + 0.0001f >= WaterCost(crop);
 
     public bool TrySpendFor(CropData crop)
     {
@@ -47,8 +46,7 @@ public class FarmWaterTank : MonoBehaviour
         if (CollectionCooldownRemaining > 0f || CurrentWater >= Capacity)
             return 0f;
 
-        float bonus = Tech != null
-            ? Tech.GetBonus(TechnologyEffect.WaterCollectionBonus) : 0f;
+        float bonus = Tech != null ? Tech.GetBonus(TechnologyEffect.WaterCollectionBonus) : 0f;
         float collected = Mathf.Min(Capacity - CurrentWater, collectionAmount + bonus);
         CurrentWater += collected;
         nextCollectionTime = Time.time + collectionCooldown;

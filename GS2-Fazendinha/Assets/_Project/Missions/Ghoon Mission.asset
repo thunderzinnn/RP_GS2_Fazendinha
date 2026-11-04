@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ghoon Mission
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   communityName: Le Ghooner
-  requiredCrop: {fileID: 0}
-  requiredAmount: 5
+  requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
+  requiredAmount: 12
   rewardCoins: 30
-  rewardTechnology: {fileID: 0}
+  rewardTechnology: {fileID: 11400000, guid: 65d1f154ed5fdea4f9d445f8ca2db991, type: 2}
