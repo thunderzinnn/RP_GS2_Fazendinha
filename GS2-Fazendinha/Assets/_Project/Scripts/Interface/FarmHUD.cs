@@ -1,3 +1,4 @@
+
 using TMPro;
 using UnityEngine.UI;
 using UnityEngine;
@@ -19,11 +20,10 @@ public class FarmHUD : MonoBehaviour
     [SerializeField] private TechnologyData shopTechnologyA;
     [SerializeField] private TechnologyData shopTechnologyB;
 
-    [Header("Textos da interface")]
+    [Header("Textos TMP da interface")]
     [SerializeField] private TMP_Text walletText;
     [SerializeField] private TMP_Text tankText;
     [SerializeField] private TMP_Text resourcesText;
-    [SerializeField] private TMP_Text selectedToolText;
     [SerializeField] private TMP_Text selectedPlotText;
     [SerializeField] private TMP_Text technologiesText;
     [SerializeField] private TMP_Text missionOneText;
@@ -40,6 +40,7 @@ public class FarmHUD : MonoBehaviour
             tankSlider.maxValue = tank.Capacity;
             tankSlider.value = tank.CurrentWater;
         }
+
         if (plotHydrationSlider != null && player != null)
         {
             plotHydrationSlider.maxValue = 100f;
@@ -57,13 +58,6 @@ public class FarmHUD : MonoBehaviour
         if (resourcesText != null && inventory != null)
             resourcesText.text = "Trigo: " + CropText(wheat) +
                 " | Milho: " + CropText(corn);
-
-        if (selectedToolText != null && player != null)
-        {
-            string crop = player.SelectedCrop != null ? " (" + player.SelectedCrop.CropName + ")" : "";
-            selectedToolText.text = "Ferramenta: " + player.SelectedTool +
-                (player.SelectedTool == FarmTool.Plant ? crop : "");
-        }
 
         if (selectedPlotText != null && player != null)
         {
@@ -99,11 +93,6 @@ public class FarmHUD : MonoBehaviour
         if (feedbackText != null) feedbackText.text = message;
         Debug.Log(message);
     }
-
-    public void SelectWheat() { if (player != null) player.SelectTool(FarmTool.Plant, wheat); }
-    public void SelectCorn() { if (player != null) player.SelectTool(FarmTool.Plant, corn); }
-    public void SelectWater() { if (player != null) player.SelectTool(FarmTool.Water); }
-    public void SelectHarvest() { if (player != null) player.SelectTool(FarmTool.Harvest); }
 
     public void BuyWheatSeeds() => BuySeeds(wheat);
     public void BuyCornSeeds() => BuySeeds(corn);
