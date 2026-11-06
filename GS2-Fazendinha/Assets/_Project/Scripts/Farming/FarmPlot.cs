@@ -16,6 +16,13 @@ public class FarmPlot : MonoBehaviour
 
     private GameObject currentModelInstance;
 
+    [Header("Crop Survival")]
+    [SerializeField, Min(0.1f)] private float drySurvivalSeconds = 10f;
+    [SerializeField, Min(0.1f)] private float deadVisualSeconds = 3f;
+    private float dryTimer;
+    public float DryTimeRemaining => Mathf.Max(0f, drySurvivalSeconds - dryTimer);
+    public float DeadVisualSeconds => deadVisualSeconds;
+
     public CropData CurrentCrop { get; private set; }
     public float Hydration { get; private set; }
     public float StageTimer { get; set; }
@@ -29,10 +36,12 @@ public class FarmPlot : MonoBehaviour
     public PlotPlantedState Planted { get; private set; }
     public PlotGrowingState Growing { get; private set; }
     public PlotGrownState Grown { get; private set; }
+    public PlotDeadState Dead { get; private set; }
 
     public string StateName => Machine.CurrentState == Empty ? "Empty" :
         Machine.CurrentState == Planted ? "Planted" :
-        Machine.CurrentState == Growing ? "Growing" : "Grown";
+        Machine.CurrentState == Growing ? "Growing" :
+        Machine.CurrentState == Dead ? "Dead" : "Grown";
 
     private void Awake()
     {
@@ -42,6 +51,7 @@ public class FarmPlot : MonoBehaviour
         Planted = new PlotPlantedState(this);
         Growing = new PlotGrowingState(this);
         Grown = new PlotGrownState(this);
+        Dead = new PlotDeadState(this);
     }
 
     private void Start() => Machine.ChangeState(Empty);
@@ -144,6 +154,19 @@ public class FarmPlot : MonoBehaviour
     public void ShowGrown() => ShowStage(
         grownVisual,
         CurrentCrop != null ? CurrentCrop.grownPrefab : null);
+
+    public void ShowDead() => ShowStage(
+        null, CurrentCrop != null ? CurrentCrop.deadPrefab : null);
+
+    // Libera o terreno depois da colheita ou da exibicao da planta morta.
+    public void ClearCrop()
+    {
+        CurrentCrop = null;
+        Hydration = 0f;
+        dryTimer = 0f;
+        StageTimer = 0f;
+        Machine.ChangeState(Empty);
+    }
 
     // Confere se a ferramenta pode ser usada no estado atual.
     public bool CanPerform(
@@ -256,6 +279,7 @@ public class FarmPlot : MonoBehaviour
 
         CurrentCrop = crop;
         Hydration = crop.initialHydration;
+        dryTimer = 0f;
 
         Machine.ChangeState(Planted);
 
@@ -277,6 +301,7 @@ public class FarmPlot : MonoBehaviour
         Hydration = Mathf.Min(
             100f,
             Hydration + CurrentCrop.hydrationPerWatering);
+        dryTimer = 0f;
 
         message = "Watered! Hydration: " +
             Hydration.ToString("0") + "%";
@@ -301,10 +326,7 @@ public class FarmPlot : MonoBehaviour
             harvestedCrop,
             harvestedCrop.harvestAmount);
 
-        CurrentCrop = null;
-        Hydration = 0f;
-
-        Machine.ChangeState(Empty);
+        ClearCrop();
 
         message = "+" + harvestedCrop.harvestAmount +
             " " + harvestedCrop.CropName;
@@ -329,17 +351,26 @@ public class FarmPlot : MonoBehaviour
         float lossMultiplier =
             1f - Mathf.Clamp(reduction, 0f, 0.8f);
 
-        Hydration = Mathf.Max(
-            0f,
-            Hydration -
-            CurrentCrop.hydrationLossPerSecond *
-            lossMultiplier *
-            seconds);
+        if (seconds <= 0f) return;
+        float lossPerSecond = CurrentCrop.hydrationLossPerSecond * lossMultiplier;
+        float hydratedSeconds = Hydration > 0f
+            ? (lossPerSecond > 0f ? Mathf.Min(seconds, Hydration / lossPerSecond) : seconds)
+            : 0f;
+        Hydration = Mathf.Max(0f, Hydration - lossPerSecond * seconds);
 
+        // Sem agua, o crescimento para e comeca a contagem para morrer.
         if (Hydration <= 0f)
-            return;
+            dryTimer += seconds - hydratedSeconds;
+        else
+            dryTimer = 0f;
 
-        StageTimer += seconds;
+        if (dryTimer >= drySurvivalSeconds)
+        {
+            Machine.ChangeState(Dead);
+            return;
+        }
+
+        StageTimer += hydratedSeconds;
 
         if (StageTimer >= stageDuration)
             Machine.ChangeState(nextState);

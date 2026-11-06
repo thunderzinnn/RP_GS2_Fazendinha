@@ -136,3 +136,33 @@ public class PlotGrownState : IPlotState
         return plot.TryHarvest(inventory, out message);
     }
 }
+
+public class PlotDeadState : IPlotState
+{
+    private readonly FarmPlot plot;
+
+    public PlotDeadState(FarmPlot plot) { this.plot = plot; }
+
+    public void Enter()
+    {
+        plot.StageTimer = 0f;
+        plot.ShowDead();
+    }
+
+    // Exibe o modelo morto por tres segundos antes de liberar o terreno.
+    public void Tick()
+    {
+        plot.StageTimer += UnityEngine.Time.deltaTime;
+        if (plot.StageTimer >= plot.DeadVisualSeconds) plot.ClearCrop();
+    }
+
+    public void FixedTick() { }
+    public void Exit() { }
+
+    public bool Interact(FarmTool tool, CropData crop, FarmInventory inventory,
+        FarmWaterTank tank, out string message)
+    {
+        message = "This crop has died. The plot will be available shortly.";
+        return false;
+    }
+}

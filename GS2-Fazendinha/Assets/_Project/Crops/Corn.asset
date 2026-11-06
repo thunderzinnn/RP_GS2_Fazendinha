@@ -13,15 +13,16 @@ MonoBehaviour:
   m_Name: Corn
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Corn
-  seedPrice: 10
-  sellPrice: 15
-  harvestAmount: 4
-  plantedSeconds: 4
-  growingSeconds: 8
+  seedPrice: 5
+  sellPrice: 8
+  harvestAmount: 3
+  plantedSeconds: 18
+  growingSeconds: 26
   initialHydration: 35
-  hydrationLossPerSecond: 3
+  hydrationLossPerSecond: 1.9
   waterCost: 10
   hydrationPerWatering: 45
-  plantedPrefab: {fileID: 7642830643533100811, guid: ecacc4cb2f111a9418b88ba355a0a12a, type: 3}
-  growingPrefab: {fileID: 4418459859309001004, guid: eb166320207dfd746966d35575e54a3e, type: 3}
-  grownPrefab: {fileID: 9104305876488668745, guid: 6995b1e6850194248906311b6fe678a1, type: 3}
+  plantedPrefab: {fileID: 6464273698628445779, guid: d5eedeebadc257e4baa3d0d053babb51, type: 3}
+  growingPrefab: {fileID: 8498046831851858317, guid: 0a07dbc0ed4674a45805631ff778c827, type: 3}
+  grownPrefab: {fileID: 5624475637289197517, guid: fae7166180db346478e3e4b32fa1350f, type: 3}
+  deadPrefab: {fileID: 1441736553622725283, guid: ead0f08b1719203409da7b1a3af51115, type: 3}

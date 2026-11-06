@@ -15,13 +15,14 @@ MonoBehaviour:
   cropName: Carrot
   seedPrice: 3
   sellPrice: 5
-  harvestAmount: 4
-  plantedSeconds: 4
-  growingSeconds: 12
-  initialHydration: 20
-  hydrationLossPerSecond: 2.4
-  waterCost: 10
+  harvestAmount: 3
+  plantedSeconds: 16
+  growingSeconds: 24
+  initialHydration: 35
+  hydrationLossPerSecond: 1.8
+  waterCost: 8
   hydrationPerWatering: 45
-  plantedPrefab: {fileID: 8288439741033836697, guid: e2fb3892ea98aba4da6ab8de18858b67, type: 3}
-  growingPrefab: {fileID: 437313945380496271, guid: 1aa7bfd0c4ff1224aaa9618795035614, type: 3}
-  grownPrefab: {fileID: 3797734963280796673, guid: f931ddbcd8749a743b64fe5b152579fc, type: 3}
+  plantedPrefab: {fileID: 1217570076420906302, guid: bba49fbed358f224abae0142702d7d77, type: 3}
+  growingPrefab: {fileID: 2022095213105029440, guid: ad4189609c17eec438354358a0d79580, type: 3}
+  grownPrefab: {fileID: 2073354196181447225, guid: a133b01a2d602694f8822fbbab8037e7, type: 3}
+  deadPrefab: {fileID: 4002843411288687651, guid: f14eebb896ef31f4ba0868644408fd82, type: 3}

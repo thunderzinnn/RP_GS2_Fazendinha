@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.Serialization;
+
 
 public class FarmWaterTank : MonoBehaviour
 {
@@ -8,11 +8,8 @@ public class FarmWaterTank : MonoBehaviour
     [SerializeField, Min(0f)] private float startingWater = 70f;
 
     [Header("Automatic Water Regeneration")]
-    [FormerlySerializedAs("collectionCooldown")]
     [SerializeField, Min(0.1f)]
     private float regenerationInterval = 2f;
-
-    [FormerlySerializedAs("collectionAmount")]
     [SerializeField, Min(0.01f)]
     private float regenerationAmount = 0.35f;
 

@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a638e45d6852046a9860d57e95c34f, type: 3}
+  m_Name: Broccoli
+  m_EditorClassIdentifier: Assembly-CSharp::CropData
+  cropName: Broccoli
+  seedPrice: 7
+  sellPrice: 11
+  harvestAmount: 3
+  plantedSeconds: 20
+  growingSeconds: 28
+  initialHydration: 35
+  hydrationLossPerSecond: 2
+  waterCost: 12
+  hydrationPerWatering: 45
+  plantedPrefab: {fileID: 3056180842177164867, guid: 34e2f946b9439d04db386216ef660da3, type: 3}
+  growingPrefab: {fileID: 7172549370128625494, guid: 7dbef7c82af20e24f822f19f645ca25a, type: 3}
+  grownPrefab: {fileID: 2124649181779782733, guid: b4701fcf73aa0704496a643dcd8ca947, type: 3}
+  deadPrefab: {fileID: 6957711933984637744, guid: 08a0adea697e17747a7367d791f44944, type: 3}

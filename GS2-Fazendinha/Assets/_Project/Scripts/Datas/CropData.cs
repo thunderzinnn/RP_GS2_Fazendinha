@@ -22,6 +22,7 @@ public class CropData : ScriptableObject
     public GameObject plantedPrefab;
     public GameObject growingPrefab;
     public GameObject grownPrefab;
+    public GameObject deadPrefab;
 
     public string CropName => cropName;
 }

@@ -55,6 +55,31 @@ public class FarmPlotContextMenu : MonoBehaviour
     private void Update()
     {
         HandleDismissInput();
+        RefreshSelectedPlot();
+    }
+
+    // Atualiza a hidratacao apenas enquanto o menu do terreno esta aberto.
+    private void RefreshSelectedPlot()
+    {
+        if (selectedPlot == null || menuPanel == null || !menuPanel.gameObject.activeSelf) return;
+        bool growing = selectedPlot.Machine.CurrentState == selectedPlot.Planted ||
+            selectedPlot.Machine.CurrentState == selectedPlot.Growing;
+        bool empty = selectedPlot.Machine.CurrentState == selectedPlot.Empty;
+        bool grown = selectedPlot.Machine.CurrentState == selectedPlot.Grown;
+        if (titleText != null)
+            titleText.text = selectedPlot.CurrentCrop != null ? selectedPlot.CurrentCrop.CropName : "Empty plot";
+        if (statusText != null)
+            statusText.text = selectedPlot.StateName +
+                (empty ? "" : " | Water: " + selectedPlot.Hydration.ToString("0") + "%") +
+                (growing && selectedPlot.Hydration <= 0f
+                    ? "\nDry! Water within " + selectedPlot.DryTimeRemaining.ToString("0.0") + "s" : "");
+        if (plantRow != null) plantRow.SetActive(empty);
+        if (seedCountText != null) seedCountText.gameObject.SetActive(empty);
+        UpdatePlantOptions();
+        ConfigureButton(waterButton, growing, growing && selectedPlot.CanPerform(
+            FarmTool.Water, null, player.Inventory, player.Tank, out _));
+        ConfigureButton(harvestButton, grown, grown && selectedPlot.CanPerform(
+            FarmTool.Harvest, null, player.Inventory, player.Tank, out _));
     }
 
     // Fecha o menu por Escape ou clique fora da interface.

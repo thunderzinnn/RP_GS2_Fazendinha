@@ -15,6 +15,11 @@ public class FarmHUD : MonoBehaviour
 
     [Header("Crop Settings")]
     [SerializeField] private CropData crop;
+
+    // Culturas e textos usados pelo painel da loja.
+    [SerializeField] private CropData[] availableCrops;
+    [SerializeField] private TMP_Dropdown shopCropDropdown;
+    [SerializeField] private TMP_Text shopCropDetailsText;
     [SerializeField, Min(1)] private int seedsPerPurchase = 5;
     [SerializeField, Min(1)] private int producePerSale = 1;
 
@@ -62,6 +67,7 @@ public class FarmHUD : MonoBehaviour
     private float refreshInterval = 0.15f;
 
     private float nextRefreshTime;
+    private float messageVisibleUntil;
 
     private void Start()
     {
@@ -72,6 +78,14 @@ public class FarmHUD : MonoBehaviour
     private void Update()
     {
         RefreshIfNeeded();
+        UpdateMessageVisibility();
+    }
+
+    // Esconde mensagens antigas para deixar a tela de jogo limpa.
+    private void UpdateMessageVisibility()
+    {
+        if (actionMessageText != null)
+            actionMessageText.gameObject.SetActive(Time.unscaledTime < messageVisibleUntil);
     }
 
     // Atualiza a interface em intervalos definidos.
@@ -94,6 +108,28 @@ public class FarmHUD : MonoBehaviour
         UpdateTechnologiesUI();
         UpdateMissionsUI();
         UpdateWaterRegenerationUI();
+        UpdateShopCropUI();
+    }
+
+    // Mostra os precos e recursos da cultura escolhida na loja.
+    private void UpdateShopCropUI()
+    {
+        if (crop == null || shopCropDetailsText == null) return;
+        int seeds = inventory != null ? inventory.SeedCount(crop) : 0;
+        int produce = inventory != null ? inventory.ProduceCount(crop) : 0;
+        shopCropDetailsText.text = crop.CropName + "\n\n" +
+            "Seeds owned: " + seeds + "\nProduce owned: " + produce + "\n\n" +
+            "Buy " + seedsPerPurchase + " seeds: " + crop.seedPrice * seedsPerPurchase + " coins\n" +
+            "Sell " + producePerSale + " produce: " + crop.sellPrice * producePerSale + " coins\n\n" +
+            "Growth time: " + (crop.plantedSeconds + crop.growingSeconds).ToString("0") + "s\n" +
+            "Water per use: " + crop.waterCost.ToString("0.#");
+    }
+
+    // Seleciona a cultura da loja pelo indice do dropdown.
+    public void SelectShopCrop(int index)
+    {
+        if (availableCrops == null || index < 0 || index >= availableCrops.Length) return;
+        SetCrop(availableCrops[index]);
     }
 
     // Mostra o saldo atual de moedas.
@@ -153,7 +189,7 @@ public class FarmHUD : MonoBehaviour
         }
 
         cropInventoryText.text =
-            $"{crop.CropName}: {inventory.ProduceCount(crop)} " +
+            $"{crop.CropName}\nProduce: {inventory.ProduceCount(crop)} " +
             $"| Seeds: {inventory.SeedCount(crop)}";
     }
 
@@ -164,6 +200,12 @@ public class FarmHUD : MonoBehaviour
             return;
 
         crop = newCrop;
+        if (availableCrops != null && shopCropDropdown != null)
+        {
+            for (int index = 0; index < availableCrops.Length; index++)
+                if (availableCrops[index] == crop)
+                    shopCropDropdown.SetValueWithoutNotify(index);
+        }
         RefreshHUD();
     }
 
@@ -293,8 +335,12 @@ public class FarmHUD : MonoBehaviour
     // Mostra o resultado da acao e atualiza o HUD.
     public void ShowMessage(string message)
     {
+        messageVisibleUntil = Time.unscaledTime + 5f;
         if (actionMessageText != null)
+        {
             actionMessageText.text = message;
+            actionMessageText.gameObject.SetActive(true);
+        }
 
         Debug.Log(message);
         RefreshHUD();
