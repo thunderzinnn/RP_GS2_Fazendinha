@@ -4,8 +4,13 @@ public interface IPlotState
     void Tick();
     void FixedTick();
     void Exit();
-    bool Interact(FarmTool tool, CropData crop, FarmInventory inventory,
-                  FarmWaterTank tank, out string message);
+
+    bool Interact(
+        FarmTool tool,
+        CropData crop,
+        FarmInventory inventory,
+        FarmWaterTank tank,
+        out string message);
 }
 
 public class PlotStateMachine
@@ -14,11 +19,13 @@ public class PlotStateMachine
 
     public void ChangeState(IPlotState newState)
     {
+        // Mantem o ciclo de estados usado pelo terreno.
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState?.Enter();
     }
 
     public void Tick() => CurrentState?.Tick();
+
     public void FixedTick() => CurrentState?.FixedTick();
 }

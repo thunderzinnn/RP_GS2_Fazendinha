@@ -249,7 +249,7 @@ MonoBehaviour:
   seedCountText: {fileID: 0}
   waterButton: {fileID: 1610415448}
   harvestButton: {fileID: 426065951}
-  waterButtonText: {fileID: 0}
+  waterButtonText: {fileID: 507539320}
 --- !u!114 &24193404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -264,27 +264,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FarmHUD
   player: {fileID: 2117025486}
   inventory: {fileID: 461223905}
-  wallet: {fileID: 461223904}
-  tank: {fileID: 461223902}
+  coinWallet: {fileID: 461223904}
+  waterTank: {fileID: 461223902}
   technologies: {fileID: 461223903}
   missions: {fileID: 461223900}
   shop: {fileID: 461223901}
   crop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
   seedsPerPurchase: 5
   producePerSale: 1
-  shopTechnologyA: {fileID: 0}
-  shopTechnologyB: {fileID: 0}
-  walletText: {fileID: 0}
-  tankText: {fileID: 0}
-  resourcesText: {fileID: 0}
-  selectedPlotText: {fileID: 0}
-  technologiesText: {fileID: 0}
-  missionOneText: {fileID: 0}
-  missionTwoText: {fileID: 0}
-  waterRegenerationText: {fileID: 0}
-  feedbackText: {fileID: 0}
-  tankSlider: {fileID: 0}
-  plotHydrationSlider: {fileID: 0}
+  shopTechnologyA: {fileID: 11400000, guid: 2dfdd5e5718772c479aca543b660787e, type: 2}
+  shopTechnologyB: {fileID: 11400000, guid: 8971947890985444da5ebd21be892ff5, type: 2}
+  coinCounterText: {fileID: 0}
+  waterAmountText: {fileID: 63489676}
+  cropInventoryText: {fileID: 0}
+  selectedPlotText: {fileID: 136562492}
+  unlockedTechnologiesText: {fileID: 0}
+  firstMissionDescriptionText: {fileID: 0}
+  secondMissionDescriptionText: {fileID: 0}
+  waterRegenerationTimerText: {fileID: 0}
+  actionMessageText: {fileID: 0}
+  waterAmountSlider: {fileID: 0}
+  selectedPlotHydrationSlider: {fileID: 0}
   refreshInterval: 0.15
 --- !u!1 &62028066
 GameObject:
@@ -545,15 +545,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 44.75
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_characterHorizontalScale: 1
@@ -584,7 +584,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -126.479706, y: 0, z: -113.33911, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1017,7 +1017,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 426065952}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24193403}
+        m_TargetAssemblyTypeName: FarmPlotContextMenu, Assembly-CSharp
+        m_MethodName: Harvest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &426065952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1166,7 +1178,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FarmInventory
   startingSeeds:
   - crop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
-    amount: 10
+    amount: 5
+  - crop: {fileID: 11400000, guid: e1e7b344f907db643a29d56b9e11e956, type: 2}
+    amount: 2
 --- !u!4 &461223906
 Transform:
   m_ObjectHideFlags: 0
@@ -1176,7 +1190,7 @@ Transform:
   m_GameObject: {fileID: 461223899}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.43161, y: 0.25, z: -1.17042}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3286,7 +3300,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1610415449}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24193403}
+        m_TargetAssemblyTypeName: FarmPlotContextMenu, Assembly-CSharp
+        m_MethodName: Water
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1610415449
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4380,7 +4406,7 @@ Transform:
   m_GameObject: {fileID: 2117025481}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.46, y: 1.12, z: -3.89}
+  m_LocalPosition: {x: 0, y: 1.355, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

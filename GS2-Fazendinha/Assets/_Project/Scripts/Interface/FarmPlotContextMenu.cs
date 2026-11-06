@@ -1,4 +1,3 @@
-
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,22 +6,22 @@ using UnityEngine.UI;
 
 public class FarmPlotContextMenu : MonoBehaviour
 {
-    [Header("Referencias")]
+    [Header("System References")]
     [SerializeField] private PlayerFarmController player;
     [SerializeField] private CropData[] availableCrops;
 
-    [Header("Painel e textos")]
+    [Header("Panel and Text")]
     [SerializeField] private RectTransform menuPanel;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text statusText;
 
-    [Header("Plantio")]
+    [Header("Planting")]
     [SerializeField] private GameObject plantRow;
     [SerializeField] private Button plantButton;
     [SerializeField] private TMP_Dropdown cropDropdown;
     [SerializeField] private TMP_Text seedCountText;
 
-    [Header("Outras acoes")]
+    [Header("Other Actions")]
     [SerializeField] private Button waterButton;
     [SerializeField] private Button harvestButton;
     [SerializeField] private TMP_Text waterButtonText;
@@ -37,6 +36,7 @@ public class FarmPlotContextMenu : MonoBehaviour
     private void Awake()
     {
         canvas = GetComponentInParent<Canvas>();
+
         PopulateDropdown();
 
         if (cropDropdown != null)
@@ -54,8 +54,17 @@ public class FarmPlotContextMenu : MonoBehaviour
 
     private void Update()
     {
-        if (menuPanel == null || !menuPanel.gameObject.activeSelf)
+        HandleDismissInput();
+    }
+
+    // Fecha o menu por Escape ou clique fora da interface.
+    private void HandleDismissInput()
+    {
+        if (menuPanel == null ||
+            !menuPanel.gameObject.activeSelf)
+        {
             return;
+        }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -69,11 +78,17 @@ public class FarmPlotContextMenu : MonoBehaviour
             // Ignora cliques na interface.
             if (EventSystem.current != null &&
                 EventSystem.current.IsPointerOverGameObject())
+            {
                 return;
+            }
 
             if (!RectTransformUtility.RectangleContainsScreenPoint(
-                menuPanel, Input.mousePosition, GetUICamera()))
+                menuPanel,
+                Input.mousePosition,
+                GetUICamera()))
+            {
                 Close();
+            }
         }
     }
 
@@ -128,10 +143,15 @@ public class FarmPlotContextMenu : MonoBehaviour
         bool empty = selectedPlot != null &&
             selectedPlot.Machine.CurrentState == selectedPlot.Empty;
 
+        string reason = "";
+
         bool canPlant = empty && crop != null && player != null &&
             selectedPlot.CanPerform(
-                FarmTool.Plant, crop,
-                player.Inventory, player.Tank, out _);
+                FarmTool.Plant,
+                crop,
+                player.Inventory,
+                player.Tank,
+                out reason);
 
         if (plantButton != null)
             plantButton.interactable = canPlant;
@@ -139,13 +159,23 @@ public class FarmPlotContextMenu : MonoBehaviour
         if (seedCountText != null)
         {
             if (crop == null)
-                seedCountText.text = "Nenhuma cultura configurada";
+            {
+                seedCountText.text = "No crop configured";
+            }
             else if (player == null || player.Inventory == null)
-                seedCountText.text = "Inventario nao configurado";
+            {
+                seedCountText.text = "Inventory not configured";
+            }
             else
-                seedCountText.text = "Sementes de " +
+            {
+                seedCountText.text = "Seeds for " +
                     crop.CropName + ": " +
                     player.Inventory.SeedCount(crop);
+            }
+
+            // Mostra o motivo quando o botao de plantio esta bloqueado.
+            if (!canPlant && !string.IsNullOrEmpty(reason))
+                seedCountText.text += "\n" + reason;
         }
     }
 
@@ -154,7 +184,8 @@ public class FarmPlotContextMenu : MonoBehaviour
         if (plot == null || player == null || menuPanel == null)
         {
             Debug.LogWarning(
-                "Menu contextual sem referencias obrigatorias.");
+                "Context menu is missing required references.");
+
             return;
         }
 
@@ -162,19 +193,25 @@ public class FarmPlotContextMenu : MonoBehaviour
         openedFrame = Time.frameCount;
 
         bool empty = plot.Machine.CurrentState == plot.Empty;
+
         bool growing = plot.Machine.CurrentState == plot.Planted ||
-                       plot.Machine.CurrentState == plot.Growing;
+            plot.Machine.CurrentState == plot.Growing;
+
         bool grown = plot.Machine.CurrentState == plot.Grown;
 
         if (titleText != null)
+        {
             titleText.text = plot.CurrentCrop != null
                 ? plot.CurrentCrop.CropName
-                : "Terreno vazio";
+                : "Empty plot";
+        }
 
         if (statusText != null)
-            statusText.text = "Estado: " + plot.StateName +
-                (empty ? "" : " | Hidratacao: " +
+        {
+            statusText.text = "State: " + plot.StateName +
+                (empty ? "" : " | Hydration: " +
                 plot.Hydration.ToString("0") + "%");
+        }
 
         if (plantRow != null)
             plantRow.SetActive(empty);
@@ -184,22 +221,35 @@ public class FarmPlotContextMenu : MonoBehaviour
 
         UpdatePlantOptions();
 
-        ConfigureButton(waterButton, growing,
+        ConfigureButton(
+            waterButton,
+            growing,
             growing && plot.CanPerform(
-                FarmTool.Water, null,
-                player.Inventory, player.Tank, out _));
+                FarmTool.Water,
+                null,
+                player.Inventory,
+                player.Tank,
+                out _));
 
-        ConfigureButton(harvestButton, grown,
+        ConfigureButton(
+            harvestButton,
+            grown,
             grown && plot.CanPerform(
-                FarmTool.Harvest, null,
-                player.Inventory, player.Tank, out _));
+                FarmTool.Harvest,
+                null,
+                player.Inventory,
+                player.Tank,
+                out _));
 
-        if (waterButtonText != null && growing &&
-            plot.CurrentCrop != null && player.Tank != null)
+        if (waterButtonText != null &&
+            growing &&
+            plot.CurrentCrop != null &&
+            player.Tank != null)
         {
-            waterButtonText.text = "Regar (" +
+            waterButtonText.text = "Water (" +
                 player.Tank.WaterCost(
-                    plot.CurrentCrop).ToString("0.#") + " agua)";
+                    plot.CurrentCrop).ToString("0.#") +
+                " water)";
         }
 
         menuPanel.gameObject.SetActive(true);
@@ -207,11 +257,14 @@ public class FarmPlotContextMenu : MonoBehaviour
 
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(menuPanel);
+
         PositionMenu(screenPosition);
     }
 
     private void ConfigureButton(
-        Button button, bool visible, bool enabled)
+        Button button,
+        bool visible,
+        bool enabled)
     {
         if (button == null)
             return;
@@ -224,7 +277,9 @@ public class FarmPlotContextMenu : MonoBehaviour
     {
         if (canvas == null ||
             canvas.renderMode == RenderMode.ScreenSpaceOverlay)
+        {
             return null;
+        }
 
         return canvas.worldCamera;
     }
@@ -237,11 +292,14 @@ public class FarmPlotContextMenu : MonoBehaviour
         if (parent == null)
             return;
 
-        if (!RectTransformUtility
-            .ScreenPointToLocalPointInRectangle(
-                parent, screenPosition,
-                GetUICamera(), out Vector2 localPoint))
+        if (!RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            parent,
+            screenPosition,
+            GetUICamera(),
+            out Vector2 localPoint))
+        {
             return;
+        }
 
         float x = localPoint.x +
             parent.rect.width * parent.pivot.x + 12f;
@@ -250,10 +308,12 @@ public class FarmPlotContextMenu : MonoBehaviour
             parent.rect.height * (1f - parent.pivot.y) - 12f;
 
         float maxX = Mathf.Max(
-            0f, parent.rect.width - menuPanel.rect.width);
+            0f,
+            parent.rect.width - menuPanel.rect.width);
 
         float minY = Mathf.Min(
-            0f, -parent.rect.height + menuPanel.rect.height);
+            0f,
+            -parent.rect.height + menuPanel.rect.height);
 
         menuPanel.anchoredPosition = new Vector2(
             Mathf.Clamp(x, 0f, maxX),

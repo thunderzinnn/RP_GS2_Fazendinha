@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a638e45d6852046a9860d57e95c34f, type: 3}
+  m_Name: Corn
+  m_EditorClassIdentifier: Assembly-CSharp::CropData
+  cropName: Corn
+  seedPrice: 10
+  sellPrice: 15
+  harvestAmount: 4
+  plantedSeconds: 4
+  growingSeconds: 8
+  initialHydration: 35
+  hydrationLossPerSecond: 3
+  waterCost: 10
+  hydrationPerWatering: 45
+  plantedPrefab: {fileID: 7642830643533100811, guid: ecacc4cb2f111a9418b88ba355a0a12a, type: 3}
+  growingPrefab: {fileID: 4418459859309001004, guid: eb166320207dfd746966d35575e54a3e, type: 3}
+  grownPrefab: {fileID: 9104305876488668745, guid: 6995b1e6850194248906311b6fe678a1, type: 3}

@@ -1,16 +1,14 @@
-
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Serialization;
 
 public class FarmHUD : MonoBehaviour
 {
     [Header("System References")]
     [SerializeField] private PlayerFarmController player;
     [SerializeField] private FarmInventory inventory;
-    [SerializeField] private FarmWallet wallet;
-    [SerializeField] private FarmWaterTank tank;
+    [SerializeField] private FarmWallet coinWallet;
+    [SerializeField] private FarmWaterTank waterTank;
     [SerializeField] private FarmTechnologyManager technologies;
     [SerializeField] private FarmMissionBoard missions;
     [SerializeField] private FarmShop shop;
@@ -24,32 +22,46 @@ public class FarmHUD : MonoBehaviour
     [SerializeField] private TechnologyData shopTechnologyA;
     [SerializeField] private TechnologyData shopTechnologyB;
 
-    [Header("Text References")]
-    [SerializeField] private TMP_Text walletText;
-    [SerializeField] private TMP_Text tankText;
-    [SerializeField] private TMP_Text resourcesText;
+    [Header("HUD Text References")]
+
+    // Texto que mostra o saldo de moedas.
+    [SerializeField] private TMP_Text coinCounterText;
+
+    // Texto que mostra a agua atual e a capacidade do reservatorio.
+    [SerializeField] private TMP_Text waterAmountText;
+
+    // Texto que mostra produtos colhidos e sementes da cultura selecionada.
+    [SerializeField] private TMP_Text cropInventoryText;
+
+    // Texto que mostra a cultura, o estado e a hidratacao do terreno.
     [SerializeField] private TMP_Text selectedPlotText;
-    [SerializeField] private TMP_Text technologiesText;
-    [SerializeField] private TMP_Text missionOneText;
-    [SerializeField] private TMP_Text missionTwoText;
 
-    [FormerlySerializedAs("collectWaterText")]
-    [SerializeField] private TMP_Text waterRegenerationText;
+    // Texto que lista as tecnologias desbloqueadas.
+    [SerializeField] private TMP_Text unlockedTechnologiesText;
 
-    [SerializeField] private TMP_Text feedbackText;
+    // Textos que mostram as descricoes das duas primeiras missoes.
+    [SerializeField] private TMP_Text firstMissionDescriptionText;
+    [SerializeField] private TMP_Text secondMissionDescriptionText;
 
-    [Header("Slider References")]
-    [SerializeField] private Slider tankSlider;
-    [SerializeField] private Slider plotHydrationSlider;
+    // Texto que mostra o tempo para regenerar agua.
+    [SerializeField] private TMP_Text waterRegenerationTimerText;
+
+    // Texto que mostra o resultado das acoes e mensagens de erro.
+    [SerializeField] private TMP_Text actionMessageText;
+
+    [Header("HUD Progress Bars")]
+
+    // Barra que mostra a quantidade de agua no reservatorio.
+    [SerializeField] private Slider waterAmountSlider;
+
+    // Barra que mostra a hidratacao da planta selecionada.
+    [SerializeField] private Slider selectedPlotHydrationSlider;
 
     [Header("UI Settings")]
     [SerializeField, Min(0.05f)]
     private float refreshInterval = 0.15f;
 
     private float nextRefreshTime;
-
-
-    // Initialization
 
     private void Start()
     {
@@ -62,10 +74,7 @@ public class FarmHUD : MonoBehaviour
         RefreshIfNeeded();
     }
 
-
-    // UI Refresh
-
-    // Refreshes the HUD at a fixed interval.
+    // Atualiza a interface em intervalos definidos.
     private void RefreshIfNeeded()
     {
         if (Time.unscaledTime < nextRefreshTime)
@@ -75,10 +84,10 @@ public class FarmHUD : MonoBehaviour
         RefreshHUD();
     }
 
-    // Updates all HUD sections.
+    // Atualiza todas as informacoes exibidas pelo HUD.
     public void RefreshHUD()
     {
-        UpdateWalletUI();
+        UpdateCoinUI();
         UpdateWaterUI();
         UpdateCropUI();
         UpdateSelectedPlotUI();
@@ -87,77 +96,68 @@ public class FarmHUD : MonoBehaviour
         UpdateWaterRegenerationUI();
     }
 
-
-    // Wallet UI
-
-    // Displays the player's current coins.
-    private void UpdateWalletUI()
+    // Mostra o saldo atual de moedas.
+    private void UpdateCoinUI()
     {
-        if (wallet == null || walletText == null)
+        if (coinWallet == null || coinCounterText == null)
             return;
 
-        walletText.text = $"Coins: {wallet.Coins}";
+        coinCounterText.text = $"Coins: {coinWallet.Coins}";
     }
 
-
-    // Water UI
-
-    // Updates the water counter and tank slider.
+    // Mostra a quantidade de agua e atualiza sua barra.
     private void UpdateWaterUI()
     {
-        if (tank == null)
+        if (waterTank == null)
             return;
 
-        if (tankText != null)
+        if (waterAmountText != null)
         {
-            tankText.text =
-                $"Water: {tank.CurrentWater:0.0}/{tank.Capacity:0.0}";
+            waterAmountText.text =
+                $"Water: {waterTank.CurrentWater:0.0}/{waterTank.Capacity:0.0}";
         }
 
-        if (tankSlider != null)
+        if (waterAmountSlider != null)
         {
-            tankSlider.maxValue = tank.Capacity;
-            tankSlider.value = tank.CurrentWater;
+            waterAmountSlider.maxValue = waterTank.Capacity;
+            waterAmountSlider.value = waterTank.CurrentWater;
         }
     }
 
-    // Displays the automatic regeneration timer.
+    // Mostra o tempo restante para regenerar agua.
     private void UpdateWaterRegenerationUI()
     {
-        if (tank == null || waterRegenerationText == null)
+        if (waterTank == null || waterRegenerationTimerText == null)
             return;
 
-        if (tank.CurrentWater >= tank.Capacity)
+        if (waterTank.CurrentWater >= waterTank.Capacity)
         {
-            waterRegenerationText.text = "Water Tank Full";
+            waterRegenerationTimerText.text = "Water Tank Full";
             return;
         }
 
-        waterRegenerationText.text =
-            $"Next Regeneration: {tank.RegenerationTimeRemaining:0.0}s";
+        waterRegenerationTimerText.text =
+            $"Next Regeneration: {waterTank.RegenerationTimeRemaining:0.0}s";
     }
 
-
-    // Crop UI
-
-    // Displays information about the selected crop.
+    // Mostra os produtos e sementes da cultura selecionada.
     private void UpdateCropUI()
     {
-        if (resourcesText == null || inventory == null)
+        if (cropInventoryText == null || inventory == null)
             return;
 
         if (crop == null)
         {
-            resourcesText.text = "Crop: None Selected";
+            cropInventoryText.text = "Crop: None Selected";
             return;
         }
 
-        resourcesText.text =
+        cropInventoryText.text =
             $"{crop.CropName}: {inventory.ProduceCount(crop)} " +
             $"| Seeds: {inventory.SeedCount(crop)}";
     }
 
-    // Changes the crop displayed in the HUD.
+    // Troca a cultura utilizada pelo HUD.
     public void SetCrop(CropData newCrop)
     {
         if (newCrop == null)
@@ -167,10 +167,7 @@ public class FarmHUD : MonoBehaviour
         RefreshHUD();
     }
 
-
-    // Selected Plot UI
-
-    // Updates the selected plot information and hydration bar.
+    // Mostra o estado e a hidratacao do terreno selecionado.
     private void UpdateSelectedPlotUI()
     {
         if (player == null)
@@ -196,47 +193,38 @@ public class FarmHUD : MonoBehaviour
             }
         }
 
-        if (plotHydrationSlider != null)
+        if (selectedPlotHydrationSlider != null)
         {
-            plotHydrationSlider.maxValue = 100f;
-            plotHydrationSlider.value =
+            selectedPlotHydrationSlider.maxValue = 100f;
+            selectedPlotHydrationSlider.value =
                 plot != null ? plot.Hydration : 0f;
         }
     }
 
-
-    // Technologies UI
-
-    // Displays unlocked technologies.
+    // Lista as tecnologias que ja foram desbloqueadas.
     private void UpdateTechnologiesUI()
     {
-        if (technologies == null || technologiesText == null)
+        if (technologies == null || unlockedTechnologiesText == null)
             return;
 
-        technologiesText.text =
+        unlockedTechnologiesText.text =
             $"Technologies: {technologies.GetUnlockedNames()}";
     }
 
-
-    // Missions UI
-
-    // Updates the available mission descriptions.
+    // Mostra as descricoes das duas primeiras missoes.
     private void UpdateMissionsUI()
     {
         if (missions == null)
             return;
 
-        if (missionOneText != null)
-            missionOneText.text = missions.Describe(0);
+        if (firstMissionDescriptionText != null)
+            firstMissionDescriptionText.text = missions.Describe(0);
 
-        if (missionTwoText != null)
-            missionTwoText.text = missions.Describe(1);
+        if (secondMissionDescriptionText != null)
+            secondMissionDescriptionText.text = missions.Describe(1);
     }
 
-
-    // Shop Actions
-
-    // Buys seeds for the selected crop.
+    // Compra sementes usando a cultura selecionada.
     public void BuySeeds()
     {
         if (shop == null || crop == null)
@@ -249,7 +237,7 @@ public class FarmHUD : MonoBehaviour
         ShowMessage(message);
     }
 
-    // Sells produce from the selected crop.
+    // Vende produtos usando a cultura selecionada.
     public void SellProduce()
     {
         if (shop == null || crop == null)
@@ -262,9 +250,6 @@ public class FarmHUD : MonoBehaviour
         ShowMessage(message);
     }
 
-
-    // Technology Purchase
-
     public void BuyTechnologyA()
     {
         BuyTechnology(shopTechnologyA);
@@ -275,7 +260,7 @@ public class FarmHUD : MonoBehaviour
         BuyTechnology(shopTechnologyB);
     }
 
-    // Purchases a technology from the shop.
+    // Encaminha a compra da tecnologia para a loja.
     private void BuyTechnology(TechnologyData technology)
     {
         if (shop == null || technology == null)
@@ -284,9 +269,6 @@ public class FarmHUD : MonoBehaviour
         shop.BuyTechnology(technology, out string message);
         ShowMessage(message);
     }
-
-
-    // Mission Delivery
 
     public void DeliverMissionOne()
     {
@@ -298,7 +280,7 @@ public class FarmHUD : MonoBehaviour
         DeliverMission(1);
     }
 
-    // Submits the required products for a mission.
+    // Encaminha a entrega para o quadro de missoes.
     private void DeliverMission(int index)
     {
         if (missions == null)
@@ -308,14 +290,11 @@ public class FarmHUD : MonoBehaviour
         ShowMessage(message);
     }
 
-
-    // Feedback
-
-    // Displays an action result and refreshes the HUD.
+    // Mostra o resultado da acao e atualiza o HUD.
     public void ShowMessage(string message)
     {
-        if (feedbackText != null)
-            feedbackText.text = message;
+        if (actionMessageText != null)
+            actionMessageText.text = message;
 
         Debug.Log(message);
         RefreshHUD();

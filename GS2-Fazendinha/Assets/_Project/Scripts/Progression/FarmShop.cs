@@ -6,61 +6,98 @@ public class FarmShop : MonoBehaviour
     [SerializeField] private FarmWallet wallet;
     [SerializeField] private FarmTechnologyManager technologies;
 
-    public bool BuySeeds(CropData crop, int amount, out string message)
+    public bool BuySeeds(
+        CropData crop,
+        int amount,
+        out string message)
     {
-        if (crop == null || amount <= 0 || inventory == null || wallet == null)
+        // Compra sementes da cultura recebida, sem nomes fixos.
+        if (crop == null ||
+            amount <= 0 ||
+            inventory == null ||
+            wallet == null)
         {
-            message = "Loja nao configurada.";
+            message = "Shop not configured.";
             return false;
         }
+
         int cost = crop.seedPrice * amount;
+
         if (!wallet.TrySpend(cost))
         {
-            message = "Moedas insuficientes para sementes.";
+            message = "Not enough coins for seeds.";
             return false;
         }
+
         inventory.AddSeeds(crop, amount);
-        message = "Comprou " + amount + " sementes de " + crop.CropName + " por " + cost + " moedas.";
+
+        message = "Bought " + amount +
+            " seeds for " + crop.CropName +
+            " for " + cost + " coins.";
+
         return true;
     }
 
-    public bool SellProduce(CropData crop, int amount, out string message)
+    public bool SellProduce(
+        CropData crop,
+        int amount,
+        out string message)
     {
-        if (crop == null || amount <= 0 || inventory == null || wallet == null)
+        if (crop == null ||
+            amount <= 0 ||
+            inventory == null ||
+            wallet == null)
         {
-            message = "Mercado nao configurado.";
+            message = "Market not configured.";
             return false;
         }
+
         if (!inventory.TryRemoveProduce(crop, amount))
         {
-            message = "Produtos insuficientes para vender.";
+            message = "Not enough produce to sell.";
             return false;
         }
+
         int earned = crop.sellPrice * amount;
+
         wallet.AddCoins(earned);
-        message = "Vendeu " + amount + " " + crop.CropName + ": +" + earned + " moedas.";
+
+        message = "Sold " + amount +
+            " " + crop.CropName +
+            ": +" + earned + " coins.";
+
         return true;
     }
 
-    public bool BuyTechnology(TechnologyData technology, out string message)
+    public bool BuyTechnology(
+        TechnologyData technology,
+        out string message)
     {
-        if (technology == null || wallet == null || technologies == null)
+        if (technology == null ||
+            wallet == null ||
+            technologies == null)
         {
-            message = "Tecnologia indisponivel.";
+            message = "Technology unavailable.";
             return false;
         }
+
         if (technologies.Has(technology))
         {
-            message = "Tecnologia ja desbloqueada.";
+            message = "Technology already unlocked.";
             return false;
         }
+
         if (!wallet.TrySpend(technology.price))
         {
-            message = "Moedas insuficientes para a tecnologia.";
+            message = "Not enough coins for this technology.";
             return false;
         }
+
         technologies.Unlock(technology);
-        message = "Tecnologia adquirida: " + technology.DisplayName;
+
+        message = "Technology purchased: " +
+            technology.DisplayName;
+
         return true;
     }
 }

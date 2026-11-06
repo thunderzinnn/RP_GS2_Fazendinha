@@ -1,4 +1,3 @@
-
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -10,10 +9,12 @@ public class FarmWaterTank : MonoBehaviour
 
     [Header("Automatic Water Regeneration")]
     [FormerlySerializedAs("collectionCooldown")]
-    [SerializeField, Min(0.1f)] private float regenerationInterval = 2f;
+    [SerializeField, Min(0.1f)]
+    private float regenerationInterval = 2f;
 
     [FormerlySerializedAs("collectionAmount")]
-    [SerializeField, Min(0.01f)] private float regenerationAmount = 0.35f;
+    [SerializeField, Min(0.01f)]
+    private float regenerationAmount = 0.35f;
 
     private float regenerationTimer;
 
@@ -31,7 +32,6 @@ public class FarmWaterTank : MonoBehaviour
         CurrentWater >= Capacity
             ? 0f
             : Mathf.Max(0f, regenerationInterval - regenerationTimer);
-
 
     // Initialization
 
@@ -52,7 +52,6 @@ public class FarmWaterTank : MonoBehaviour
         regenerationTimer = 0f;
     }
 
-
     // Automatic Regeneration
 
     // Tracks time and triggers water regeneration.
@@ -70,8 +69,7 @@ public class FarmWaterTank : MonoBehaviour
             return;
 
         int cycles = Mathf.FloorToInt(
-            regenerationTimer / regenerationInterval
-        );
+            regenerationTimer / regenerationInterval);
 
         regenerationTimer -= cycles * regenerationInterval;
 
@@ -83,18 +81,21 @@ public class FarmWaterTank : MonoBehaviour
     {
         float amount = GetRegenerationAmount() * cycles;
 
-        CurrentWater = Mathf.Min(Capacity,CurrentWater + amount
-        );
+        CurrentWater = Mathf.Min(
+            Capacity,
+            CurrentWater + amount);
     }
 
     // Applies technology bonuses to regeneration.
     private float GetRegenerationAmount()
     {
-        float bonus = Technologies != null ? Technologies.GetBonus(TechnologyEffect.WaterCollectionBonus): 0f;
+        float bonus = Technologies != null
+            ? Technologies.GetBonus(
+                TechnologyEffect.WaterCollectionBonus)
+            : 0f;
 
         return Mathf.Max(0f, regenerationAmount + bonus);
     }
-
 
     // Water Consumption
 
@@ -104,7 +105,10 @@ public class FarmWaterTank : MonoBehaviour
         if (crop == null)
             return 0f;
 
-        float reduction = Technologies != null ? Technologies.GetBonus(TechnologyEffect.WaterCostReduction): 0f;
+        float reduction = Technologies != null
+            ? Technologies.GetBonus(
+                TechnologyEffect.WaterCostReduction)
+            : 0f;
 
         return crop.waterCost *
             (1f - Mathf.Clamp(reduction, 0f, 0.8f));
@@ -125,8 +129,7 @@ public class FarmWaterTank : MonoBehaviour
 
         CurrentWater = Mathf.Max(
             0f,
-            CurrentWater - WaterCost(crop)
-        );
+            CurrentWater - WaterCost(crop));
 
         return true;
     }
