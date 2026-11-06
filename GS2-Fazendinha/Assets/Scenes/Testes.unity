@@ -269,8 +269,9 @@ MonoBehaviour:
   technologies: {fileID: 461223903}
   missions: {fileID: 461223900}
   shop: {fileID: 461223901}
-  wheat: {fileID: 0}
-  corn: {fileID: 0}
+  crop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
+  seedsPerPurchase: 5
+  producePerSale: 1
   shopTechnologyA: {fileID: 0}
   shopTechnologyB: {fileID: 0}
   walletText: {fileID: 0}
@@ -280,10 +281,11 @@ MonoBehaviour:
   technologiesText: {fileID: 0}
   missionOneText: {fileID: 0}
   missionTwoText: {fileID: 0}
-  collectWaterText: {fileID: 0}
+  waterRegenerationText: {fileID: 0}
   feedbackText: {fileID: 0}
   tankSlider: {fileID: 0}
   plotHydrationSlider: {fileID: 0}
+  refreshInterval: 0.15
 --- !u!1 &62028066
 GameObject:
   m_ObjectHideFlags: 0
@@ -1122,9 +1124,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FarmWaterTank
   baseCapacity: 100
-  startingWater: 100
-  collectionCooldown: 2
-  collectionAmount: 0.35
+  startingWater: 60
+  regenerationInterval: 1
+  regenerationAmount: 0.35
 --- !u!114 &461223903
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4217,7 +4219,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2092161557}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 24193403}
+        m_TargetAssemblyTypeName: FarmPlotContextMenu, Assembly-CSharp
+        m_MethodName: PlantSelected
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2092161557
 MonoBehaviour:
   m_ObjectHideFlags: 0

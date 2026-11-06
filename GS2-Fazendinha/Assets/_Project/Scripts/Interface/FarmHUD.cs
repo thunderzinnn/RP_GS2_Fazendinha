@@ -1,11 +1,12 @@
 
 using TMPro;
-using UnityEngine.UI;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.Serialization;
 
 public class FarmHUD : MonoBehaviour
 {
-    [Header("Sistemas")]
+    [Header("System References")]
     [SerializeField] private PlayerFarmController player;
     [SerializeField] private FarmInventory inventory;
     [SerializeField] private FarmWallet wallet;
@@ -14,13 +15,16 @@ public class FarmHUD : MonoBehaviour
     [SerializeField] private FarmMissionBoard missions;
     [SerializeField] private FarmShop shop;
 
-    [Header("Itens do prototipo")]
-    [SerializeField] private CropData wheat;
-    [SerializeField] private CropData corn;
+    [Header("Crop Settings")]
+    [SerializeField] private CropData crop;
+    [SerializeField, Min(1)] private int seedsPerPurchase = 5;
+    [SerializeField, Min(1)] private int producePerSale = 1;
+
+    [Header("Shop Technologies")]
     [SerializeField] private TechnologyData shopTechnologyA;
     [SerializeField] private TechnologyData shopTechnologyB;
 
-    [Header("Textos TMP da interface")]
+    [Header("Text References")]
     [SerializeField] private TMP_Text walletText;
     [SerializeField] private TMP_Text tankText;
     [SerializeField] private TMP_Text resourcesText;
@@ -28,110 +32,292 @@ public class FarmHUD : MonoBehaviour
     [SerializeField] private TMP_Text technologiesText;
     [SerializeField] private TMP_Text missionOneText;
     [SerializeField] private TMP_Text missionTwoText;
-    [SerializeField] private TMP_Text collectWaterText;
+
+    [FormerlySerializedAs("collectWaterText")]
+    [SerializeField] private TMP_Text waterRegenerationText;
+
     [SerializeField] private TMP_Text feedbackText;
+
+    [Header("Slider References")]
     [SerializeField] private Slider tankSlider;
     [SerializeField] private Slider plotHydrationSlider;
 
+    [Header("UI Settings")]
+    [SerializeField, Min(0.05f)]
+    private float refreshInterval = 0.15f;
+
+    private float nextRefreshTime;
+
+
+    // Initialization
+
+    private void Start()
+    {
+        RefreshHUD();
+        nextRefreshTime = Time.unscaledTime + refreshInterval;
+    }
+
     private void Update()
     {
-        if (tankSlider != null && tank != null)
+        RefreshIfNeeded();
+    }
+
+
+    // UI Refresh
+
+    // Refreshes the HUD at a fixed interval.
+    private void RefreshIfNeeded()
+    {
+        if (Time.unscaledTime < nextRefreshTime)
+            return;
+
+        nextRefreshTime = Time.unscaledTime + refreshInterval;
+        RefreshHUD();
+    }
+
+    // Updates all HUD sections.
+    public void RefreshHUD()
+    {
+        UpdateWalletUI();
+        UpdateWaterUI();
+        UpdateCropUI();
+        UpdateSelectedPlotUI();
+        UpdateTechnologiesUI();
+        UpdateMissionsUI();
+        UpdateWaterRegenerationUI();
+    }
+
+
+    // Wallet UI
+
+    // Displays the player's current coins.
+    private void UpdateWalletUI()
+    {
+        if (wallet == null || walletText == null)
+            return;
+
+        walletText.text = $"Coins: {wallet.Coins}";
+    }
+
+
+    // Water UI
+
+    // Updates the water counter and tank slider.
+    private void UpdateWaterUI()
+    {
+        if (tank == null)
+            return;
+
+        if (tankText != null)
+        {
+            tankText.text =
+                $"Water: {tank.CurrentWater:0.0}/{tank.Capacity:0.0}";
+        }
+
+        if (tankSlider != null)
         {
             tankSlider.maxValue = tank.Capacity;
             tankSlider.value = tank.CurrentWater;
         }
+    }
 
-        if (plotHydrationSlider != null && player != null)
+    // Displays the automatic regeneration timer.
+    private void UpdateWaterRegenerationUI()
+    {
+        if (tank == null || waterRegenerationText == null)
+            return;
+
+        if (tank.CurrentWater >= tank.Capacity)
+        {
+            waterRegenerationText.text = "Water Tank Full";
+            return;
+        }
+
+        waterRegenerationText.text =
+            $"Next Regeneration: {tank.RegenerationTimeRemaining:0.0}s";
+    }
+
+
+    // Crop UI
+
+    // Displays information about the selected crop.
+    private void UpdateCropUI()
+    {
+        if (resourcesText == null || inventory == null)
+            return;
+
+        if (crop == null)
+        {
+            resourcesText.text = "Crop: None Selected";
+            return;
+        }
+
+        resourcesText.text =
+            $"{crop.CropName}: {inventory.ProduceCount(crop)} " +
+            $"| Seeds: {inventory.SeedCount(crop)}";
+    }
+
+    // Changes the crop displayed in the HUD.
+    public void SetCrop(CropData newCrop)
+    {
+        if (newCrop == null)
+            return;
+
+        crop = newCrop;
+        RefreshHUD();
+    }
+
+
+    // Selected Plot UI
+
+    // Updates the selected plot information and hydration bar.
+    private void UpdateSelectedPlotUI()
+    {
+        if (player == null)
+            return;
+
+        FarmPlot plot = player.LastSelectedPlot;
+
+        if (selectedPlotText != null)
+        {
+            if (plot == null)
+            {
+                selectedPlotText.text = "Plot: None";
+            }
+            else
+            {
+                string cropName = plot.CurrentCrop != null
+                    ? plot.CurrentCrop.CropName
+                    : "Empty";
+
+                selectedPlotText.text =
+                    $"Plot: {cropName} | {plot.StateName} " +
+                    $"| Hydration: {plot.Hydration:0}%";
+            }
+        }
+
+        if (plotHydrationSlider != null)
         {
             plotHydrationSlider.maxValue = 100f;
-            plotHydrationSlider.value = player.LastSelectedPlot != null
-                ? player.LastSelectedPlot.Hydration : 0f;
+            plotHydrationSlider.value =
+                plot != null ? plot.Hydration : 0f;
         }
+    }
 
-        if (walletText != null && wallet != null)
-            walletText.text = "Moedas: " + wallet.Coins;
 
-        if (tankText != null && tank != null)
-            tankText.text = "Agua: " + tank.CurrentWater.ToString("0.0") +
-                "/" + tank.Capacity.ToString("0.0");
+    // Technologies UI
 
-        if (resourcesText != null && inventory != null)
-            resourcesText.text = "Trigo: " + CropText(wheat) +
-                " | Milho: " + CropText(corn);
+    // Displays unlocked technologies.
+    private void UpdateTechnologiesUI()
+    {
+        if (technologies == null || technologiesText == null)
+            return;
 
-        if (selectedPlotText != null && player != null)
-        {
-            FarmPlot plot = player.LastSelectedPlot;
-            selectedPlotText.text = plot == null ? "Terreno: nenhum" :
-                "Terreno: " + plot.StateName + " | Hidratacao: " +
-                plot.Hydration.ToString("0") + "%";
-        }
+        technologiesText.text =
+            $"Technologies: {technologies.GetUnlockedNames()}";
+    }
 
-        if (technologiesText != null && technologies != null)
-            technologiesText.text = "Tecnologias: " + technologies.GetUnlockedNames();
 
-        if (missionOneText != null && missions != null)
+    // Missions UI
+
+    // Updates the available mission descriptions.
+    private void UpdateMissionsUI()
+    {
+        if (missions == null)
+            return;
+
+        if (missionOneText != null)
             missionOneText.text = missions.Describe(0);
 
-        if (missionTwoText != null && missions != null)
+        if (missionTwoText != null)
             missionTwoText.text = missions.Describe(1);
-
-        if (collectWaterText != null && tank != null)
-            collectWaterText.text = tank.CollectionCooldownRemaining > 0f
-                ? "Captacao em " + tank.CollectionCooldownRemaining.ToString("0") + "s"
-                : "Captacao disponivel";
     }
 
-    private string CropText(CropData crop)
+
+    // Shop Actions
+
+    // Buys seeds for the selected crop.
+    public void BuySeeds()
     {
-        if (crop == null) return "nao configurado";
-        return inventory.ProduceCount(crop) + " (sementes: " + inventory.SeedCount(crop) + ")";
+        if (shop == null || crop == null)
+        {
+            ShowMessage("Crop or shop not configured.");
+            return;
+        }
+
+        shop.BuySeeds(crop, seedsPerPurchase, out string message);
+        ShowMessage(message);
     }
 
-    public void ShowMessage(string message)
+    // Sells produce from the selected crop.
+    public void SellProduce()
     {
-        if (feedbackText != null) feedbackText.text = message;
-        Debug.Log(message);
+        if (shop == null || crop == null)
+        {
+            ShowMessage("Crop or shop not configured.");
+            return;
+        }
+
+        shop.SellProduce(crop, producePerSale, out string message);
+        ShowMessage(message);
     }
 
-    public void BuyWheatSeeds() => BuySeeds(wheat);
-    public void BuyCornSeeds() => BuySeeds(corn);
 
-    private void BuySeeds(CropData crop)
+    // Technology Purchase
+
+    public void BuyTechnologyA()
     {
-        if (shop != null) { shop.BuySeeds(crop, 5, out string message); ShowMessage(message); }
+        BuyTechnology(shopTechnologyA);
     }
 
-    public void SellWheat() => Sell(wheat);
-    public void SellCorn() => Sell(corn);
-
-    private void Sell(CropData crop)
+    public void BuyTechnologyB()
     {
-        if (shop != null) { shop.SellProduce(crop, 1, out string message); ShowMessage(message); }
+        BuyTechnology(shopTechnologyB);
     }
 
-    public void BuyTechnologyA() => BuyTechnology(shopTechnologyA);
-    public void BuyTechnologyB() => BuyTechnology(shopTechnologyB);
-
+    // Purchases a technology from the shop.
     private void BuyTechnology(TechnologyData technology)
     {
-        if (shop != null) { shop.BuyTechnology(technology, out string message); ShowMessage(message); }
+        if (shop == null || technology == null)
+            return;
+
+        shop.BuyTechnology(technology, out string message);
+        ShowMessage(message);
     }
 
-    public void DeliverMissionOne() => Deliver(0);
-    public void DeliverMissionTwo() => Deliver(1);
 
-    private void Deliver(int index)
+    // Mission Delivery
+
+    public void DeliverMissionOne()
     {
-        if (missions != null) { missions.Deliver(index, out string message); ShowMessage(message); }
+        DeliverMission(0);
     }
 
-    public void CollectWater()
+    public void DeliverMissionTwo()
     {
-        if (tank == null) return;
-        float collected = tank.CollectWater();
-        ShowMessage(collected > 0f
-            ? "Agua coletada: +" + collected.ToString("0.0")
-            : "Captacao em recarga ou tanque cheio.");
+        DeliverMission(1);
+    }
+
+    // Submits the required products for a mission.
+    private void DeliverMission(int index)
+    {
+        if (missions == null)
+            return;
+
+        missions.Deliver(index, out string message);
+        ShowMessage(message);
+    }
+
+
+    // Feedback
+
+    // Displays an action result and refreshes the HUD.
+    public void ShowMessage(string message)
+    {
+        if (feedbackText != null)
+            feedbackText.text = message;
+
+        Debug.Log(message);
+        RefreshHUD();
     }
 }
