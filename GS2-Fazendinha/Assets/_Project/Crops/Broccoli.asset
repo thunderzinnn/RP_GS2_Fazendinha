@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Broccoli
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Broccoli
-  seedPrice: 7
-  sellPrice: 11
-  harvestAmount: 3
-  plantedSeconds: 20
-  growingSeconds: 28
-  initialHydration: 35
+  seedPrice: 20
+  sellPrice: 15
+  harvestAmount: 4
+  plantedSeconds: 50
+  growingSeconds: 80
+  initialHydration: 10
   hydrationLossPerSecond: 2
-  waterCost: 12
-  hydrationPerWatering: 45
+  waterCost: 20
+  hydrationPerWatering: 30
   plantedPrefab: {fileID: 3056180842177164867, guid: 34e2f946b9439d04db386216ef660da3, type: 3}
   growingPrefab: {fileID: 7172549370128625494, guid: 7dbef7c82af20e24f822f19f645ca25a, type: 3}
   grownPrefab: {fileID: 2124649181779782733, guid: b4701fcf73aa0704496a643dcd8ca947, type: 3}

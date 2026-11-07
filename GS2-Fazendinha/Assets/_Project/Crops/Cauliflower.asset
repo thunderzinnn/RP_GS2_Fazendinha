@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Cauliflower
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Cauliflower
-  seedPrice: 9
-  sellPrice: 14
-  harvestAmount: 3
-  plantedSeconds: 22
-  growingSeconds: 30
+  seedPrice: 15
+  sellPrice: 10
+  harvestAmount: 4
+  plantedSeconds: 35
+  growingSeconds: 45
   initialHydration: 35
-  hydrationLossPerSecond: 2.1
-  waterCost: 14
-  hydrationPerWatering: 45
+  hydrationLossPerSecond: 2
+  waterCost: 15
+  hydrationPerWatering: 30
   plantedPrefab: {fileID: 2828316624410644556, guid: d1589782678b7934c954eee39af415ee, type: 3}
   growingPrefab: {fileID: 7664598580951247107, guid: d04ebcde71de9ef44bd5b870ba854a16, type: 3}
   grownPrefab: {fileID: 7810531864056597350, guid: cbaf50efd3e9571479abe1453df26d73, type: 3}

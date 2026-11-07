@@ -76,7 +76,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4279969606
   m_fontColor: {r: 0.27450982, g: 0.15294118, b: 0.105882354, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -89,7 +89,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -148,7 +148,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3655439930852106950}
-  - component: {fileID: 3057555307784806102}
   m_Layer: 5
   m_Name: PlotExpansionCard
   m_TagString: Untagged
@@ -177,25 +176,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 644, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3057555307784806102
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4597253808877531102}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a874bb08beb6924d8598c9d81a1a8c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FarmPlotExpansion
-  coinWallet: {fileID: 0}
-  hud: {fileID: 0}
-  extraPlots: []
-  plotPrices: 64000000c800000020030000
-  buyPlotButton: {fileID: 2306217368853347371}
-  buyPlotButtonText: {fileID: 4524660297556496357}
-  plotExpansionText: {fileID: 3009584890738422622}
 --- !u!1 &6656976844049692781
 GameObject:
   m_ObjectHideFlags: 0
@@ -270,7 +250,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4279969606
   m_fontColor: {r: 0.27450982, g: 0.15294118, b: 0.105882354, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -283,7 +263,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
@@ -454,13 +434,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3057555307784806102}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FarmPlotExpansion, Assembly-CSharp
         m_MethodName: BuyNextPlot
-        m_Mode: 0
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 

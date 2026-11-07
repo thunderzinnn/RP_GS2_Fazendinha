@@ -13,15 +13,15 @@ MonoBehaviour:
   m_Name: Sunflower
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Sunflower
-  seedPrice: 12
-  sellPrice: 18
-  harvestAmount: 3
-  plantedSeconds: 24
-  growingSeconds: 32
-  initialHydration: 35
-  hydrationLossPerSecond: 2.2
-  waterCost: 16
-  hydrationPerWatering: 45
+  seedPrice: 30
+  sellPrice: 20
+  harvestAmount: 6
+  plantedSeconds: 60
+  growingSeconds: 90
+  initialHydration: 19.6
+  hydrationLossPerSecond: 5
+  waterCost: 7
+  hydrationPerWatering: 35
   plantedPrefab: {fileID: 4841337126469615709, guid: db3f98d8b210b7c429c3f36e183c7ea0, type: 3}
   growingPrefab: {fileID: 3183466250291289172, guid: 9de27a30dcde5934cbd2111a0af96a88, type: 3}
   grownPrefab: {fileID: 8982583835137163325, guid: 0defabba418f17a418ad5525635b51f9, type: 3}

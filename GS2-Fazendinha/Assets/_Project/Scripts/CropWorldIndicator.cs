@@ -3,39 +3,21 @@ using UnityEngine.UI;
 
 public class CropWorldIndicator : MonoBehaviour
 {
+
+
+    [SerializeField] Color32 colorRed, colorBlue, colorGreen, colorYellow;
     [Header("Plot Reference")]
     [SerializeField] private FarmPlot plot;
     [SerializeField] private Camera gameCamera;
 
     [Header("Indicator References")]
     [SerializeField] private GameObject hydrationRoot;
-    [SerializeField] private Image hydrationRing;
-    [SerializeField] private Image readyMarker;
-    [SerializeField] private Image dryMarker;
+    [SerializeField] private Image hydrationRing, readyMarker, dryMarker;
 
     [Header("Position Settings")]
-
-    // Opcional: crie um objeto vazio como filho do terreno e arraste aqui.
-    // Mova esse objeto em X, Y e Z para escolher a origem do indicador.
     [SerializeField] private Transform positionAnchor;
-
-    // Desloca o conjunto inteiro nos eixos X, Y e Z do mundo.
     [SerializeField] private Vector3 positionOffset = Vector3.zero;
-
-    // Usado somente quando Position Anchor estiver vazio.
     [SerializeField] private float heightAboveCrop = 0.65f;
-
-    [Header("Individual Element Positions")]
-
-    // Posicoes locais dentro do Canvas. Permitem separar o anel e os icones.
-    [SerializeField] private Vector3 hydrationOffset = Vector3.zero;
-    [SerializeField] private Vector3 readyMarkerOffset = Vector3.zero;
-    [SerializeField] private Vector3 dryMarkerOffset = Vector3.zero;
-
-    [Header("Floating Animation")]
-    [SerializeField] private bool floatMarkers = true;
-    [SerializeField] private float markerFloatHeight = 6f;
-    [SerializeField] private float markerFloatSpeed = 3f;
 
     private void Awake()
     {
@@ -47,7 +29,6 @@ public class CropWorldIndicator : MonoBehaviour
     {
         UpdatePosition();
         UpdateIndicator();
-        UpdateElementPositions();
     }
 
     // Usa a origem escolhida ou calcula uma posicao acima da plantacao.
@@ -158,40 +139,15 @@ public class CropWorldIndicator : MonoBehaviour
 
         if (hydration > 0.5f)
         {
-            hydrationRing.color = new Color32(102, 225, 76, 255);
+            hydrationRing.color = colorGreen;
         }
         else if (hydration > 0.25f)
         {
-            hydrationRing.color = new Color32(255, 202, 58, 255);
+            hydrationRing.color = colorYellow;
         }
         else
         {
-            hydrationRing.color = new Color32(244, 75, 49, 255);
-        }
-    }
-
-    // Aplica as posicoes individuais sem apagar os ajustes dos campos.
-    private void UpdateElementPositions()
-    {
-        float floatingOffset = floatMarkers
-            ? Mathf.Sin(Time.time * markerFloatSpeed) * markerFloatHeight
-            : 0f;
-
-        Vector3 animationOffset = Vector3.up * floatingOffset;
-
-        if (hydrationRoot != null)
-            hydrationRoot.transform.localPosition = hydrationOffset;
-
-        if (readyMarker != null)
-        {
-            readyMarker.rectTransform.localPosition =
-                readyMarkerOffset + animationOffset;
-        }
-
-        if (dryMarker != null)
-        {
-            dryMarker.rectTransform.localPosition =
-                dryMarkerOffset + animationOffset;
+            hydrationRing.color = colorRed;
         }
     }
 }
