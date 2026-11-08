@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
-  m_Name: Better Irrigation
+  m_Name: Tank Upgrade I
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
-  displayName: Irrigation System I
-  effect: 0
-  value: 0.25
-  price: 50
+  displayName: Tank Capacity I
+  effect: 2
+  value: 0.05
+  price: 45
+  marketExclusive: 1

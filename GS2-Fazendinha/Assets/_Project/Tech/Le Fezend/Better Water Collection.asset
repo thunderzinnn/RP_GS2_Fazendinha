@@ -10,9 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
-  m_Name: Water Collector Upgrade 1
+  m_Name: Better Water Collection
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
-  displayName: Water Collector Upgrade I
+  displayName: Better Water Collection
   effect: 3
-  value: 0.1
-  price: 25
+  value: 0.2
+  price: 68
+  marketExclusive: 0

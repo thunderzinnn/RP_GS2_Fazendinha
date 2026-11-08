@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,39 +28,47 @@ public class FarmHUD : MonoBehaviour
     [SerializeField] private TechnologyData shopTechnologyA;
     [SerializeField] private TechnologyData shopTechnologyB;
 
+    [Header("Seasonal Market UI")]
+    [SerializeField] private TMP_Dropdown marketTechnologyDropdown;
+    [SerializeField] private TMP_Text marketTechnologyDetailsText;
+    [SerializeField] private TMP_Text marketRefreshText;
+    [SerializeField] private Button buySeedsButton;
+    [SerializeField] private Button buyMarketTechnologyButton;
+
+    [Header("Mission Progress UI")]
+    [SerializeField] private TMP_Text missionProgressText;
+    [SerializeField] private Button firstMissionDeliverButton;
+    [SerializeField] private Button secondMissionDeliverButton;
+
     [Header("HUD Text References")]
 
-    // Texto que mostra o saldo de moedas.
+    // Mostra o saldo de moedas.
     [SerializeField] private TMP_Text coinCounterText;
 
-    // Texto que mostra a agua atual e a capacidade do reservatorio.
+    // Mostra a água atual e a capacidade do reservatório.
     [SerializeField] private TMP_Text waterAmountText;
 
-    // Texto que mostra produtos colhidos e sementes da cultura selecionada.
+    // Mostra produtos colhidos e sementes da cultura selecionada.
     [SerializeField] private TMP_Text cropInventoryText;
 
-    // Texto que mostra a cultura, o estado e a hidratacao do terreno.
+    // Mostra a cultura, o estado e a hidratação do terreno.
     [SerializeField] private TMP_Text selectedPlotText;
 
-    // Texto que lista as tecnologias desbloqueadas.
+    // Lista as tecnologias desbloqueadas.
     [SerializeField] private TMP_Text unlockedTechnologiesText;
 
-    // Textos que mostram as descricoes das duas primeiras missoes.
+    // Mostram os requisitos e os tempos das duas primeiras comunidades.
     [SerializeField] private TMP_Text firstMissionDescriptionText;
     [SerializeField] private TMP_Text secondMissionDescriptionText;
 
-    // Texto que mostra o tempo para regenerar agua.
+    // Mostra o tempo para regenerar água.
     [SerializeField] private TMP_Text waterRegenerationTimerText;
 
-    // Texto que mostra o resultado das acoes e mensagens de erro.
+    // Mostra resultados das ações e mensagens de erro.
     [SerializeField] private TMP_Text actionMessageText;
 
     [Header("HUD Progress Bars")]
-
-    // Barra que mostra a quantidade de agua no reservatorio.
     [SerializeField] private Slider waterAmountSlider;
-
-    // Barra que mostra a hidratacao da planta selecionada.
     [SerializeField] private Slider selectedPlotHydrationSlider;
 
     [Header("UI Settings")]
@@ -69,10 +78,24 @@ public class FarmHUD : MonoBehaviour
     private float nextRefreshTime;
     private float messageVisibleUntil;
 
+    private int lastMarketRevision = -1;
+    private TechnologyData selectedMarketTechnology;
+
     private void Start()
     {
+        InitializeMarketUI();
+
         RefreshHUD();
         nextRefreshTime = Time.unscaledTime + refreshInterval;
+    }
+
+    private void OnDestroy()
+    {
+        if (marketTechnologyDropdown != null)
+        {
+            marketTechnologyDropdown.onValueChanged.RemoveListener(
+                SelectMarketTechnology);
+        }
     }
 
     private void Update()
@@ -81,11 +104,27 @@ public class FarmHUD : MonoBehaviour
         UpdateMessageVisibility();
     }
 
+    // Aproveita as culturas existentes e conecta a seleção de tecnologias.
+    private void InitializeMarketUI()
+    {
+        if (shop != null)
+            shop.ConfigureCropCatalogIfEmpty(availableCrops);
+
+        if (marketTechnologyDropdown != null)
+        {
+            marketTechnologyDropdown.onValueChanged.AddListener(
+                SelectMarketTechnology);
+        }
+    }
+
     // Esconde mensagens antigas para deixar a tela de jogo limpa.
     private void UpdateMessageVisibility()
     {
-        if (actionMessageText != null)
-            actionMessageText.gameObject.SetActive(Time.unscaledTime < messageVisibleUntil);
+        if (actionMessageText == null)
+            return;
+
+        actionMessageText.gameObject.SetActive(
+            Time.unscaledTime < messageVisibleUntil);
     }
 
     // Atualiza a interface em intervalos definidos.
@@ -98,7 +137,7 @@ public class FarmHUD : MonoBehaviour
         RefreshHUD();
     }
 
-    // Atualiza todas as informacoes exibidas pelo HUD.
+    // Atualiza todas as informações exibidas pelo HUD.
     public void RefreshHUD()
     {
         UpdateCoinUI();
@@ -109,27 +148,7 @@ public class FarmHUD : MonoBehaviour
         UpdateMissionsUI();
         UpdateWaterRegenerationUI();
         UpdateShopCropUI();
-    }
-
-    // Mostra os precos e recursos da cultura escolhida na loja.
-    private void UpdateShopCropUI()
-    {
-        if (crop == null || shopCropDetailsText == null) return;
-        int seeds = inventory != null ? inventory.SeedCount(crop) : 0;
-        int produce = inventory != null ? inventory.ProduceCount(crop) : 0;
-        shopCropDetailsText.text = crop.CropName + "\n\n" +
-            "Seeds owned: " + seeds + "\nProduce owned: " + produce + "\n\n" +
-            "Buy " + seedsPerPurchase + " seeds: " + crop.seedPrice * seedsPerPurchase + " coins\n" +
-            "Sell " + producePerSale + " produce: " + crop.sellPrice * producePerSale + " coins\n\n" +
-            "Growth time: " + (crop.plantedSeconds + crop.growingSeconds).ToString("0") + "s\n" +
-            "Water per use: " + crop.waterCost.ToString("0.#");
-    }
-
-    // Seleciona a cultura da loja pelo indice do dropdown.
-    public void SelectShopCrop(int index)
-    {
-        if (availableCrops == null || index < 0 || index >= availableCrops.Length) return;
-        SetCrop(availableCrops[index]);
+        UpdateSeasonalMarketUI();
     }
 
     // Mostra o saldo atual de moedas.
@@ -141,7 +160,7 @@ public class FarmHUD : MonoBehaviour
         coinCounterText.text = $"Coins: {coinWallet.Coins}";
     }
 
-    // Mostra a quantidade de agua e atualiza sua barra.
+    // Mostra a quantidade de água e atualiza sua barra.
     private void UpdateWaterUI()
     {
         if (waterTank == null)
@@ -150,7 +169,8 @@ public class FarmHUD : MonoBehaviour
         if (waterAmountText != null)
         {
             waterAmountText.text =
-                $"Water: {waterTank.CurrentWater:0.0}/{waterTank.Capacity:0.0}";
+                $"Water: {waterTank.CurrentWater:0.0}/" +
+                $"{waterTank.Capacity:0.0}";
         }
 
         if (waterAmountSlider != null)
@@ -160,7 +180,7 @@ public class FarmHUD : MonoBehaviour
         }
     }
 
-    // Mostra o tempo restante para regenerar agua.
+    // Mostra o tempo restante para regenerar água.
     private void UpdateWaterRegenerationUI()
     {
         if (waterTank == null || waterRegenerationTimerText == null)
@@ -173,7 +193,8 @@ public class FarmHUD : MonoBehaviour
         }
 
         waterRegenerationTimerText.text =
-            $"Next Regeneration: {waterTank.RegenerationTimeRemaining:0.0}s";
+            $"Next Regeneration: " +
+            $"{waterTank.RegenerationTimeRemaining:0.0}s";
     }
 
     // Mostra os produtos e sementes da cultura selecionada.
@@ -189,27 +210,257 @@ public class FarmHUD : MonoBehaviour
         }
 
         cropInventoryText.text =
-            $"{crop.CropName}\nProduce: {inventory.ProduceCount(crop)} " +
+            $"{crop.CropName}\n" +
+            $"Produce: {inventory.ProduceCount(crop)} " +
             $"| Seeds: {inventory.SeedCount(crop)}";
     }
 
-    // Troca a cultura utilizada pelo HUD.
+    // Troca a cultura e sincroniza o dropdown sem disparar outro evento.
     public void SetCrop(CropData newCrop)
     {
         if (newCrop == null)
             return;
 
         crop = newCrop;
+
         if (availableCrops != null && shopCropDropdown != null)
         {
             for (int index = 0; index < availableCrops.Length; index++)
-                if (availableCrops[index] == crop)
-                    shopCropDropdown.SetValueWithoutNotify(index);
+            {
+                if (availableCrops[index] != crop)
+                    continue;
+
+                shopCropDropdown.SetValueWithoutNotify(index);
+                break;
+            }
         }
+
         RefreshHUD();
     }
 
-    // Mostra o estado e a hidratacao do terreno selecionado.
+    // Seleciona a cultura da loja pelo índice do dropdown.
+    public void SelectShopCrop(int index)
+    {
+        if (availableCrops == null ||
+            index < 0 ||
+            index >= availableCrops.Length)
+        {
+            return;
+        }
+
+        SetCrop(availableCrops[index]);
+    }
+
+    // Mostra os preços reais e a disponibilidade da cultura na época atual.
+    private void UpdateShopCropUI()
+    {
+        if (crop == null || shopCropDetailsText == null)
+            return;
+
+        int seeds = inventory != null
+            ? inventory.SeedCount(crop)
+            : 0;
+
+        int produce = inventory != null
+            ? inventory.ProduceCount(crop)
+            : 0;
+
+        bool inSeason = shop == null || shop.IsSeedAvailable(crop);
+
+        int salePrice = shop != null
+            ? shop.GetSellPrice(crop)
+            : crop.sellPrice;
+
+        string demand = shop != null && shop.HighDemandCrop == crop
+            ? " (HIGH DEMAND)"
+            : "";
+
+        string availability = inSeason
+            ? "Available this season"
+            : "Out of season";
+
+        shopCropDetailsText.text =
+            $"{crop.CropName}\n" +
+            $"Seeds: {seeds} | Produce: {produce}\n\n" +
+            $"Buy {seedsPerPurchase} seeds: " +
+            $"{crop.seedPrice * seedsPerPurchase} coins\n" +
+            $"Seeds: {availability}\n" +
+            $"Sell {producePerSale}: " +
+            $"{salePrice * producePerSale} coins{demand}\n\n" +
+            $"Growth: {crop.plantedSeconds + crop.growingSeconds:0}s " +
+            $"| Water: {crop.waterCost:0.#}";
+
+        if (shop != null)
+        {
+            shopCropDetailsText.text +=
+                "\nMarket refresh: " +
+                FormatTime(shop.RefreshTimeRemaining);
+        }
+    }
+
+    // Reconstrói as opções somente quando as ofertas mudam.
+    private void UpdateSeasonalMarketUI()
+    {
+        if (shop == null)
+            return;
+
+        if (lastMarketRevision != shop.MarketRevision)
+        {
+            lastMarketRevision = shop.MarketRevision;
+
+            PopulateMarketTechnologies();
+            UpdateSeedOptionLabels();
+        }
+
+        if (marketRefreshText != null)
+        {
+            marketRefreshText.text =
+                "Market refresh: " +
+                FormatTime(shop.RefreshTimeRemaining);
+        }
+
+        UpdateMarketButtons();
+        UpdateMarketTechnologyDetails();
+    }
+
+    // Bloqueia compras sem saldo ou sem oferta disponível.
+    private void UpdateMarketButtons()
+    {
+        if (buySeedsButton != null)
+        {
+            buySeedsButton.interactable =
+                crop != null &&
+                shop.IsSeedAvailable(crop) &&
+                coinWallet != null &&
+                coinWallet.Coins >= crop.seedPrice * seedsPerPurchase;
+        }
+
+        if (buyMarketTechnologyButton != null)
+        {
+            buyMarketTechnologyButton.interactable =
+                shop.IsTechnologyAvailable(selectedMarketTechnology) &&
+                coinWallet != null &&
+                coinWallet.Coins >= selectedMarketTechnology.price;
+        }
+    }
+
+    // Sementes fora de época continuam selecionáveis para vender a colheita.
+    private void UpdateSeedOptionLabels()
+    {
+        if (shopCropDropdown == null || availableCrops == null)
+            return;
+
+        for (int index = 0;
+             index < availableCrops.Length &&
+             index < shopCropDropdown.options.Count;
+             index++)
+        {
+            CropData item = availableCrops[index];
+
+            if (item == null)
+            {
+                shopCropDropdown.options[index].text =
+                    "Crop not configured";
+
+                continue;
+            }
+
+            string availability = shop.IsSeedAvailable(item)
+                ? ""
+                : " (out of season)";
+
+            shopCropDropdown.options[index].text =
+                item.CropName + availability;
+        }
+
+        shopCropDropdown.RefreshShownValue();
+    }
+
+    // Preenche o dropdown com as tecnologias oferecidas neste ciclo.
+    private void PopulateMarketTechnologies()
+    {
+        List<string> options = new List<string>();
+        int selectedIndex = 0;
+
+        for (int index = 0; index < shop.TechnologyOfferCount; index++)
+        {
+            TechnologyData technology = shop.GetTechnologyOffer(index);
+
+            options.Add(technology.DisplayName);
+
+            if (technology == selectedMarketTechnology)
+                selectedIndex = index;
+        }
+
+        selectedMarketTechnology =
+            shop.GetTechnologyOffer(selectedIndex);
+
+        if (marketTechnologyDropdown == null)
+            return;
+
+        marketTechnologyDropdown.ClearOptions();
+
+        if (options.Count == 0)
+            options.Add("No seasonal technology available");
+
+        marketTechnologyDropdown.AddOptions(options);
+        marketTechnologyDropdown.SetValueWithoutNotify(selectedIndex);
+
+        marketTechnologyDropdown.interactable =
+            shop.TechnologyOfferCount > 0;
+
+        marketTechnologyDropdown.RefreshShownValue();
+    }
+
+    // Troca a tecnologia selecionada sem executar uma compra.
+    public void SelectMarketTechnology(int index)
+    {
+        if (shop == null)
+            return;
+
+        selectedMarketTechnology = shop.GetTechnologyOffer(index);
+        UpdateMarketTechnologyDetails();
+    }
+
+    // Mostra a oferta selecionada ou informa a ausência de tecnologias.
+    private void UpdateMarketTechnologyDetails()
+    {
+        if (marketTechnologyDetailsText == null || shop == null)
+            return;
+
+        if (selectedMarketTechnology != null)
+        {
+            marketTechnologyDetailsText.text =
+                selectedMarketTechnology.DisplayName +
+                "\nPrice: " +
+                selectedMarketTechnology.price +
+                " coins";
+
+            return;
+        }
+
+        marketTechnologyDetailsText.text = shop.HasExclusiveCatalog
+            ? "No seasonal technology available. Check the next refresh."
+            : "Configure the exclusive technology catalog in FarmShop.";
+    }
+
+    // Encaminha a compra da tecnologia sazonal para o mercado.
+    public void BuySelectedMarketTechnology()
+    {
+        if (shop == null || selectedMarketTechnology == null)
+        {
+            ShowMessage("No seasonal technology selected.");
+            return;
+        }
+
+        shop.BuyMarketTechnology(
+            selectedMarketTechnology,
+            out string message);
+
+        ShowMessage(message);
+    }
+
+    // Mostra o estado e a hidratação do terreno selecionado.
     private void UpdateSelectedPlotUI()
     {
         if (player == null)
@@ -243,7 +494,7 @@ public class FarmHUD : MonoBehaviour
         }
     }
 
-    // Lista as tecnologias que ja foram desbloqueadas.
+    // Lista as tecnologias que já foram desbloqueadas.
     private void UpdateTechnologiesUI()
     {
         if (technologies == null || unlockedTechnologiesText == null)
@@ -253,7 +504,7 @@ public class FarmHUD : MonoBehaviour
             $"Technologies: {technologies.GetUnlockedNames()}";
     }
 
-    // Mostra as descricoes das duas primeiras missoes.
+    // Mostra os requisitos, os temporizadores e o progresso das entregas.
     private void UpdateMissionsUI()
     {
         if (missions == null)
@@ -264,6 +515,21 @@ public class FarmHUD : MonoBehaviour
 
         if (secondMissionDescriptionText != null)
             secondMissionDescriptionText.text = missions.Describe(1);
+
+        if (missionProgressText != null)
+        {
+            missionProgressText.text =
+                $"Requests: {missions.CompletedMissionCount}/" +
+                $"{missions.DemoMissionLimit} " +
+                $"| Food delivered: {missions.TotalProduceDelivered} " +
+                $"| Communities served: {missions.CommunitiesServed}";
+        }
+
+        if (firstMissionDeliverButton != null)
+            firstMissionDeliverButton.interactable = missions.CanDeliver(0);
+
+        if (secondMissionDeliverButton != null)
+            secondMissionDeliverButton.interactable = missions.CanDeliver(1);
     }
 
     // Compra sementes usando a cultura selecionada.
@@ -279,7 +545,7 @@ public class FarmHUD : MonoBehaviour
         ShowMessage(message);
     }
 
-    // Vende produtos usando a cultura selecionada.
+    // Vende produtos pelo preço atual do mercado.
     public void SellProduce()
     {
         if (shop == null || crop == null)
@@ -302,7 +568,7 @@ public class FarmHUD : MonoBehaviour
         BuyTechnology(shopTechnologyB);
     }
 
-    // Encaminha a compra da tecnologia para a loja.
+    // Preserva os botões de compra das melhorias já existentes.
     private void BuyTechnology(TechnologyData technology)
     {
         if (shop == null || technology == null)
@@ -322,7 +588,13 @@ public class FarmHUD : MonoBehaviour
         DeliverMission(1);
     }
 
-    // Encaminha a entrega para o quadro de missoes.
+    // Permite conectar outras comunidades pelo índice no Inspector.
+    public void DeliverCommunity(int index)
+    {
+        DeliverMission(index);
+    }
+
+    // Encaminha a entrega para o quadro de missões.
     private void DeliverMission(int index)
     {
         if (missions == null)
@@ -332,10 +604,21 @@ public class FarmHUD : MonoBehaviour
         ShowMessage(message);
     }
 
-    // Mostra o resultado da acao e atualiza o HUD.
+    // Converte os segundos restantes para o formato minutos:segundos.
+    private string FormatTime(float seconds)
+    {
+        int total = Mathf.CeilToInt(Mathf.Max(0f, seconds));
+
+        return (total / 60).ToString("00") +
+            ":" +
+            (total % 60).ToString("00");
+    }
+
+    // Mostra o resultado da ação e mantém a mensagem visível por cinco segundos.
     public void ShowMessage(string message)
     {
         messageVisibleUntil = Time.unscaledTime + 5f;
+
         if (actionMessageText != null)
         {
             actionMessageText.text = message;

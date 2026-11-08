@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed9b358f3f7ff149b54813a74c5693f, type: 3}
+  m_Name: Mataradar LTDA
+  m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
+  communityName: Mataradar LTDA
+  technologyFocus: Top-Quality Soil! Sell the soil with the best water-holding capacity.
+  missions:
+  - {fileID: 11400000, guid: d87067cebe6b16a47ac9d5c3378b8ffe, type: 2}
+  - {fileID: 11400000, guid: 854475098a0fa2049908af505fd50e25, type: 2}
+  - {fileID: 11400000, guid: 94e540428c590374bb37ffb8028ef0e3, type: 2}
+  - {fileID: 11400000, guid: 81c14c31ffac205438c26e3646ef0e80, type: 2}
+  missionDurationSeconds: 800
+  missionCooldownSeconds: 200

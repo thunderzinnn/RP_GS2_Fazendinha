@@ -11,21 +11,26 @@ public class FarmPlot : MonoBehaviour
     [SerializeField] private GameObject growingVisual;
     [SerializeField] private GameObject grownVisual;
 
-    // Define a origem da planta; os valores locais do prefab sao preservados.
+    // Define a origem da planta e preserva os valores locais do prefab.
     [SerializeField] private Transform cropVisualAnchor;
-
-    private GameObject currentModelInstance;
 
     [Header("Crop Survival")]
     [SerializeField, Min(0.1f)] private float drySurvivalSeconds = 10f;
     [SerializeField, Min(0.1f)] private float deadVisualSeconds = 3f;
+
+    private GameObject currentModelInstance;
     private float dryTimer;
-    public float DryTimeRemaining => Mathf.Max(0f, drySurvivalSeconds - dryTimer);
+
+    public float DryTimeRemaining =>
+        Mathf.Max(0f, drySurvivalSeconds - dryTimer);
+
     public float DeadVisualSeconds => deadVisualSeconds;
 
     public CropData CurrentCrop { get; private set; }
     public float Hydration { get; private set; }
     public float StageTimer { get; set; }
+
+    public float GrowthPercentage => CalculateGrowthPercentage();
 
     public Vector3 InteractionPosition => interactionPoint != null
         ? interactionPoint.position
@@ -60,7 +65,56 @@ public class FarmPlot : MonoBehaviour
 
     private void FixedUpdate() => Machine.FixedTick();
 
-    // Usa o prefab da cultura ou o modelo ja conectado ao terreno.
+    // Soma o tempo das duas etapas para calcular o progresso total.
+    private float CalculateGrowthPercentage()
+    {
+        if (CurrentCrop == null || Machine == null)
+            return 0f;
+
+        if (Machine.CurrentState == Grown)
+            return 100f;
+
+        bool planted = Machine.CurrentState == Planted;
+        bool growing = Machine.CurrentState == Growing;
+
+        if (!planted && !growing)
+            return 0f;
+
+        float plantedDuration = Mathf.Max(
+            0f,
+            CurrentCrop.plantedSeconds);
+
+        float growingDuration = Mathf.Max(
+            0f,
+            CurrentCrop.growingSeconds);
+
+        float totalDuration = plantedDuration + growingDuration;
+
+        if (totalDuration <= 0f)
+            return 0f;
+
+        float elapsedTime;
+
+        if (planted)
+        {
+            elapsedTime = Mathf.Clamp(
+                StageTimer,
+                0f,
+                plantedDuration);
+        }
+        else
+        {
+            // O contador reinicia ao trocar de estado; soma a etapa concluída.
+            elapsedTime = plantedDuration + Mathf.Clamp(
+                StageTimer,
+                0f,
+                growingDuration);
+        }
+
+        return Mathf.Clamp01(elapsedTime / totalDuration) * 100f;
+    }
+
+    // Usa o prefab da cultura ou o modelo já conectado ao terreno.
     private void ShowStage(GameObject fallbackVisual, GameObject cropPrefab)
     {
         if (currentModelInstance != null)
@@ -80,7 +134,7 @@ public class FarmPlot : MonoBehaviour
                 ? cropVisualAnchor
                 : transform;
 
-            // Mantem a posicao, rotacao e escala locais salvas no prefab.
+            // Mantém a posição, rotação e escala locais salvas no prefab.
             currentModelInstance = Instantiate(cropPrefab, anchor, false);
             currentModelInstance.SetActive(true);
 
@@ -110,7 +164,7 @@ public class FarmPlot : MonoBehaviour
         }
     }
 
-    // Impede que uma referencia incorreta desative o proprio terreno.
+    // Impede que uma referência incorreta desative o próprio terreno.
     private void SetVisualActive(GameObject visual, bool active)
     {
         if (visual == null)
@@ -156,15 +210,17 @@ public class FarmPlot : MonoBehaviour
         CurrentCrop != null ? CurrentCrop.grownPrefab : null);
 
     public void ShowDead() => ShowStage(
-        null, CurrentCrop != null ? CurrentCrop.deadPrefab : null);
+        null,
+        CurrentCrop != null ? CurrentCrop.deadPrefab : null);
 
-    // Libera o terreno depois da colheita ou da exibicao da planta morta.
+    // Libera o terreno depois da colheita ou da exibição da planta morta.
     public void ClearCrop()
     {
         CurrentCrop = null;
         Hydration = 0f;
         dryTimer = 0f;
         StageTimer = 0f;
+
         Machine.ChangeState(Empty);
     }
 
@@ -233,7 +289,7 @@ public class FarmPlot : MonoBehaviour
         return false;
     }
 
-    // Encaminha a interacao para o estado atual do terreno.
+    // Encaminha a interação para o estado atual do terreno.
     public bool Interact(
         FarmTool tool,
         CropData crop,
@@ -287,7 +343,7 @@ public class FarmPlot : MonoBehaviour
         return true;
     }
 
-    // Consome agua do reservatorio e aumenta a hidratacao.
+    // Consome água do reservatório e aumenta a hidratação.
     public bool TryWater(FarmWaterTank tank, out string message)
     {
         if (tank == null ||
@@ -301,6 +357,7 @@ public class FarmPlot : MonoBehaviour
         Hydration = Mathf.Min(
             100f,
             Hydration + CurrentCrop.hydrationPerWatering);
+
         dryTimer = 0f;
 
         message = "Watered! Hydration: " +
@@ -309,7 +366,7 @@ public class FarmPlot : MonoBehaviour
         return true;
     }
 
-    // Guarda a colheita no inventario e esvazia o terreno.
+    // Guarda a colheita no inventário e esvazia o terreno.
     public bool TryHarvest(
         FarmInventory inventory,
         out string message)
@@ -334,7 +391,7 @@ public class FarmPlot : MonoBehaviour
         return true;
     }
 
-    // Atualiza a hidratacao e avanca o crescimento enquanto houver agua.
+    // Atualiza a hidratação e avança o crescimento enquanto houver água.
     public void TickGrowth(
         float seconds,
         float stageDuration,
@@ -351,14 +408,23 @@ public class FarmPlot : MonoBehaviour
         float lossMultiplier =
             1f - Mathf.Clamp(reduction, 0f, 0.8f);
 
-        if (seconds <= 0f) return;
-        float lossPerSecond = CurrentCrop.hydrationLossPerSecond * lossMultiplier;
-        float hydratedSeconds = Hydration > 0f
-            ? (lossPerSecond > 0f ? Mathf.Min(seconds, Hydration / lossPerSecond) : seconds)
-            : 0f;
-        Hydration = Mathf.Max(0f, Hydration - lossPerSecond * seconds);
+        if (seconds <= 0f)
+            return;
 
-        // Sem agua, o crescimento para e comeca a contagem para morrer.
+        float lossPerSecond =
+            CurrentCrop.hydrationLossPerSecond * lossMultiplier;
+
+        float hydratedSeconds = Hydration > 0f
+            ? (lossPerSecond > 0f
+                ? Mathf.Min(seconds, Hydration / lossPerSecond)
+                : seconds)
+            : 0f;
+
+        Hydration = Mathf.Max(
+            0f,
+            Hydration - lossPerSecond * seconds);
+
+        // Sem água, o crescimento para e começa a contagem para morrer.
         if (Hydration <= 0f)
             dryTimer += seconds - hydratedSeconds;
         else

@@ -10,6 +10,9 @@ public class FarmPlotContextMenu : MonoBehaviour
     [SerializeField] private PlayerFarmController player;
     [SerializeField] private CropData[] availableCrops;
 
+    [Header("Growth Information")]
+    [SerializeField] private TechnologyData growthTimeTechnology;
+
     [Header("Panel and Text")]
     [SerializeField] private RectTransform menuPanel;
     [SerializeField] private TMP_Text titleText;
@@ -58,28 +61,121 @@ public class FarmPlotContextMenu : MonoBehaviour
         RefreshSelectedPlot();
     }
 
-    // Atualiza a hidratacao apenas enquanto o menu do terreno esta aberto.
+    // Atualiza as informações enquanto o menu do terreno estiver aberto.
     private void RefreshSelectedPlot()
     {
-        if (selectedPlot == null || menuPanel == null || !menuPanel.gameObject.activeSelf) return;
-        bool growing = selectedPlot.Machine.CurrentState == selectedPlot.Planted ||
+        if (selectedPlot == null ||
+            selectedPlot.Machine == null ||
+            player == null ||
+            menuPanel == null ||
+            !menuPanel.gameObject.activeSelf)
+        {
+            return;
+        }
+
+        bool growing =
+            selectedPlot.Machine.CurrentState == selectedPlot.Planted ||
             selectedPlot.Machine.CurrentState == selectedPlot.Growing;
-        bool empty = selectedPlot.Machine.CurrentState == selectedPlot.Empty;
-        bool grown = selectedPlot.Machine.CurrentState == selectedPlot.Grown;
+
+        bool empty =
+            selectedPlot.Machine.CurrentState == selectedPlot.Empty;
+
+        bool grown =
+            selectedPlot.Machine.CurrentState == selectedPlot.Grown;
+
+        UpdatePlotText(empty, growing, grown);
+        UpdateActionButtons(empty, growing, grown);
+    }
+
+    // Reúne os textos do terreno e mostra o progresso quando permitido.
+    private void UpdatePlotText(bool empty, bool growing, bool grown)
+    {
         if (titleText != null)
-            titleText.text = selectedPlot.CurrentCrop != null ? selectedPlot.CurrentCrop.CropName : "Empty plot";
-        if (statusText != null)
-            statusText.text = selectedPlot.StateName +
-                (empty ? "" : " | Water: " + selectedPlot.Hydration.ToString("0") + "%") +
-                (growing && selectedPlot.Hydration <= 0f
-                    ? "\nDry! Water within " + selectedPlot.DryTimeRemaining.ToString("0.0") + "s" : "");
-        if (plantRow != null) plantRow.SetActive(empty);
-        if (seedCountText != null) seedCountText.gameObject.SetActive(empty);
+        {
+            titleText.text = selectedPlot.CurrentCrop != null
+                ? selectedPlot.CurrentCrop.CropName
+                : "Empty plot";
+        }
+
+        if (statusText == null)
+            return;
+
+        string description = "State: " + selectedPlot.StateName;
+
+        if (!empty)
+        {
+            description += " | Water: " +
+                selectedPlot.Hydration.ToString("0") + "%";
+        }
+
+        if ((growing || grown) && CanShowGrowth())
+        {
+            // Arredonda para baixo para mostrar 100% somente ao concluir.
+            int percentage = Mathf.FloorToInt(
+                selectedPlot.GrowthPercentage);
+
+            description += "\nGrowth: " + percentage + "%";
+        }
+
+        if (growing && selectedPlot.Hydration <= 0f)
+        {
+            description += "\nDry! Water within " +
+                selectedPlot.DryTimeRemaining.ToString("0.0") + "s";
+        }
+
+        statusText.text = description;
+    }
+
+    // Confere se o mesmo asset de tecnologia já foi desbloqueado.
+    private bool CanShowGrowth()
+    {
+        return growthTimeTechnology != null &&
+            growthTimeTechnology.effect == TechnologyEffect.ShowGrowingTime &&
+            FarmTechnologyManager.Instance != null &&
+            FarmTechnologyManager.Instance.Has(growthTimeTechnology);
+    }
+
+    // Atualiza os botões conforme o estado e os recursos disponíveis.
+    private void UpdateActionButtons(bool empty, bool growing, bool grown)
+    {
+        if (plantRow != null)
+            plantRow.SetActive(empty);
+
+        if (seedCountText != null)
+            seedCountText.gameObject.SetActive(empty);
+
         UpdatePlantOptions();
-        ConfigureButton(waterButton, growing, growing && selectedPlot.CanPerform(
-            FarmTool.Water, null, player.Inventory, player.Tank, out _));
-        ConfigureButton(harvestButton, grown, grown && selectedPlot.CanPerform(
-            FarmTool.Harvest, null, player.Inventory, player.Tank, out _));
+
+        ConfigureButton(
+            waterButton,
+            growing,
+            growing && selectedPlot.CanPerform(
+                FarmTool.Water,
+                null,
+                player.Inventory,
+                player.Tank,
+                out _));
+
+        ConfigureButton(
+            harvestButton,
+            grown,
+            grown && selectedPlot.CanPerform(
+                FarmTool.Harvest,
+                null,
+                player.Inventory,
+                player.Tank,
+                out _));
+
+        if (waterButtonText != null &&
+            growing &&
+            selectedPlot.CurrentCrop != null &&
+            player.Tank != null)
+        {
+            waterButtonText.text = "Water (" +
+                player.Tank.WaterCost(
+                    selectedPlot.CurrentCrop).ToString("0.#") +
+                " water)";
+        }
     }
 
     // Fecha o menu por Escape ou clique fora da interface.
@@ -117,6 +213,7 @@ public class FarmPlotContextMenu : MonoBehaviour
         }
     }
 
+    // Preenche a seleção sem repetir culturas ou incluir referências vazias.
     private void PopulateDropdown()
     {
         cropsInDropdown.Clear();
@@ -161,11 +258,13 @@ public class FarmPlotContextMenu : MonoBehaviour
         UpdatePlantOptions();
     }
 
+    // Confere as sementes e informa por que o plantio está bloqueado.
     private void UpdatePlantOptions()
     {
         CropData crop = SelectedCrop();
 
         bool empty = selectedPlot != null &&
+            selectedPlot.Machine != null &&
             selectedPlot.Machine.CurrentState == selectedPlot.Empty;
 
         string reason = "";
@@ -198,7 +297,6 @@ public class FarmPlotContextMenu : MonoBehaviour
                     player.Inventory.SeedCount(crop);
             }
 
-            // Mostra o motivo quando o botao de plantio esta bloqueado.
             if (!canPlant && !string.IsNullOrEmpty(reason))
                 seedCountText.text += "\n" + reason;
         }
@@ -206,7 +304,10 @@ public class FarmPlotContextMenu : MonoBehaviour
 
     public void Show(FarmPlot plot, Vector2 screenPosition)
     {
-        if (plot == null || player == null || menuPanel == null)
+        if (plot == null ||
+            plot.Machine == null ||
+            player == null ||
+            menuPanel == null)
         {
             Debug.LogWarning(
                 "Context menu is missing required references.");
@@ -217,68 +318,10 @@ public class FarmPlotContextMenu : MonoBehaviour
         selectedPlot = plot;
         openedFrame = Time.frameCount;
 
-        bool empty = plot.Machine.CurrentState == plot.Empty;
-
-        bool growing = plot.Machine.CurrentState == plot.Planted ||
-            plot.Machine.CurrentState == plot.Growing;
-
-        bool grown = plot.Machine.CurrentState == plot.Grown;
-
-        if (titleText != null)
-        {
-            titleText.text = plot.CurrentCrop != null
-                ? plot.CurrentCrop.CropName
-                : "Empty plot";
-        }
-
-        if (statusText != null)
-        {
-            statusText.text = "State: " + plot.StateName +
-                (empty ? "" : " | Hydration: " +
-                plot.Hydration.ToString("0") + "%");
-        }
-
-        if (plantRow != null)
-            plantRow.SetActive(empty);
-
-        if (seedCountText != null)
-            seedCountText.gameObject.SetActive(empty);
-
-        UpdatePlantOptions();
-
-        ConfigureButton(
-            waterButton,
-            growing,
-            growing && plot.CanPerform(
-                FarmTool.Water,
-                null,
-                player.Inventory,
-                player.Tank,
-                out _));
-
-        ConfigureButton(
-            harvestButton,
-            grown,
-            grown && plot.CanPerform(
-                FarmTool.Harvest,
-                null,
-                player.Inventory,
-                player.Tank,
-                out _));
-
-        if (waterButtonText != null &&
-            growing &&
-            plot.CurrentCrop != null &&
-            player.Tank != null)
-        {
-            waterButtonText.text = "Water (" +
-                player.Tank.WaterCost(
-                    plot.CurrentCrop).ToString("0.#") +
-                " water)";
-        }
-
         menuPanel.gameObject.SetActive(true);
         menuPanel.SetAsLastSibling();
+
+        RefreshSelectedPlot();
 
         Canvas.ForceUpdateCanvases();
         LayoutRebuilder.ForceRebuildLayoutImmediate(menuPanel);
@@ -309,6 +352,7 @@ public class FarmPlotContextMenu : MonoBehaviour
         return canvas.worldCamera;
     }
 
+    // Posiciona o menu próximo ao clique e limita sua posição ao painel pai.
     private void PositionMenu(Vector2 screenPosition)
     {
         RectTransform parent =
@@ -345,6 +389,7 @@ public class FarmPlotContextMenu : MonoBehaviour
             Mathf.Clamp(y, minY, 0f));
     }
 
+    // Solicita a ação ao jogador antes de fechar o menu.
     private void Confirm(FarmTool tool, CropData crop = null)
     {
         if (selectedPlot == null || player == null)

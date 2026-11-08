@@ -386,6 +386,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 363b5e63a92607f48abde583dc197459, type: 2}
   - {fileID: 11400000, guid: 05bc36d1a4c22d54d9c47b68e14fc6ad, type: 2}
   - {fileID: 11400000, guid: 431a7c7b768eba340976fed03fed2f50, type: 2}
+  growthTimeTechnology: {fileID: 11400000, guid: 32b14b06ee16e30498aa214834cb477c, type: 2}
   menuPanel: {fileID: 314075035}
   titleText: {fileID: 1693522940}
   statusText: {fileID: 395732170}
@@ -428,6 +429,14 @@ MonoBehaviour:
   producePerSale: 1
   shopTechnologyA: {fileID: 11400000, guid: d70c0177b3ccbf9428d1803a6efb9337, type: 2}
   shopTechnologyB: {fileID: 11400000, guid: 2dfdd5e5718772c479aca543b660787e, type: 2}
+  marketTechnologyDropdown: {fileID: 0}
+  marketTechnologyDetailsText: {fileID: 0}
+  marketRefreshText: {fileID: 0}
+  buySeedsButton: {fileID: 0}
+  buyMarketTechnologyButton: {fileID: 0}
+  missionProgressText: {fileID: 0}
+  firstMissionDeliverButton: {fileID: 0}
+  secondMissionDeliverButton: {fileID: 0}
   coinCounterText: {fileID: 1937466185}
   waterAmountText: {fileID: 471945818}
   cropInventoryText: {fileID: 0}
@@ -458,7 +467,7 @@ MonoBehaviour:
   - {fileID: 577005458}
   - {fileID: 1273822956}
   - {fileID: 2062322793}
-  plotPrices: 3200000096000000c2010000
+  plotPrices: 4100000096000000c2010000
   buyPlotButton: {fileID: 935807963}
   buyPlotButtonText: {fileID: 162691908}
   plotExpansionText: {fileID: 1781098915}
@@ -3060,9 +3069,26 @@ MonoBehaviour:
   inventory: {fileID: 461223905}
   wallet: {fileID: 461223904}
   technologies: {fileID: 461223903}
+  communities:
+  - {fileID: 11400000, guid: f5cb1cabde12229448e45055c6668f3e, type: 2}
+  - {fileID: 11400000, guid: 9c584f528e77b68409326f5c4c30d63f, type: 2}
+  - {fileID: 11400000, guid: fd6e94b5d1d795e458fb7518fecca656, type: 2}
   missions:
+  - {fileID: 11400000, guid: 50a3e0458b6ce7d4e81653ca472021f4, type: 2}
   - {fileID: 11400000, guid: a53bc5aabd86ca442890b82d1298ad11, type: 2}
+  - {fileID: 11400000, guid: d87067cebe6b16a47ac9d5c3378b8ffe, type: 2}
+  - {fileID: 11400000, guid: e2ad1ba5760591c44a190f91bdae09a9, type: 2}
+  - {fileID: 11400000, guid: 854475098a0fa2049908af505fd50e25, type: 2}
+  - {fileID: 11400000, guid: 107a923c1c5db9d4fbcd850eecbb3bc3, type: 2}
+  - {fileID: 11400000, guid: df892985d2dbdfa4f989d8864db64369, type: 2}
   - {fileID: 11400000, guid: 94e540428c590374bb37ffb8028ef0e3, type: 2}
+  - {fileID: 11400000, guid: 41b52aa972ac4b240b6b0d28eb8436ea, type: 2}
+  - {fileID: 11400000, guid: 81c14c31ffac205438c26e3646ef0e80, type: 2}
+  - {fileID: 11400000, guid: a620a0a5d36e0b64298ea14d3b3618c4, type: 2}
+  - {fileID: 11400000, guid: 02c8b718ca2c50d4bb2b85f313463050, type: 2}
+  defaultMissionDuration: 1050
+  defaultMissionCooldown: 330
+  demoMissionLimit: 12
 --- !u!114 &461223901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3078,6 +3104,21 @@ MonoBehaviour:
   inventory: {fileID: 461223905}
   wallet: {fileID: 461223904}
   technologies: {fileID: 461223903}
+  cropCatalog:
+  - {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
+  - {fileID: 11400000, guid: e1e7b344f907db643a29d56b9e11e956, type: 2}
+  - {fileID: 11400000, guid: 05bc36d1a4c22d54d9c47b68e14fc6ad, type: 2}
+  - {fileID: 11400000, guid: 431a7c7b768eba340976fed03fed2f50, type: 2}
+  - {fileID: 11400000, guid: 363b5e63a92607f48abde583dc197459, type: 2}
+  exclusiveTechnologyCatalog:
+  - {fileID: 11400000, guid: 65d1f154ed5fdea4f9d445f8ca2db991, type: 2}
+  - {fileID: 11400000, guid: 2dfdd5e5718772c479aca543b660787e, type: 2}
+  - {fileID: 11400000, guid: 32b14b06ee16e30498aa214834cb477c, type: 2}
+  - {fileID: 11400000, guid: 8971947890985444da5ebd21be892ff5, type: 2}
+  seedOffersPerRotation: 3
+  technologyOffersPerRotation: 2
+  refreshInterval: 210
+  demandPriceMultiplier: 1.5
 --- !u!114 &461223902
 MonoBehaviour:
   m_ObjectHideFlags: 0
