@@ -1,0 +1,285 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4408530778425967912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2876637015925184892}
+  m_Layer: 0
+  m_Name: Crops_Carrot_Grown_Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2876637015925184892
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4408530778425967912}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.2750001, y: 1.2750001, z: 1.2750001}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7035488716932696602}
+  - {fileID: 2474781504024788961}
+  - {fileID: 535796836362164331}
+  - {fileID: 814054454861000731}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &64511779846782848
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2876637015925184892}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.61924875
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4832404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.74388367
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.3826841
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9238793
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Carrot_Stage_Grown_03
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+--- !u!4 &535796836362164331 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+  m_PrefabInstance: {fileID: 64511779846782848}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &920602719841753072
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2876637015925184892}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.7418797
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4832404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.77841634
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.036056947
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9993498
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Carrot_Stage_Grown_04
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+--- !u!4 &814054454861000731 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+  m_PrefabInstance: {fileID: 920602719841753072}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &2725392281068099594
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2876637015925184892}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.6713064
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4832404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.74629647
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.61898357
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.785404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Carrot_Stage_Grown_02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+--- !u!4 &2474781504024788961 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+  m_PrefabInstance: {fileID: 2725392281068099594}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7361602855250669041
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2876637015925184892}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.74079895
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.4832404
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.7747273
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Carrot_Stage_Grown_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+--- !u!4 &7035488716932696602 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+  m_PrefabInstance: {fileID: 7361602855250669041}
+  m_PrefabAsset: {fileID: 0}

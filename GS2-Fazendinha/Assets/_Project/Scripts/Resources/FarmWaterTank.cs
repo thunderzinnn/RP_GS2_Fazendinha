@@ -7,11 +7,11 @@ public class FarmWaterTank : MonoBehaviour
     private float baseCapacity = 100f;
 
     [SerializeField, Min(0f)]
-    private float startingWater = 70f;
+    private float startingWater = 50f;
 
     [Header("Automatic Water Regeneration")]
     [SerializeField, Min(0.1f)]
-    private float regenerationInterval = 2f;
+    private float regenerationInterval = 3.5f;
 
     [SerializeField, Min(0.01f)]
     private float regenerationAmount = 0.35f;
@@ -22,8 +22,20 @@ public class FarmWaterTank : MonoBehaviour
         FarmTechnologyManager.Instance;
 
     public float CurrentWater { get; private set; }
+    public float StartingWater => startingWater;
 
-    // O bônus usa uma fração: 0.1 representa 10% da capacidade base.
+    public void SaveProgress(string prefix)
+    {
+        PlayerPrefs.SetFloat(prefix + ".Water", CurrentWater);
+        PlayerPrefs.SetFloat(prefix + ".WaterTimer", regenerationTimer);
+    }
+
+    public void LoadProgress(string prefix)
+    {
+        CurrentWater = Mathf.Clamp(PlayerPrefs.GetFloat(prefix + ".Water", startingWater), 0f, Capacity);
+        regenerationTimer = Mathf.Clamp(PlayerPrefs.GetFloat(prefix + ".WaterTimer", 0f), 0f, regenerationInterval);
+    }
+
     public float Capacity => baseCapacity * (1f +
         (Technologies != null
             ? Technologies.GetBonus(TechnologyEffect.TankCapacityBonus)
@@ -44,7 +56,6 @@ public class FarmWaterTank : MonoBehaviour
         UpdateRegeneration();
     }
 
-    // Define a água inicial sem ultrapassar a capacidade base.
     private void InitializeWater()
     {
         CurrentWater = Mathf.Clamp(
@@ -55,7 +66,6 @@ public class FarmWaterTank : MonoBehaviour
         regenerationTimer = 0f;
     }
 
-    // Conta os intervalos completos para regenerar a quantidade correspondente.
     private void UpdateRegeneration()
     {
         if (CurrentWater >= Capacity)
@@ -77,7 +87,6 @@ public class FarmWaterTank : MonoBehaviour
         RegenerateWater(cycles);
     }
 
-    // Recupera água sem ultrapassar a capacidade atual do tanque.
     private void RegenerateWater(int cycles)
     {
         float amount = GetRegenerationAmount() * cycles;
@@ -87,7 +96,6 @@ public class FarmWaterTank : MonoBehaviour
             CurrentWater + amount);
     }
 
-    // O bônus de regeneração continua somando unidades de água por ciclo.
     private float GetRegenerationAmount()
     {
         float bonus = Technologies != null
@@ -98,7 +106,6 @@ public class FarmWaterTank : MonoBehaviour
         return Mathf.Max(0f, regenerationAmount + bonus);
     }
 
-    // Aplica o desconto das tecnologias, limitado a 80% do custo original.
     public float WaterCost(CropData crop)
     {
         if (crop == null)
@@ -113,14 +120,12 @@ public class FarmWaterTank : MonoBehaviour
             (1f - Mathf.Clamp(reduction, 0f, 0.8f));
     }
 
-    // Confere o saldo com uma pequena tolerância para cálculos decimais.
     public bool CanWater(CropData crop)
     {
         return crop != null &&
             CurrentWater + 0.0001f >= WaterCost(crop);
     }
 
-    // Consome água somente quando existe quantidade suficiente para regar.
     public bool TrySpendFor(CropData crop)
     {
         if (!CanWater(crop))

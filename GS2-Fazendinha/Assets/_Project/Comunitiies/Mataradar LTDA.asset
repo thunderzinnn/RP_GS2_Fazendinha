@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed9b358f3f7ff149b54813a74c5693f, type: 3}
   m_Name: Mataradar LTDA
   m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
+  saveId: f5cb1cabde12229448e45055c6668f3e
   communityName: Mataradar LTDA
   technologyFocus: Top-Quality Soil! Sell the soil with the best water-holding capacity.
   missions:

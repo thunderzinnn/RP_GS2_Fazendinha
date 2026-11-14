@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
   m_Name: Better Soil I
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
+  saveId: 1b9e19c7572ba224299eaf025f2cc8b7
   displayName: Better Soil I
+  icon: {fileID: -510594048994259102, guid: 213d683f33cbbd6408f3f6b37d86db20, type: 3}
   effect: 1
   value: 0.2
-  price: 50
+  price: 60
   marketExclusive: 0

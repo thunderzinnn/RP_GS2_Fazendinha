@@ -29,7 +29,6 @@ public class PlayerMoveState : IPlayerState
 
     public void Tick()
     {
-        // Ao chegar, delega a acao ao estado de interacao.
         if (player.HasPathProblem())
         {
             player.Show("Unable to reach the destination.");

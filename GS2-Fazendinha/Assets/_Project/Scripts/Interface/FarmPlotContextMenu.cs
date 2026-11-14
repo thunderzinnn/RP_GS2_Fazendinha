@@ -17,6 +17,7 @@ public class FarmPlotContextMenu : MonoBehaviour
     [SerializeField] private RectTransform menuPanel;
     [SerializeField] private TMP_Text titleText;
     [SerializeField] private TMP_Text statusText;
+    [SerializeField] private Image cropIcon;
 
     [Header("Planting")]
     [SerializeField] private GameObject plantRow;
@@ -28,6 +29,9 @@ public class FarmPlotContextMenu : MonoBehaviour
     [SerializeField] private Button waterButton;
     [SerializeField] private Button harvestButton;
     [SerializeField] private TMP_Text waterButtonText;
+    [SerializeField] private Button fertilizeButton;
+    [SerializeField] private TMP_Text fertilizeButtonText;
+    [SerializeField] private FarmFertilizerStorage fertilizerStorage;
 
     private readonly List<CropData> cropsInDropdown =
         new List<CropData>();
@@ -61,7 +65,6 @@ public class FarmPlotContextMenu : MonoBehaviour
         RefreshSelectedPlot();
     }
 
-    // Atualiza as informações enquanto o menu do terreno estiver aberto.
     private void RefreshSelectedPlot()
     {
         if (selectedPlot == null ||
@@ -87,9 +90,16 @@ public class FarmPlotContextMenu : MonoBehaviour
         UpdateActionButtons(empty, growing, grown);
     }
 
-    // Reúne os textos do terreno e mostra o progresso quando permitido.
     private void UpdatePlotText(bool empty, bool growing, bool grown)
     {
+        if (cropIcon != null)
+        {
+            cropIcon.sprite = selectedPlot.CurrentCrop != null
+                ? selectedPlot.CurrentCrop.icon
+                : null;
+            cropIcon.enabled = cropIcon.sprite != null;
+        }
+
         if (titleText != null)
         {
             titleText.text = selectedPlot.CurrentCrop != null
@@ -123,10 +133,14 @@ public class FarmPlotContextMenu : MonoBehaviour
                 selectedPlot.DryTimeRemaining.ToString("0.0") + "s";
         }
 
+        if ((growing || grown) && selectedPlot.IsFertilized)
+        {
+            description += "\nFertilized | Harvest: " + selectedPlot.GetHarvestAmount();
+        }
+
         statusText.text = description;
     }
 
-    // Confere se o mesmo asset de tecnologia já foi desbloqueado.
     private bool CanShowGrowth()
     {
         return growthTimeTechnology != null &&
@@ -135,7 +149,6 @@ public class FarmPlotContextMenu : MonoBehaviour
             FarmTechnologyManager.Instance.Has(growthTimeTechnology);
     }
 
-    // Atualiza os botões conforme o estado e os recursos disponíveis.
     private void UpdateActionButtons(bool empty, bool growing, bool grown)
     {
         if (plantRow != null)
@@ -166,6 +179,18 @@ public class FarmPlotContextMenu : MonoBehaviour
                 player.Tank,
                 out _));
 
+        ConfigureButton(
+            fertilizeButton,
+            growing,
+            growing && selectedPlot.CanFertilize(out _));
+
+        if (fertilizeButtonText != null && fertilizerStorage != null)
+        {
+            fertilizeButtonText.text = selectedPlot.IsFertilized
+                ? "Already fertilized"
+                : "Fertilize (" + fertilizerStorage.ApplicationCost.ToString("0.#") + ")";
+        }
+
         if (waterButtonText != null &&
             growing &&
             selectedPlot.CurrentCrop != null &&
@@ -178,7 +203,6 @@ public class FarmPlotContextMenu : MonoBehaviour
         }
     }
 
-    // Fecha o menu por Escape ou clique fora da interface.
     private void HandleDismissInput()
     {
         if (menuPanel == null ||
@@ -196,7 +220,6 @@ public class FarmPlotContextMenu : MonoBehaviour
         if (Input.GetMouseButtonDown(0) &&
             Time.frameCount != openedFrame)
         {
-            // Ignora cliques na interface.
             if (EventSystem.current != null &&
                 EventSystem.current.IsPointerOverGameObject())
             {
@@ -213,7 +236,6 @@ public class FarmPlotContextMenu : MonoBehaviour
         }
     }
 
-    // Preenche a seleção sem repetir culturas ou incluir referências vazias.
     private void PopulateDropdown()
     {
         cropsInDropdown.Clear();
@@ -221,7 +243,7 @@ public class FarmPlotContextMenu : MonoBehaviour
         if (cropDropdown == null)
             return;
 
-        List<string> options = new List<string>();
+        List<TMP_Dropdown.OptionData> options = new List<TMP_Dropdown.OptionData>();
 
         if (availableCrops != null)
         {
@@ -231,7 +253,7 @@ public class FarmPlotContextMenu : MonoBehaviour
                     continue;
 
                 cropsInDropdown.Add(crop);
-                options.Add(crop.CropName);
+                options.Add(new TMP_Dropdown.OptionData(crop.CropName, crop.icon, Color.white));
             }
         }
 
@@ -255,10 +277,11 @@ public class FarmPlotContextMenu : MonoBehaviour
 
     private void OnCropChanged(int index)
     {
+        if (menuPanel != null && menuPanel.gameObject.activeInHierarchy && AudioManager.Instance != null)
+            AudioManager.Instance.PlayCropClick();
         UpdatePlantOptions();
     }
 
-    // Confere as sementes e informa por que o plantio está bloqueado.
     private void UpdatePlantOptions()
     {
         CropData crop = SelectedCrop();
@@ -316,6 +339,7 @@ public class FarmPlotContextMenu : MonoBehaviour
         }
 
         selectedPlot = plot;
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayCropClick();
         openedFrame = Time.frameCount;
 
         menuPanel.gameObject.SetActive(true);
@@ -352,7 +376,6 @@ public class FarmPlotContextMenu : MonoBehaviour
         return canvas.worldCamera;
     }
 
-    // Posiciona o menu próximo ao clique e limita sua posição ao painel pai.
     private void PositionMenu(Vector2 screenPosition)
     {
         RectTransform parent =
@@ -389,7 +412,6 @@ public class FarmPlotContextMenu : MonoBehaviour
             Mathf.Clamp(y, minY, 0f));
     }
 
-    // Solicita a ação ao jogador antes de fechar o menu.
     private void Confirm(FarmTool tool, CropData crop = null)
     {
         if (selectedPlot == null || player == null)
@@ -412,6 +434,11 @@ public class FarmPlotContextMenu : MonoBehaviour
     public void Harvest()
     {
         Confirm(FarmTool.Harvest);
+    }
+
+    public void Fertilize()
+    {
+        Confirm(FarmTool.Fertilize);
     }
 
     public void Close()

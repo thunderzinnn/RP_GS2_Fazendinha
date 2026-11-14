@@ -6,7 +6,8 @@ public enum FarmTool
 {
     Plant,
     Water,
-    Harvest
+    Harvest,
+    Fertilize
 }
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -34,6 +35,27 @@ public class PlayerFarmController : MonoBehaviour
 
     public FarmPlot LastSelectedPlot { get; private set; }
     public FarmPlot TargetPlot { get; private set; }
+
+    public void SaveProgress(string prefix)
+    {
+        PlayerPrefs.SetFloat(prefix + ".PlayerX", transform.position.x);
+        PlayerPrefs.SetFloat(prefix + ".PlayerY", transform.position.y);
+        PlayerPrefs.SetFloat(prefix + ".PlayerZ", transform.position.z);
+        PlayerPrefs.SetFloat(prefix + ".PlayerRotation", transform.eulerAngles.y);
+    }
+
+    public void LoadProgress(string prefix)
+    {
+        Vector3 position = new Vector3(
+            PlayerPrefs.GetFloat(prefix + ".PlayerX", transform.position.x),
+            PlayerPrefs.GetFloat(prefix + ".PlayerY", transform.position.y),
+            PlayerPrefs.GetFloat(prefix + ".PlayerZ", transform.position.z));
+        StopAndClear();
+        if (Agent.isActiveAndEnabled && NavMesh.SamplePosition(position, out NavMeshHit hit, 2f, Agent.areaMask))
+            Agent.Warp(hit.position);
+        transform.rotation = Quaternion.Euler(0f, PlayerPrefs.GetFloat(prefix + ".PlayerRotation", transform.eulerAngles.y), 0f);
+        Machine.ChangeState(Idle);
+    }
     public Vector3 Destination { get; private set; }
 
     public PlayerStateMachine Machine { get; private set; }
@@ -70,7 +92,6 @@ public class PlayerFarmController : MonoBehaviour
         Machine.Tick();
     }
 
-    // Separa a leitura de entrada da atualizacao dos estados.
     private void HandleInput()
     {
         if (Input.GetMouseButtonDown(0))
@@ -114,7 +135,6 @@ public class PlayerFarmController : MonoBehaviour
 
         if (plot != null)
         {
-            // Selecionar o terreno nao executa a acao imediatamente.
             Machine.ChangeState(Idle);
 
             if (contextMenu != null)

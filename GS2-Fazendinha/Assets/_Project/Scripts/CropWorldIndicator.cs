@@ -3,8 +3,6 @@ using UnityEngine.UI;
 
 public class CropWorldIndicator : MonoBehaviour
 {
-
-
     [SerializeField] Color32 colorRed, colorBlue, colorGreen, colorYellow;
     [Header("Plot Reference")]
     [SerializeField] private FarmPlot plot;
@@ -31,7 +29,6 @@ public class CropWorldIndicator : MonoBehaviour
         UpdateIndicator();
     }
 
-    // Usa a origem escolhida ou calcula uma posicao acima da plantacao.
     private void UpdatePosition()
     {
         if (gameCamera != null)
@@ -51,7 +48,7 @@ public class CropWorldIndicator : MonoBehaviour
         transform.position = GetAutomaticPosition() + positionOffset;
     }
 
-    // Calcula uma posicao acima do contorno da planta visto pela camera.
+    // Projeta os oito cantos para manter o indicador acima da planta em qualquer ângulo.
     private Vector3 GetAutomaticPosition()
     {
         Renderer[] models = plot.GetComponentsInChildren<Renderer>();
@@ -107,7 +104,6 @@ public class CropWorldIndicator : MonoBehaviour
         return gameCamera.ScreenToWorldPoint(screenPosition);
     }
 
-    // Atualiza o preenchimento, as cores e os simbolos de cada estado.
     private void UpdateIndicator()
     {
         bool growing = plot != null &&

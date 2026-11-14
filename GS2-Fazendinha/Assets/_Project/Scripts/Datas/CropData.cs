@@ -1,10 +1,16 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewCrop", menuName = "Golden Root Quick Farmer/Crops")]
-// Reune os dados e modelos de qualquer cultura, sem regras por nome.
 public class CropData : ScriptableObject
 {
     [SerializeField] private string cropName = "New Crop";
+
+    [Header("Save Settings")]
+    [SerializeField] private string saveId;
+    public string SaveId => string.IsNullOrEmpty(saveId) ? name : saveId;
+
+    [Header("UI Icon")]
+    public Sprite icon;
 
     [Min(1)] public int seedPrice = 3;
     [Min(1)] public int sellPrice = 5;

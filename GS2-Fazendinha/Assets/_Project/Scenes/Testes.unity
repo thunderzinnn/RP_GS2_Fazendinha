@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.CanvasScaler
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
@@ -244,6 +244,7 @@ MonoBehaviour:
   menuPanel: {fileID: 329260762}
   titleText: {fileID: 1737435597}
   statusText: {fileID: 136562492}
+  cropIcon: {fileID: 0}
   plantRow: {fileID: 1672483294}
   plantButton: {fileID: 2092161556}
   cropDropdown: {fileID: 577315378}
@@ -251,6 +252,9 @@ MonoBehaviour:
   waterButton: {fileID: 1610415448}
   harvestButton: {fileID: 426065951}
   waterButtonText: {fileID: 507539320}
+  fertilizeButton: {fileID: 0}
+  fertilizeButtonText: {fileID: 0}
+  fertilizerStorage: {fileID: 0}
 --- !u!114 &24193404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +274,11 @@ MonoBehaviour:
   technologies: {fileID: 461223903}
   missions: {fileID: 461223900}
   shop: {fileID: 461223901}
+  fertilizerStorage: {fileID: 0}
+  fertilizerAmountSlider: {fileID: 0}
+  fertilizerAmountText: {fileID: 0}
+  wormComposter: {fileID: 0}
+  fertilizerGenerationTimerText: {fileID: 0}
   crop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
   availableCrops: []
   shopCropDropdown: {fileID: 0}
@@ -278,14 +287,27 @@ MonoBehaviour:
   producePerSale: 1
   shopTechnologyA: {fileID: 11400000, guid: 2dfdd5e5718772c479aca543b660787e, type: 2}
   shopTechnologyB: {fileID: 11400000, guid: 8971947890985444da5ebd21be892ff5, type: 2}
+  growingTimeUpgradeDescriptionText: {fileID: 0}
+  growingTimeUpgradeButton: {fileID: 0}
+  growingTimeUpgradeButtonText: {fileID: 0}
+  wormComposterUpgradeDescriptionText: {fileID: 0}
+  wormComposterUpgradeButton: {fileID: 0}
+  wormComposterUpgradeButtonText: {fileID: 0}
+  shopCropIcon: {fileID: 0}
+  marketTechnologyIcon: {fileID: 0}
+  growingTimeUpgradeIcon: {fileID: 0}
+  wormComposterUpgradeIcon: {fileID: 0}
   marketTechnologyDropdown: {fileID: 0}
   marketTechnologyDetailsText: {fileID: 0}
   marketRefreshText: {fileID: 0}
   buySeedsButton: {fileID: 0}
+  buyFiveSeedsButton: {fileID: 0}
   buyMarketTechnologyButton: {fileID: 0}
   missionProgressText: {fileID: 0}
   firstMissionDeliverButton: {fileID: 0}
   secondMissionDeliverButton: {fileID: 0}
+  thirdMissionDescriptionText: {fileID: 0}
+  thirdMissionDeliverButton: {fileID: 0}
   coinCounterText: {fileID: 0}
   waterAmountText: {fileID: 63489676}
   cropInventoryText: {fileID: 0}
@@ -385,7 +407,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -522,7 +544,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -787,7 +809,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1269,7 +1291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1624,7 +1646,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1944,7 +1966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2308,7 +2330,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2447,7 +2469,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.13813452, g: 0.20949112, b: 0.8415094, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -2610,11 +2632,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e7730a4fbfe1344891965ae0d43a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FarmPlot
+  saveId: 
   interactionPoint: {fileID: 1654118927}
+  fertilizerStorage: {fileID: 0}
   plantedVisual: {fileID: 7980655159967946272}
   growingVisual: {fileID: 7919189997701214291}
   grownVisual: {fileID: 8205868056485491455}
   cropVisualAnchor: {fileID: 1769767170}
+  wateringEffectPrefab: {fileID: 0}
+  fertilizerEffectPrefab: {fileID: 0}
   drySurvivalSeconds: 10
   deadVisualSeconds: 3
 --- !u!65 &1278316411
@@ -2689,7 +2715,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3002,7 +3028,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.3832182, g: 0.5373509, b: 0.8792453, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -3156,7 +3182,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8539,7 +8565,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -8707,7 +8733,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

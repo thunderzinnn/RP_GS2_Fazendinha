@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
   m_Name: Ghoon Mission IV
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
+  saveId: 02c8b718ca2c50d4bb2b85f313463050
   communityName: Le Fezende Ghoon'd
   requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
   requiredAmount: 12
   rewardCoins: 60
-  rewardTechnology: {fileID: 11400000, guid: 65d1f154ed5fdea4f9d445f8ca2db991, type: 2}
+  rewardTechnology: {fileID: 11400000, guid: bf1a4f2edb316a148b75e3a6e4080570, type: 2}

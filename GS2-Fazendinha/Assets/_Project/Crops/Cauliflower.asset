@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Cauliflower
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Cauliflower
+  saveId: 05bc36d1a4c22d54d9c47b68e14fc6ad
+  icon: {fileID: 0}
   seedPrice: 15
   sellPrice: 10
   harvestAmount: 4

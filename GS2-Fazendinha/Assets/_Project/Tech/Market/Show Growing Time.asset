@@ -12,8 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
   m_Name: Show Growing Time
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
+  saveId: 32b14b06ee16e30498aa214834cb477c
   displayName: Growing Timer
+  icon: {fileID: 0}
   effect: 4
   value: 0.2
   price: 100
-  marketExclusive: 1
+  marketExclusive: 0

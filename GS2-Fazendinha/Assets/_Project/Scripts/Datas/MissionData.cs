@@ -1,9 +1,12 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewMission", menuName = "Golden Root Quick Farmer/Missions")]
-// Define a entrega e suas recompensas usando uma referencia de CropData.
 public class MissionData : ScriptableObject
 {
+    [Header("Save Settings")]
+    [SerializeField] private string saveId;
+    public string SaveId => string.IsNullOrEmpty(saveId) ? name : saveId;
+
     public string communityName = "New Community";
     public CropData requiredCrop;
 

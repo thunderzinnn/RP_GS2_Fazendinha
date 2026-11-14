@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
+  m_Name: Ghoon Mission I
+  m_EditorClassIdentifier: Assembly-CSharp::MissionData
+  saveId: eb8d6b676633c29439ec3060b6288169
+  communityName: Le Fezende Ghoon'd
+  requiredCrop: {fileID: 11400000, guid: 750ae6d450c6e8e4ba86201dca89ad9d, type: 2}
+  requiredAmount: 12
+  rewardCoins: 60
+  rewardTechnology: {fileID: 11400000, guid: 0b70b0c18384e854fbd6f13f38393261, type: 2}

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
   m_Name: Community 3 Mission IV
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
+  saveId: a620a0a5d36e0b64298ea14d3b3618c4
   communityName: Community 3
   requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
   requiredAmount: 20
   rewardCoins: 90
-  rewardTechnology: {fileID: 0}
+  rewardTechnology: {fileID: 11400000, guid: df4d7992e7fd3d54a9f3ab4d9b757c16, type: 2}

@@ -40,7 +40,6 @@ public class PlotPlantedState : IPlotState
 
     public void Enter()
     {
-        // Reinicia o tempo e exibe o modelo da etapa de plantio.
         plot.StageTimer = 0f;
         plot.ShowPlanted();
     }
@@ -64,6 +63,9 @@ public class PlotPlantedState : IPlotState
         FarmWaterTank tank,
         out string message)
     {
+        if (tool == FarmTool.Fertilize)
+            return plot.TryFertilize(out message);
+
         return plot.TryWater(tank, out message);
     }
 }
@@ -102,6 +104,9 @@ public class PlotGrowingState : IPlotState
         FarmWaterTank tank,
         out string message)
     {
+        if (tool == FarmTool.Fertilize)
+            return plot.TryFertilize(out message);
+
         return plot.TryWater(tank, out message);
     }
 }
@@ -149,7 +154,6 @@ public class PlotDeadState : IPlotState
         plot.ShowDead();
     }
 
-    // Exibe o modelo morto por tres segundos antes de liberar o terreno.
     public void Tick()
     {
         plot.StageTimer += UnityEngine.Time.deltaTime;

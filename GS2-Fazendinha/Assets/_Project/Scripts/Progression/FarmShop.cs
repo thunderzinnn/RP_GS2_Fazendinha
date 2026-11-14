@@ -34,6 +34,52 @@ public class FarmShop : MonoBehaviour
     private int rotationIndex = -1;
     private float refreshTimer;
 
+    public void SaveProgress(string prefix)
+    {
+        string key = prefix + ".Market";
+        PlayerPrefs.SetInt(key + ".Rotation", rotationIndex);
+        PlayerPrefs.SetFloat(key + ".Timer", refreshTimer);
+        PlayerPrefs.SetString(key + ".Demand", HighDemandCrop != null ? HighDemandCrop.SaveId : "");
+        PlayerPrefs.SetInt(key + ".SeedCount", seedOffers.Count);
+        PlayerPrefs.SetInt(key + ".TechnologyCount", technologyOffers.Count);
+        for (int index = 0; index < seedOffers.Count; index++)
+            PlayerPrefs.SetString(key + ".Seed." + index, seedOffers[index].SaveId);
+        for (int index = 0; index < technologyOffers.Count; index++)
+            PlayerPrefs.SetString(key + ".Technology." + index, technologyOffers[index].SaveId);
+    }
+
+    // Recupera as mesmas ofertas para que reabrir o jogo não renove o mercado.
+    public void LoadProgress(string prefix)
+    {
+        string key = prefix + ".Market";
+        if (!PlayerPrefs.HasKey(key + ".Rotation")) return;
+        rotationIndex = Mathf.Max(0, PlayerPrefs.GetInt(key + ".Rotation", 0));
+        refreshTimer = Mathf.Clamp(PlayerPrefs.GetFloat(key + ".Timer", refreshInterval), 0f, refreshInterval);
+        seedOffers.Clear();
+        technologyOffers.Clear();
+        int seedCount = Mathf.Clamp(PlayerPrefs.GetInt(key + ".SeedCount", 0), 0, cropCatalog != null ? cropCatalog.Length : 0);
+        int technologyCount = Mathf.Clamp(PlayerPrefs.GetInt(key + ".TechnologyCount", 0), 0,
+            exclusiveTechnologyCatalog != null ? exclusiveTechnologyCatalog.Length : 0);
+        for (int index = 0; index < seedCount; index++)
+        {
+            string id = PlayerPrefs.GetString(key + ".Seed." + index, "");
+            foreach (var crop in cropCatalog)
+                if (crop != null && crop.SaveId == id && !seedOffers.Contains(crop)) seedOffers.Add(crop);
+        }
+        for (int index = 0; index < technologyCount; index++)
+        {
+            string id = PlayerPrefs.GetString(key + ".Technology." + index, "");
+            foreach (var technology in exclusiveTechnologyCatalog)
+                if (technology != null && technology.SaveId == id && !technologyOffers.Contains(technology)) technologyOffers.Add(technology);
+        }
+        HighDemandCrop = seedOffers.Count > 0 ? seedOffers[0] : null;
+        string demandId = PlayerPrefs.GetString(key + ".Demand", "");
+        if (cropCatalog != null)
+            foreach (var crop in cropCatalog)
+                if (crop != null && crop.SaveId == demandId) HighDemandCrop = crop;
+        MarketRevision++;
+    }
+
     public int MarketRevision { get; private set; }
 
     public CropData HighDemandCrop { get; private set; }
@@ -57,7 +103,6 @@ public class FarmShop : MonoBehaviour
         TickMarket(Time.deltaTime);
     }
 
-    // Aproveita as culturas do HUD quando não existe um catálogo próprio.
     public void ConfigureCropCatalogIfEmpty(CropData[] crops)
     {
         if (cropCatalog != null && cropCatalog.Length > 0)
@@ -72,7 +117,6 @@ public class FarmShop : MonoBehaviour
         RefreshMarketOffers();
     }
 
-    // Conta o tempo de jogo até a próxima renovação das ofertas.
     public void TickMarket(float seconds)
     {
         if (seconds <= 0f)
@@ -96,7 +140,6 @@ public class FarmShop : MonoBehaviour
         refreshTimer = interval - overdue % interval;
     }
 
-    // Renova as sementes, as tecnologias e a cultura com maior demanda.
     private void RefreshMarketOffers()
     {
         rotationIndex++;
@@ -113,7 +156,6 @@ public class FarmShop : MonoBehaviour
         MarketRevision++;
     }
 
-    // Percorre as culturas em ordem circular, sem repetir uma oferta.
     private void PopulateSeedOffers()
     {
         if (cropCatalog == null || cropCatalog.Length == 0)
@@ -138,7 +180,6 @@ public class FarmShop : MonoBehaviour
             HighDemandCrop = seedOffers[0];
     }
 
-    // Oferece somente tecnologias exclusivas que ainda não foram desbloqueadas.
     private void PopulateTechnologyOffers()
     {
         if (!HasExclusiveCatalog)
@@ -173,7 +214,6 @@ public class FarmShop : MonoBehaviour
         }
     }
 
-    // Sem catálogo configurado, preserva o comportamento anterior da loja.
     public bool IsSeedAvailable(CropData crop)
     {
         if (crop == null)
@@ -184,7 +224,6 @@ public class FarmShop : MonoBehaviour
             seedOffers.Contains(crop);
     }
 
-    // Aplica a demanda ao preço e arredonda para uma quantidade inteira de moedas.
     public int GetSellPrice(CropData crop)
     {
         if (crop == null)
@@ -207,7 +246,6 @@ public class FarmShop : MonoBehaviour
         return technologyOffers[index];
     }
 
-    // Confere a oferta atual e impede a compra de uma tecnologia já adquirida.
     public bool IsTechnologyAvailable(TechnologyData technology)
     {
         return technology != null &&
@@ -217,7 +255,6 @@ public class FarmShop : MonoBehaviour
             !technologies.Has(technology);
     }
 
-    // Compra sementes da cultura recebida, respeitando a época atual.
     public bool BuySeeds(
         CropData crop,
         int amount,
@@ -251,15 +288,16 @@ public class FarmShop : MonoBehaviour
 
         inventory.AddSeeds(crop, amount);
 
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayPurchase();
+
         message =
             "Bought " + amount +
-            " seeds for " + crop.CropName +
+            (amount == 1 ? " seed for " : " seeds for ") + crop.CropName +
             " for " + cost + " coins.";
 
         return true;
     }
 
-    // Permite vender qualquer cultura, usando o preço da demanda atual.
     public bool SellProduce(
         CropData crop,
         int amount,
@@ -284,6 +322,8 @@ public class FarmShop : MonoBehaviour
 
         wallet.AddCoins(earned);
 
+        if (AudioManager.Instance != null) AudioManager.Instance.PlaySale();
+
         message =
             "Sold " + amount +
             " " + crop.CropName +
@@ -292,7 +332,6 @@ public class FarmShop : MonoBehaviour
         return true;
     }
 
-    // Preserva as melhorias permanentes e valida as exclusivas pela oferta atual.
     public bool BuyTechnology(
         TechnologyData technology,
         out string message)
@@ -303,7 +342,6 @@ public class FarmShop : MonoBehaviour
         return TryPurchaseTechnology(technology, out message);
     }
 
-    // Retira a tecnologia comprada das ofertas até a próxima renovação.
     public bool BuyMarketTechnology(
         TechnologyData technology,
         out string message)
@@ -326,7 +364,6 @@ public class FarmShop : MonoBehaviour
         return true;
     }
 
-    // Centraliza o pagamento e o desbloqueio para os dois tipos de compra.
     private bool TryPurchaseTechnology(
         TechnologyData technology,
         out string message)
@@ -352,6 +389,8 @@ public class FarmShop : MonoBehaviour
         }
 
         technologies.Unlock(technology);
+
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayTechnologyPurchase(technology.marketExclusive);
 
         message =
             "Technology purchased: " +

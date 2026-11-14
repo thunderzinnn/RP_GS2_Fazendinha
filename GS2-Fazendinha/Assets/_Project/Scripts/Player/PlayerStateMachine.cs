@@ -12,7 +12,6 @@ public class PlayerStateMachine
 
     public void ChangeState(IPlayerState next)
     {
-        // Encerra o estado anterior antes de iniciar o proximo.
         CurrentState?.Exit();
         CurrentState = next;
         CurrentState?.Enter();

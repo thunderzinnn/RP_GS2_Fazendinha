@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: Broccoli
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Broccoli
+  saveId: 363b5e63a92607f48abde583dc197459
+  icon: {fileID: 0}
   seedPrice: 20
   sellPrice: 15
   harvestAmount: 4

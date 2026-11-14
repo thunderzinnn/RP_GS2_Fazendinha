@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
   m_Name: Better Water Collection
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
+  saveId: f9058c73598c1bf42a7c204b9d02dc77
   displayName: Better Water Collection
+  icon: {fileID: 1405208029476395079, guid: ac85c05b34475544b825f2ed99b7e4b5, type: 3}
   effect: 3
   value: 0.2
   price: 68

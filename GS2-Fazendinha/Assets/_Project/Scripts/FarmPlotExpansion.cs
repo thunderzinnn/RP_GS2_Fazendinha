@@ -18,6 +18,20 @@ public class FarmPlotExpansion : MonoBehaviour
     [SerializeField] private TMP_Text plotExpansionText;
 
     private int purchasedPlots;
+
+    public void SaveProgress(string prefix)
+    {
+        PlayerPrefs.SetInt(prefix + ".PurchasedPlots", purchasedPlots);
+    }
+
+    public void LoadProgress(string prefix)
+    {
+        int limit = extraPlots != null && plotPrices != null ? Mathf.Min(extraPlots.Length, plotPrices.Length) : 0;
+        purchasedPlots = Mathf.Clamp(PlayerPrefs.GetInt(prefix + ".PurchasedPlots", 0), 0, limit);
+        for (int index = 0; index < limit; index++)
+            if (extraPlots[index] != null) extraPlots[index].SetActive(index < purchasedPlots);
+        RefreshUpgradeUI();
+    }
     public int PurchasedPlots => purchasedPlots;
     public int TotalAvailablePlots => 1 + purchasedPlots;
     public bool AllPlotsUnlocked => extraPlots == null || plotPrices == null ||
@@ -35,12 +49,16 @@ public class FarmPlotExpansion : MonoBehaviour
         RefreshUpgradeUI();
     }
 
-    // Compra um terreno por vez, seguindo os valores 100, 200 e 800.
     public void BuyNextPlot()
     {
         if (AllPlotsUnlocked)
         {
             ShowMessage("All four planting spaces are already unlocked.");
+            return;
+        }
+        if (extraPlots[purchasedPlots] == null)
+        {
+            ShowMessage("Next planting space is not configured.");
             return;
         }
         if (coinWallet == null || NextPlotPrice <= 0 || !coinWallet.TrySpend(NextPlotPrice))
@@ -50,6 +68,7 @@ public class FarmPlotExpansion : MonoBehaviour
         }
         extraPlots[purchasedPlots].SetActive(true);
         purchasedPlots++;
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayPurchase();
         ShowMessage("Planting space unlocked! Available plots: " + TotalAvailablePlots + "/4");
         RefreshUpgradeUI();
     }
@@ -60,7 +79,6 @@ public class FarmPlotExpansion : MonoBehaviour
         else Debug.Log(message);
     }
 
-    // Atualiza o preco, o limite de terrenos e a disponibilidade do botao.
     private void RefreshUpgradeUI()
     {
         if (plotExpansionText != null)
@@ -69,6 +87,8 @@ public class FarmPlotExpansion : MonoBehaviour
         if (buyPlotButtonText != null)
             buyPlotButtonText.text = AllPlotsUnlocked ? "ALL SPACES UNLOCKED" : "UNLOCK PLOT / " + NextPlotPrice + " COINS";
         if (buyPlotButton != null)
-            buyPlotButton.interactable = !AllPlotsUnlocked && coinWallet != null && coinWallet.Coins >= NextPlotPrice;
+            buyPlotButton.interactable = !AllPlotsUnlocked &&
+                extraPlots[purchasedPlots] != null && NextPlotPrice > 0 &&
+                coinWallet != null && coinWallet.Coins >= NextPlotPrice;
     }
 }

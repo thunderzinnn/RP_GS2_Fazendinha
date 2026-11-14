@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed9b358f3f7ff149b54813a74c5693f, type: 3}
   m_Name: Le Fezende Ghoon'd
   m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
+  saveId: 9c584f528e77b68409326f5c4c30d63f
   communityName: Le Fezende Ghoon'd
-  technologyFocus: Pipes,Encanation and Basic Saniament
+  technologyFocus: Water pipes and basic sanitation
   missions:
   - {fileID: 11400000, guid: a53bc5aabd86ca442890b82d1298ad11, type: 2}
   - {fileID: 11400000, guid: 107a923c1c5db9d4fbcd850eecbb3bc3, type: 2}

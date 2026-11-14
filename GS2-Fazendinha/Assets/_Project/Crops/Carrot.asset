@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Carrot
-  seedPrice: 3
-  sellPrice: 5
+  saveId: 3fb486bac1ed71f488bc59765d7dbfab
+  icon: {fileID: -3052978455105817748, guid: 04f8591ac6cdbad48b90ec748d17a712, type: 3}
+  seedPrice: 20
+  sellPrice: 10
   harvestAmount: 4
   plantedSeconds: 30
-  growingSeconds: 60
-  initialHydration: 20
+  growingSeconds: 40
+  initialHydration: 12
   hydrationLossPerSecond: 1.5
-  waterCost: 8
+  waterCost: 12
   hydrationPerWatering: 37
-  plantedPrefab: {fileID: 1217570076420906302, guid: bba49fbed358f224abae0142702d7d77, type: 3}
-  growingPrefab: {fileID: 2022095213105029440, guid: ad4189609c17eec438354358a0d79580, type: 3}
-  grownPrefab: {fileID: 2073354196181447225, guid: a133b01a2d602694f8822fbbab8037e7, type: 3}
+  plantedPrefab: {fileID: 5712267591551209936, guid: c9df2643d0e05e249be1076a96a94756, type: 3}
+  growingPrefab: {fileID: 4530910142163059092, guid: 999c7a7f7a1fc12469cb6fd021d80ba8, type: 3}
+  grownPrefab: {fileID: 4408530778425967912, guid: c39c82fcd69ac574e8284684a01fed2b, type: 3}
   deadPrefab: {fileID: 4002843411288687651, guid: f14eebb896ef31f4ba0868644408fd82, type: 3}

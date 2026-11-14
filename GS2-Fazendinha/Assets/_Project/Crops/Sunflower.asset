@@ -13,16 +13,18 @@ MonoBehaviour:
   m_Name: Sunflower
   m_EditorClassIdentifier: Assembly-CSharp::CropData
   cropName: Sunflower
-  seedPrice: 30
-  sellPrice: 20
-  harvestAmount: 6
+  saveId: 431a7c7b768eba340976fed03fed2f50
+  icon: {fileID: -1442357011454674365, guid: c3c2a9cda43deea4582b6a4955703ce7, type: 3}
+  seedPrice: 40
+  sellPrice: 25
+  harvestAmount: 5
   plantedSeconds: 60
   growingSeconds: 90
-  initialHydration: 19.6
-  hydrationLossPerSecond: 5
-  waterCost: 7
+  initialHydration: 6.6
+  hydrationLossPerSecond: 3.2
+  waterCost: 10
   hydrationPerWatering: 35
-  plantedPrefab: {fileID: 4841337126469615709, guid: db3f98d8b210b7c429c3f36e183c7ea0, type: 3}
-  growingPrefab: {fileID: 3183466250291289172, guid: 9de27a30dcde5934cbd2111a0af96a88, type: 3}
-  grownPrefab: {fileID: 8982583835137163325, guid: 0defabba418f17a418ad5525635b51f9, type: 3}
+  plantedPrefab: {fileID: 1027074873611115188, guid: c53746645abdec640b5136317ade4de9, type: 3}
+  growingPrefab: {fileID: 1429033982125635713, guid: 4627f47b03b1e5a4486bc2c0415f1c7c, type: 3}
+  grownPrefab: {fileID: 7384034607754344568, guid: 65d1851cc8eaaf043a2f91891ffc50f3, type: 3}
   deadPrefab: {fileID: 1036648506915333536, guid: 1e3fa7665cac8044f8a42f7c9bcafc6f, type: 3}

@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
   m_Name: Mataradar LTDA Mission III
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
+  saveId: 94e540428c590374bb37ffb8028ef0e3
   communityName: Mataradar LTDA
   requiredCrop: {fileID: 11400000, guid: 431a7c7b768eba340976fed03fed2f50, type: 2}
   requiredAmount: 10
   rewardCoins: 400
-  rewardTechnology: {fileID: 0}
+  rewardTechnology: {fileID: 11400000, guid: 89204877a777a96439380a3b1b810508, type: 2}

@@ -1,0 +1,348 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1429033982125635713
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1039678263290971116}
+  m_Layer: 0
+  m_Name: Crops_Sunflower_Growing_Group
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1039678263290971116
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429033982125635713}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 270215375459891025}
+  - {fileID: 34487239607861540}
+  - {fileID: 1514136383850025985}
+  - {fileID: 7272973487716126050}
+  - {fileID: 8021578579750321523}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &303225578908012730
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1039678263290971116}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.6116727
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3607446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.0774076
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7621037
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.64745504
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Sunflower_Stage_Growing_01
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+--- !u!4 &270215375459891025 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+  m_PrefabInstance: {fileID: 303225578908012730}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &572023721659803343
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1039678263290971116}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.039925
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3607446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.882929
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.75178087
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.65941304
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Sunflower_Stage_Growing_02
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+--- !u!4 &34487239607861540 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+  m_PrefabInstance: {fileID: 572023721659803343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &1335865368855278570
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1039678263290971116}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.08293752
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3607446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.015385923
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.09930943
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.9950566
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Sunflower_Stage_Growing_03
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+--- !u!4 &1514136383850025985 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+  m_PrefabInstance: {fileID: 1335865368855278570}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7161976468834757257
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1039678263290971116}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.8890975
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3607446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.847799
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.14782716
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.98901325
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Sunflower_Stage_Growing_04
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+--- !u!4 &7272973487716126050 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+  m_PrefabInstance: {fileID: 7161976468834757257}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7555041583257295512
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1039678263290971116}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.93563575
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.3607446
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.59596187
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6877214
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.72597474
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+      propertyPath: m_Name
+      value: SM_Crop_Sunflower_Stage_Growing_05
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+--- !u!4 &8021578579750321523 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 535511d75670252458aa4b7dd4ccd831, type: 3}
+  m_PrefabInstance: {fileID: 7555041583257295512}
+  m_PrefabAsset: {fileID: 0}

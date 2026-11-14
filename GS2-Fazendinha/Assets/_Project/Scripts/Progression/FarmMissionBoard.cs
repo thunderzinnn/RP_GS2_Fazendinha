@@ -31,6 +31,7 @@ public class FarmMissionBoard : MonoBehaviour
     private class CommunityProgress
     {
         public string name;
+        public string saveId;
         public string focus;
 
         public readonly List<MissionData> pool =
@@ -91,24 +92,22 @@ public class FarmMissionBoard : MonoBehaviour
         TickMissionTimers(Time.deltaTime);
     }
 
-    // Prepara as comunidades e oferece uma missão inicial para cada uma.
     private void InitializeCommunities()
     {
         if (communities != null && communities.Length > 0)
         {
-            InitializeConfiguredCommunities();
+            InitCommunities();
         }
         else
         {
-            InitializeLegacyCommunities();
+            InitLegacyCommunities();
         }
 
         foreach (CommunityProgress community in progress)
             AssignNextMission(community);
     }
 
-    // Usa os nomes, focos, missões e tempos definidos nos novos assets.
-    private void InitializeConfiguredCommunities()
+    private void InitCommunities()
     {
         foreach (FarmCommunityData data in communities)
         {
@@ -122,12 +121,12 @@ public class FarmMissionBoard : MonoBehaviour
                 data.missionCooldownSeconds);
 
             AddMissions(community, data.missions);
+            community.saveId = data.SaveId;
             progress.Add(community);
         }
     }
 
-    // Agrupa a lista antiga pelo nome da comunidade, preservando seu uso.
-    private void InitializeLegacyCommunities()
+    private void InitLegacyCommunities()
     {
         if (missions == null)
             return;
@@ -167,7 +166,6 @@ public class FarmMissionBoard : MonoBehaviour
         return null;
     }
 
-    // Cria os dados de execução com tempos positivos.
     private CommunityProgress CreateProgress(
         string communityName,
         string focus,
@@ -177,13 +175,13 @@ public class FarmMissionBoard : MonoBehaviour
         return new CommunityProgress
         {
             name = communityName,
+            saveId = communityName,
             focus = focus,
             duration = Mathf.Max(1f, duration),
             cooldown = Mathf.Max(1f, cooldown)
         };
     }
 
-    // Ignora referências vazias e evita repetir o mesmo asset no conjunto.
     private void AddMissions(
         CommunityProgress community,
         MissionData[] pool)
@@ -198,7 +196,6 @@ public class FarmMissionBoard : MonoBehaviour
         }
     }
 
-    // Atualiza os prazos e cooldowns com tempo de jogo, mesmo com o mapa aberto.
     public void TickMissionTimers(float seconds)
     {
         if (seconds <= 0f || IsDemoComplete)
@@ -246,7 +243,6 @@ public class FarmMissionBoard : MonoBehaviour
         }
     }
 
-    // Percorre as missões em ordem circular, pulando as já concluídas.
     private void AssignNextMission(CommunityProgress community)
     {
         community.activeMission = null;
@@ -280,7 +276,6 @@ public class FarmMissionBoard : MonoBehaviour
         }
     }
 
-    // Impede que o mesmo asset seja oferecido em duas comunidades ao mesmo tempo.
     private bool IsOfferedElsewhere(
         MissionData mission,
         CommunityProgress owner)
@@ -297,7 +292,6 @@ public class FarmMissionBoard : MonoBehaviour
         return false;
     }
 
-    // Inicia a espera após uma entrega ou após o prazo da missão acabar.
     private void BeginCooldown(CommunityProgress community)
     {
         community.activeMission = null;
@@ -338,7 +332,48 @@ public class FarmMissionBoard : MonoBehaviour
         return index >= 0 && index < progress.Count;
     }
 
-    // Monta a descrição da missão, da espera ou do encerramento da demo.
+    public void SaveProgress(string prefix)
+    {
+        PlayerPrefs.SetInt(prefix + ".DeliveredProduce", TotalProduceDelivered);
+        foreach (var community in progress)
+        {
+            foreach (var mission in community.pool)
+                PlayerPrefs.SetInt(prefix + ".Mission." + mission.SaveId, completed.Contains(mission) ? 1 : 0);
+            string key = prefix + ".Community." + community.saveId;
+            PlayerPrefs.SetString(key + ".Active", community.activeMission != null ? community.activeMission.SaveId : "");
+            PlayerPrefs.SetFloat(key + ".Time", community.timeRemaining);
+            PlayerPrefs.SetInt(key + ".Cooldown", community.coolingDown ? 1 : 0);
+            PlayerPrefs.SetInt(key + ".Next", community.nextMissionIndex);
+            PlayerPrefs.SetInt(key + ".Completed", community.completedDeliveries);
+        }
+    }
+
+    public void LoadProgress(string prefix)
+    {
+        completed.Clear();
+        foreach (var community in progress)
+            foreach (var mission in community.pool)
+                if (PlayerPrefs.GetInt(prefix + ".Mission." + mission.SaveId, 0) == 1) completed.Add(mission);
+        TotalProduceDelivered = Mathf.Max(0, PlayerPrefs.GetInt(prefix + ".DeliveredProduce", 0));
+        foreach (var community in progress)
+        {
+            string key = prefix + ".Community." + community.saveId;
+            if (!PlayerPrefs.HasKey(key + ".Time")) continue;
+            string activeId = PlayerPrefs.GetString(key + ".Active", "");
+            community.activeMission = null;
+            foreach (var mission in community.pool)
+                if (mission.SaveId == activeId && !completed.Contains(mission)) community.activeMission = mission;
+            community.coolingDown = PlayerPrefs.GetInt(key + ".Cooldown", 0) == 1;
+            community.nextMissionIndex = Mathf.Max(0, PlayerPrefs.GetInt(key + ".Next", 0)) % Mathf.Max(1, community.pool.Count);
+            community.completedDeliveries = Mathf.Max(0, PlayerPrefs.GetInt(key + ".Completed", 0));
+            float interval = community.coolingDown ? community.cooldown : community.duration;
+            community.timeRemaining = Mathf.Clamp(PlayerPrefs.GetFloat(key + ".Time", interval), 0f, interval);
+            if (community.coolingDown) community.activeMission = null;
+            else if (community.activeMission == null && !IsDemoComplete) AssignNextMission(community);
+        }
+        if (IsDemoComplete) FinishDemoMissions();
+    }
+
     public string Describe(int index)
     {
         if (!IsValidCommunity(index))
@@ -400,7 +435,6 @@ public class FarmMissionBoard : MonoBehaviour
             summary;
     }
 
-    // Permite ao HUD conferir se deve habilitar o botão de entrega.
     public bool CanDeliver(int index)
     {
         MissionData mission = GetActiveMission(index);
@@ -414,15 +448,14 @@ public class FarmMissionBoard : MonoBehaviour
             return false;
         }
 
-        if (!HasValidTechnologyReward(mission))
+        if (!HasValidReward(mission))
             return false;
 
         return inventory.ProduceCount(mission.requiredCrop) >=
             mission.requiredAmount;
     }
 
-    // Tecnologias exclusivas do mercado não podem ser recompensas de missão.
-    private bool HasValidTechnologyReward(MissionData mission)
+    private bool HasValidReward(MissionData mission)
     {
         if (mission.rewardTechnology == null)
             return true;
@@ -431,7 +464,6 @@ public class FarmMissionBoard : MonoBehaviour
             !mission.rewardTechnology.marketExclusive;
     }
 
-    // Valida a entrega antes de consumir os produtos e pagar a recompensa.
     public bool Deliver(int index, out string message)
     {
         if (!IsValidCommunity(index) ||
@@ -464,7 +496,7 @@ public class FarmMissionBoard : MonoBehaviour
 
         if (mission.requiredCrop == null ||
             mission.requiredAmount <= 0 ||
-            !HasValidTechnologyReward(mission))
+            !HasValidReward(mission))
         {
             message =
                 "Mission requirements or technology reward " +
@@ -486,7 +518,9 @@ public class FarmMissionBoard : MonoBehaviour
         bool unlocked = mission.rewardTechnology != null &&
             technologies.Unlock(mission.rewardTechnology);
 
-        RegisterCompletedMission(community, mission);
+        CompleteMission(community, mission);
+
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayMissionComplete();
 
         message =
             "Delivery completed: +" +
@@ -499,8 +533,7 @@ public class FarmMissionBoard : MonoBehaviour
         return true;
     }
 
-    // Registra uma única conclusão e atualiza os indicadores de abastecimento.
-    private void RegisterCompletedMission(
+    private void CompleteMission(
         CommunityProgress community,
         MissionData mission)
     {
@@ -515,7 +548,6 @@ public class FarmMissionBoard : MonoBehaviour
             FinishDemoMissions();
     }
 
-    // Encerra as ofertas de todas as comunidades ao atingir o limite da demo.
     private void FinishDemoMissions()
     {
         foreach (CommunityProgress community in progress)
@@ -526,7 +558,6 @@ public class FarmMissionBoard : MonoBehaviour
         }
     }
 
-    // Converte segundos para o formato minutos:segundos.
     private string FormatTime(float seconds)
     {
         int total = Mathf.CeilToInt(Mathf.Max(0f, seconds));

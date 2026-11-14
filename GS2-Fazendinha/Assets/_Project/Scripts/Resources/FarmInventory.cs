@@ -25,7 +25,6 @@ public class FarmInventory : MonoBehaviour
         InitializeSeeds();
     }
 
-    // Carrega as sementes iniciais usando os mesmos assets de CropData do menu.
     private void InitializeSeeds()
     {
         if (startingSeeds == null)
@@ -38,6 +37,37 @@ public class FarmInventory : MonoBehaviour
     public int SeedCount(CropData crop) => Count(seeds, crop);
 
     public int ProduceCount(CropData crop) => Count(produce, crop);
+
+    public int StartingSeedCount(CropData crop)
+    {
+        int count = 0;
+        if (startingSeeds != null)
+            foreach (var entry in startingSeeds)
+                if (entry.crop == crop) count += entry.amount;
+        return count;
+    }
+
+    public void SaveProgress(string prefix, CropData[] crops)
+    {
+        foreach (var crop in crops)
+        {
+            if (crop == null) continue;
+            PlayerPrefs.SetInt(prefix + ".Seeds." + crop.SaveId, SeedCount(crop));
+            PlayerPrefs.SetInt(prefix + ".Produce." + crop.SaveId, ProduceCount(crop));
+        }
+    }
+
+    public void LoadProgress(string prefix, CropData[] crops)
+    {
+        seeds.Clear();
+        produce.Clear();
+        foreach (var crop in crops)
+        {
+            if (crop == null) continue;
+            seeds[crop] = Mathf.Max(0, PlayerPrefs.GetInt(prefix + ".Seeds." + crop.SaveId, StartingSeedCount(crop)));
+            produce[crop] = Mathf.Max(0, PlayerPrefs.GetInt(prefix + ".Produce." + crop.SaveId, 0));
+        }
+    }
 
     private int Count(
         Dictionary<CropData, int> items,

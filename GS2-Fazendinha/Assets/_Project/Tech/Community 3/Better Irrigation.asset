@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
   m_Name: Better Irrigation
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
+  saveId: d70c0177b3ccbf9428d1803a6efb9337
   displayName: Better Irrigation I
+  icon: {fileID: 4082042833395392640, guid: d706eaae255e58b4baf8baacd6d58dd9, type: 3}
   effect: 0
   value: 0.25
   price: 50

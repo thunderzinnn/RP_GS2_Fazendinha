@@ -31,6 +31,21 @@ public class FarmTechnologyManager : MonoBehaviour
     public bool Has(TechnologyData technology) =>
         technology != null && unlocked.Contains(technology);
 
+    public void SaveProgress(string prefix, TechnologyData[] catalog)
+    {
+        foreach (var technology in catalog)
+            if (technology != null)
+                PlayerPrefs.SetInt(prefix + ".Technology." + technology.SaveId, Has(technology) ? 1 : 0);
+    }
+
+    public void LoadProgress(string prefix, TechnologyData[] catalog)
+    {
+        unlocked.Clear();
+        foreach (var technology in catalog)
+            if (technology != null && PlayerPrefs.GetInt(prefix + ".Technology." + technology.SaveId, 0) == 1)
+                unlocked.Add(technology);
+    }
+
     public bool Unlock(TechnologyData technology)
     {
         if (technology == null || Has(technology))
@@ -42,7 +57,6 @@ public class FarmTechnologyManager : MonoBehaviour
 
     public float GetBonus(TechnologyEffect effect)
     {
-        // Soma os bonus desbloqueados para o efeito solicitado.
         float total = 0f;
 
         foreach (TechnologyData technology in unlocked)

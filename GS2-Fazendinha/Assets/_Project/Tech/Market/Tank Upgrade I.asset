@@ -12,7 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 842963fb834c7614fb9ac2e3e1d49fdb, type: 3}
   m_Name: Tank Upgrade I
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
+  saveId: 2dfdd5e5718772c479aca543b660787e
   displayName: Tank Capacity I
+  icon: {fileID: -7487061425195692979, guid: d18adb82e406ff44db5771a498624adb, type: 3}
   effect: 2
   value: 0.05
   price: 45

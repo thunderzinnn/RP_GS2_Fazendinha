@@ -3,16 +3,26 @@ using UnityEngine;
 [RequireComponent(typeof(BoxCollider))]
 public class FarmPlot : MonoBehaviour
 {
+    [Header("Save Settings")]
+    [SerializeField] private string saveId;
+    public string SaveId => string.IsNullOrEmpty(saveId) ? name : saveId;
+
     [Header("Interaction Position")]
     [SerializeField] private Transform interactionPoint;
+
+    [Header("Fertilizer Reference")]
+    [SerializeField] private FarmFertilizerStorage fertilizerStorage;
 
     [Header("Crop Visuals")]
     [SerializeField] private GameObject plantedVisual;
     [SerializeField] private GameObject growingVisual;
     [SerializeField] private GameObject grownVisual;
 
-    // Define a origem da planta e preserva os valores locais do prefab.
     [SerializeField] private Transform cropVisualAnchor;
+
+    [Header("Action Effects")]
+    [SerializeField] private GameObject wateringEffectPrefab;
+    [SerializeField] private GameObject fertilizerEffectPrefab;
 
     [Header("Crop Survival")]
     [SerializeField, Min(0.1f)] private float drySurvivalSeconds = 10f;
@@ -29,8 +39,9 @@ public class FarmPlot : MonoBehaviour
     public CropData CurrentCrop { get; private set; }
     public float Hydration { get; private set; }
     public float StageTimer { get; set; }
+    public bool IsFertilized { get; private set; }
 
-    public float GrowthPercentage => CalculateGrowthPercentage();
+    public float GrowthPercentage => GetGrowthPercent();
 
     public Vector3 InteractionPosition => interactionPoint != null
         ? interactionPoint.position
@@ -59,14 +70,50 @@ public class FarmPlot : MonoBehaviour
         Dead = new PlotDeadState(this);
     }
 
-    private void Start() => Machine.ChangeState(Empty);
+    private void Start()
+    {
+        if (Machine.CurrentState == null) Machine.ChangeState(Empty);
+    }
+
+    public void SaveProgress(string prefix)
+    {
+        string key = prefix + ".Plot." + SaveId;
+        PlayerPrefs.SetString(key + ".Crop", CurrentCrop != null ? CurrentCrop.SaveId : "");
+        PlayerPrefs.SetString(key + ".State", Machine != null && Machine.CurrentState != null ? StateName : "Empty");
+        PlayerPrefs.SetFloat(key + ".StageTimer", StageTimer);
+        PlayerPrefs.SetFloat(key + ".Hydration", Hydration);
+        PlayerPrefs.SetFloat(key + ".DryTimer", dryTimer);
+        PlayerPrefs.SetInt(key + ".Fertilized", IsFertilized ? 1 : 0);
+    }
+
+    // Reconstrói o estado existente sem gastar sementes, água ou adubo novamente.
+    public void LoadProgress(string prefix, CropData[] crops)
+    {
+        if (!gameObject.activeInHierarchy || Machine == null) return;
+        string key = prefix + ".Plot." + SaveId;
+        string cropId = PlayerPrefs.GetString(key + ".Crop", "");
+        CropData savedCrop = null;
+        foreach (var crop in crops)
+            if (crop != null && crop.SaveId == cropId) { savedCrop = crop; break; }
+        string state = PlayerPrefs.GetString(key + ".State", "Empty");
+        if (savedCrop == null || state == "Empty") { ClearCrop(); return; }
+        CurrentCrop = savedCrop;
+        Hydration = Mathf.Clamp(PlayerPrefs.GetFloat(key + ".Hydration", savedCrop.initialHydration), 0f, 100f);
+        IsFertilized = PlayerPrefs.GetInt(key + ".Fertilized", 0) == 1;
+        dryTimer = Mathf.Clamp(PlayerPrefs.GetFloat(key + ".DryTimer", 0f), 0f, drySurvivalSeconds);
+        if (state == "Planted") Machine.ChangeState(Planted);
+        else if (state == "Growing") Machine.ChangeState(Growing);
+        else if (state == "Grown") Machine.ChangeState(Grown);
+        else if (state == "Dead") Machine.ChangeState(Dead);
+        else { ClearCrop(); return; }
+        StageTimer = Mathf.Max(0f, PlayerPrefs.GetFloat(key + ".StageTimer", 0f));
+    }
 
     private void Update() => Machine.Tick();
 
     private void FixedUpdate() => Machine.FixedTick();
 
-    // Soma o tempo das duas etapas para calcular o progresso total.
-    private float CalculateGrowthPercentage()
+    private float GetGrowthPercent()
     {
         if (CurrentCrop == null || Machine == null)
             return 0f;
@@ -114,7 +161,6 @@ public class FarmPlot : MonoBehaviour
         return Mathf.Clamp01(elapsedTime / totalDuration) * 100f;
     }
 
-    // Usa o prefab da cultura ou o modelo já conectado ao terreno.
     private void ShowStage(GameObject fallbackVisual, GameObject cropPrefab)
     {
         if (currentModelInstance != null)
@@ -134,7 +180,6 @@ public class FarmPlot : MonoBehaviour
                 ? cropVisualAnchor
                 : transform;
 
-            // Mantém a posição, rotação e escala locais salvas no prefab.
             currentModelInstance = Instantiate(cropPrefab, anchor, false);
             currentModelInstance.SetActive(true);
 
@@ -182,7 +227,6 @@ public class FarmPlot : MonoBehaviour
         visual.SetActive(active);
     }
 
-    // Confere se existe um modelo para a primeira etapa da cultura.
     private bool HasPlantingVisual(CropData crop)
     {
         if (crop == null)
@@ -213,18 +257,17 @@ public class FarmPlot : MonoBehaviour
         null,
         CurrentCrop != null ? CurrentCrop.deadPrefab : null);
 
-    // Libera o terreno depois da colheita ou da exibição da planta morta.
     public void ClearCrop()
     {
         CurrentCrop = null;
         Hydration = 0f;
         dryTimer = 0f;
         StageTimer = 0f;
+        IsFertilized = false;
 
         Machine.ChangeState(Empty);
     }
 
-    // Confere se a ferramenta pode ser usada no estado atual.
     public bool CanPerform(
         FarmTool tool,
         CropData crop,
@@ -233,6 +276,9 @@ public class FarmPlot : MonoBehaviour
         out string message)
     {
         message = "";
+
+        if (tool == FarmTool.Fertilize)
+            return CanFertilize(out message);
 
         if (Machine.CurrentState == Empty && tool == FarmTool.Plant)
         {
@@ -289,7 +335,6 @@ public class FarmPlot : MonoBehaviour
         return false;
     }
 
-    // Encaminha a interação para o estado atual do terreno.
     public bool Interact(
         FarmTool tool,
         CropData crop,
@@ -308,13 +353,11 @@ public class FarmPlot : MonoBehaviour
             out message);
     }
 
-    // Consome uma semente e inicia o estado plantado.
     public bool TryPlant(
         CropData crop,
         FarmInventory inventory,
         out string message)
     {
-        // Valida novamente ao chegar, antes de consumir a semente.
         if (!CanPerform(
             FarmTool.Plant,
             crop,
@@ -336,6 +379,7 @@ public class FarmPlot : MonoBehaviour
         CurrentCrop = crop;
         Hydration = crop.initialHydration;
         dryTimer = 0f;
+        IsFertilized = false;
 
         Machine.ChangeState(Planted);
 
@@ -343,7 +387,6 @@ public class FarmPlot : MonoBehaviour
         return true;
     }
 
-    // Consome água do reservatório e aumenta a hidratação.
     public bool TryWater(FarmWaterTank tank, out string message)
     {
         if (tank == null ||
@@ -363,35 +406,119 @@ public class FarmPlot : MonoBehaviour
         message = "Watered! Hydration: " +
             Hydration.ToString("0") + "%";
 
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayWatering();
+        SpawnActionEffect(wateringEffectPrefab);
+
         return true;
     }
 
-    // Guarda a colheita no inventário e esvazia o terreno.
+    public bool CanFertilize(out string message)
+    {
+        if (CurrentCrop == null || Machine == null ||
+            (Machine.CurrentState != Planted && Machine.CurrentState != Growing))
+        {
+            message = "Only growing crops can be fertilized.";
+            return false;
+        }
+
+        if (IsFertilized)
+        {
+            message = "This crop has already been fertilized.";
+            return false;
+        }
+
+        if (fertilizerStorage == null)
+        {
+            message = "Fertilizer storage not configured.";
+            return false;
+        }
+
+        if (!fertilizerStorage.CanApply)
+        {
+            message = "Not enough fertilizer.";
+            return false;
+        }
+
+        message = "";
+        return true;
+    }
+
+    public bool TryFertilize(out string message)
+    {
+        if (!CanFertilize(out message))
+            return false;
+
+        if (!fertilizerStorage.TrySpendForApplication())
+        {
+            message = "Not enough fertilizer.";
+            return false;
+        }
+
+        IsFertilized = true;
+
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayFertilizer();
+        SpawnActionEffect(fertilizerEffectPrefab);
+
+        message = "Crop fertilized! Remaining growth time reduced by " +
+            (fertilizerStorage.GrowthTimeReduction * 100f).ToString("0") + "%!";
+
+        return true;
+    }
+
+    private void SpawnActionEffect(GameObject prefab)
+    {
+        if (prefab == null) return;
+        Vector3 position = cropVisualAnchor != null ? cropVisualAnchor.position : transform.position;
+        Instantiate(prefab, position, Quaternion.identity);
+    }
+
     public bool TryHarvest(
         FarmInventory inventory,
         out string message)
     {
-        if (CurrentCrop == null || inventory == null)
+        if (CurrentCrop == null || inventory == null ||
+            Machine == null || Machine.CurrentState != Grown)
         {
             message = "Unable to harvest.";
             return false;
         }
 
         CropData harvestedCrop = CurrentCrop;
+        int harvestAmount = GetHarvestAmount();
 
         inventory.AddProduce(
             harvestedCrop,
-            harvestedCrop.harvestAmount);
+            harvestAmount);
+
+        float fertilizerGained = fertilizerStorage != null
+            ? fertilizerStorage.AddHarvestReward(IsFertilized)
+            : 0f;
 
         ClearCrop();
 
-        message = "+" + harvestedCrop.harvestAmount +
+        message = "+" + harvestAmount +
             " " + harvestedCrop.CropName;
+
+        if (fertilizerStorage != null)
+            message += " | Fertilizer: +" + fertilizerGained.ToString("0.#");
+
+        if (AudioManager.Instance != null) AudioManager.Instance.PlayHarvest();
 
         return true;
     }
 
-    // Atualiza a hidratação e avança o crescimento enquanto houver água.
+    public int GetHarvestAmount()
+    {
+        if (CurrentCrop == null)
+            return 0;
+
+        float bonus = IsFertilized && fertilizerStorage != null
+            ? fertilizerStorage.HarvestYieldBonus
+            : 0f;
+
+        return Mathf.CeilToInt(CurrentCrop.harvestAmount * (1f + bonus));
+    }
+
     public void TickGrowth(
         float seconds,
         float stageDuration,
@@ -424,7 +551,6 @@ public class FarmPlot : MonoBehaviour
             0f,
             Hydration - lossPerSecond * seconds);
 
-        // Sem água, o crescimento para e começa a contagem para morrer.
         if (Hydration <= 0f)
             dryTimer += seconds - hydratedSeconds;
         else
@@ -436,9 +562,37 @@ public class FarmPlot : MonoBehaviour
             return;
         }
 
-        StageTimer += hydratedSeconds;
+        AdvanceGrowth(hydratedSeconds * GetGrowthRate(), stageDuration, nextState);
+    }
 
-        if (StageTimer >= stageDuration)
-            Machine.ChangeState(nextState);
+    private float GetGrowthRate()
+    {
+        float technologyBonus = FarmTechnologyManager.Instance != null
+            ? FarmTechnologyManager.Instance.GetBonus(TechnologyEffect.GrowthSpeedBonus)
+            : 0f;
+        float fertilizerMultiplier = IsFertilized && fertilizerStorage != null
+            ? 1f / (1f - fertilizerStorage.GrowthTimeReduction)
+            : 1f;
+        return (1f + Mathf.Max(0f, technologyBonus)) * fertilizerMultiplier;
+    }
+
+    // Aproveita a sobra de crescimento ao passar do plantio para a próxima etapa.
+    private void AdvanceGrowth(float growthSeconds, float stageDuration, IPlotState nextState)
+    {
+        StageTimer += growthSeconds;
+
+        if (StageTimer < stageDuration)
+            return;
+
+        float remainingGrowth = Mathf.Max(0f, StageTimer - stageDuration);
+        Machine.ChangeState(nextState);
+
+        if (Machine.CurrentState != Growing || remainingGrowth <= 0f)
+            return;
+
+        StageTimer = remainingGrowth;
+
+        if (StageTimer >= CurrentCrop.growingSeconds)
+            Machine.ChangeState(Grown);
     }
 }

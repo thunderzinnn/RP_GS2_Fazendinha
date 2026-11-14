@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a638e45d6852046a9860d57e95c34f, type: 3}
+  m_Name: Wheat
+  m_EditorClassIdentifier: Assembly-CSharp::CropData
+  cropName: Wheat
+  saveId: 42526acad3ae4cb89e5cb170358f9722
+  icon: {fileID: 1270094035138924429, guid: 8a99b93a982cfe7438ef9a171a0dfe90, type: 3}
+  seedPrice: 50
+  sellPrice: 20
+  harvestAmount: 10
+  plantedSeconds: 60
+  growingSeconds: 85
+  initialHydration: 2
+  hydrationLossPerSecond: 2
+  waterCost: 20
+  hydrationPerWatering: 50
+  plantedPrefab: {fileID: 5804734032518101693, guid: a8b57f2dc3993764291115fa767f203b, type: 3}
+  growingPrefab: {fileID: 8197255440547200452, guid: 3026aea24a2e1f0499d62a344daee52f, type: 3}
+  grownPrefab: {fileID: 822618079964825350, guid: 9ba75ddb3b70a974a8d9a154aaa8e529, type: 3}
+  deadPrefab: {fileID: 3279399817702626726, guid: 41006b08a5aabf0468eaa99f51527a78, type: 3}

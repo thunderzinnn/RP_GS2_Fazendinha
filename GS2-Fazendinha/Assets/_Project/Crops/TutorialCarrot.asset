@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 04a638e45d6852046a9860d57e95c34f, type: 3}
+  m_Name: Carrot
+  m_EditorClassIdentifier: Assembly-CSharp::CropData
+  cropName: Carrot
+  saveId: 750ae6d450c6e8e4ba86201dca89ad9d
+  icon: {fileID: -3052978455105817748, guid: 04f8591ac6cdbad48b90ec748d17a712, type: 3}
+  seedPrice: 20
+  sellPrice: 10
+  harvestAmount: 4
+  plantedSeconds: 5
+  growingSeconds: 10
+  initialHydration: 12
+  hydrationLossPerSecond: 1.5
+  waterCost: 12
+  hydrationPerWatering: 37
+  plantedPrefab: {fileID: 5712267591551209936, guid: c9df2643d0e05e249be1076a96a94756, type: 3}
+  growingPrefab: {fileID: 4530910142163059092, guid: 999c7a7f7a1fc12469cb6fd021d80ba8, type: 3}
+  grownPrefab: {fileID: 4408530778425967912, guid: c39c82fcd69ac574e8284684a01fed2b, type: 3}
+  deadPrefab: {fileID: 4002843411288687651, guid: f14eebb896ef31f4ba0868644408fd82, type: 3}

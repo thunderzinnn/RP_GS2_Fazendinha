@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ed9b358f3f7ff149b54813a74c5693f, type: 3}
   m_Name: Community 3
   m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
+  saveId: fd6e94b5d1d795e458fb7518fecca656
   communityName: Community 3
   technologyFocus: Irrigation
   missions:

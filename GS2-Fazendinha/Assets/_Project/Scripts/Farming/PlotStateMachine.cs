@@ -19,7 +19,6 @@ public class PlotStateMachine
 
     public void ChangeState(IPlotState newState)
     {
-        // Mantem o ciclo de estados usado pelo terreno.
         CurrentState?.Exit();
         CurrentState = newState;
         CurrentState?.Enter();
