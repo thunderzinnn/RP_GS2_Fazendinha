@@ -183,12 +183,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38e7730a4fbfe1344891965ae0d43a21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FarmPlot
+  saveId: 
   interactionPoint: {fileID: 6694645514346801120}
   fertilizerStorage: {fileID: 0}
   plantedVisual: {fileID: 0}
   growingVisual: {fileID: 0}
   grownVisual: {fileID: 0}
   cropVisualAnchor: {fileID: 65649136926818000}
+  wateringEffectPrefab: {fileID: 8198304816519440433, guid: a47f32653c5ee9f4db162019cf155634, type: 3}
+  fertilizerEffectPrefab: {fileID: 7740539704371552035, guid: 6077643bd603f3940aad9f2019966fad, type: 3}
+  harvestEffectPrefab: {fileID: 6266873028464678643, guid: cd6d2dab125f4dc4a966416925b0c28c, type: 3}
   drySurvivalSeconds: 10
   deadVisualSeconds: 3
 --- !u!1 &8128792745108690535

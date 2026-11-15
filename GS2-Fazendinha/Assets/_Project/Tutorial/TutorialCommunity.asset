@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TutorialCommunity
   m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
   saveId: d1c10a6497123df43a4d18502eafbad8
-  communityName: Le Fezende Ghoon'd
+  communityName: Peace Woods
   technologyFocus: Learn to grow food and deliver it to a community
   missions:
-  - {fileID: 11400000, guid: eb8d6b676633c29439ec3060b6288169, type: 2}
+  - {fileID: 11400000, guid: ff1c2c83f58c7fe4c9c4546aba185603, type: 2}
   missionDurationSeconds: 3600
   missionCooldownSeconds: 1

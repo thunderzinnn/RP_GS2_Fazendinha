@@ -20,6 +20,9 @@ public class PlayerFarmController : MonoBehaviour
     [SerializeField] private FarmHUD hud;
     [SerializeField] private FarmPlotContextMenu contextMenu;
 
+    [Header("Animation")]
+    [SerializeField] private Animator animator;
+
     [Header("Click and Navigation")]
     [SerializeField] private LayerMask clickableLayers = ~0;
 
@@ -70,6 +73,7 @@ public class PlayerFarmController : MonoBehaviour
     private void Awake()
     {
         Agent = GetComponent<NavMeshAgent>();
+        if (animator == null) animator = GetComponentInChildren<Animator>();
 
         if (gameCamera == null)
             gameCamera = Camera.main;
@@ -90,6 +94,14 @@ public class PlayerFarmController : MonoBehaviour
     {
         HandleInput();
         Machine.Tick();
+        UpdateAnimation();
+    }
+
+    private void UpdateAnimation()
+    {
+        if (animator == null) return;
+        bool moving = Agent.isActiveAndEnabled && Agent.isOnNavMesh && !Agent.isStopped && Agent.velocity.sqrMagnitude > 0.01f;
+        animator.SetBool("Moving", moving);
     }
 
     private void HandleInput()
@@ -202,6 +214,7 @@ public class PlayerFarmController : MonoBehaviour
             return false;
         }
 
+        Agent.updateRotation = true;
         Agent.isStopped = false;
 
         if (!Agent.SetDestination(navHit.position))
@@ -278,14 +291,36 @@ public class PlayerFarmController : MonoBehaviour
         if (plot == null)
             return;
 
-        plot.Interact(
+        bool success = plot.Interact(
             tool,
             crop,
             inventory,
             tank,
             out string message);
 
+        if (success)
+        {
+            FacePlot(plot);
+            PlayAction();
+        }
+
         Show(message);
+    }
+
+    private void FacePlot(FarmPlot plot)
+    {
+        Vector3 direction = plot.transform.position - transform.position;
+        direction.y = 0f;
+        if (direction.sqrMagnitude > 0.001f)
+            transform.rotation = Quaternion.LookRotation(direction);
+    }
+
+    private void PlayAction()
+    {
+        if (animator == null) return;
+        animator.SetBool("Moving", false);
+        animator.ResetTrigger("Plant");
+        animator.SetTrigger("Plant");
     }
 
     public void StopAndClear()
@@ -296,8 +331,10 @@ public class PlayerFarmController : MonoBehaviour
 
         if (Agent.isActiveAndEnabled && Agent.isOnNavMesh)
         {
+            Agent.updateRotation = false;
             Agent.isStopped = true;
             Agent.ResetPath();
+            Agent.velocity = Vector3.zero;
         }
     }
 

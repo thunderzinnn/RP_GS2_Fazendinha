@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
   saveId: f45761f633eaa314c93a2bb28f063d70
   displayName: Reinforced Pipes II
-  icon: {fileID: -7908749635056559189, guid: 6776ba3138f309649a3e86f1d777ae68, type: 3}
+  icon: {fileID: 21300000, guid: a360af9cfd7632245945b731b792ecca, type: 3}
   effect: 0
   value: 0.45
   price: 100

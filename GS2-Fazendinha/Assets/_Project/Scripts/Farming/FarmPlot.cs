@@ -23,6 +23,7 @@ public class FarmPlot : MonoBehaviour
     [Header("Action Effects")]
     [SerializeField] private GameObject wateringEffectPrefab;
     [SerializeField] private GameObject fertilizerEffectPrefab;
+    [SerializeField] private GameObject harvestEffectPrefab;
 
     [Header("Crop Survival")]
     [SerializeField, Min(0.1f)] private float drySurvivalSeconds = 10f;
@@ -469,7 +470,9 @@ public class FarmPlot : MonoBehaviour
     {
         if (prefab == null) return;
         Vector3 position = cropVisualAnchor != null ? cropVisualAnchor.position : transform.position;
-        Instantiate(prefab, position, Quaternion.identity);
+        var effect = Instantiate(prefab, position, Quaternion.identity);
+        var particles = effect.GetComponent<ParticleSystem>();
+        if (particles != null) particles.Play(true);
     }
 
     public bool TryHarvest(
@@ -503,6 +506,7 @@ public class FarmPlot : MonoBehaviour
             message += " | Fertilizer: +" + fertilizerGained.ToString("0.#");
 
         if (AudioManager.Instance != null) AudioManager.Instance.PlayHarvest();
+        SpawnActionEffect(harvestEffectPrefab);
 
         return true;
     }

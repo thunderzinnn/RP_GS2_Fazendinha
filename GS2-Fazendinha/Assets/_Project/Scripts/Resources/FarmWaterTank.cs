@@ -11,7 +11,7 @@ public class FarmWaterTank : MonoBehaviour
 
     [Header("Automatic Water Regeneration")]
     [SerializeField, Min(0.1f)]
-    private float regenerationInterval = 3.5f;
+    private float regenerationInterval = 3f;
 
     [SerializeField, Min(0.01f)]
     private float regenerationAmount = 0.35f;

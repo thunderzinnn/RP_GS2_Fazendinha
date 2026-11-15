@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TechnologyData
   saveId: 32b14b06ee16e30498aa214834cb477c
   displayName: Growing Timer
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: b4410d8489d88a740bb885331e69add5, type: 3}
   effect: 4
   value: 0.2
   price: 100

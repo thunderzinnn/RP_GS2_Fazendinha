@@ -24,6 +24,7 @@ public class MenuFarmBackdrop : MonoBehaviour
     [SerializeField] private PlotVisual[] plots = new PlotVisual[0];
     [SerializeField] private Transform farmer;
     [SerializeField] private Transform farmerVisual;
+    [SerializeField] private Animator farmerAnimator;
     [SerializeField] private Transform waterEffect;
     [SerializeField] private Transform harvestEffect;
     [SerializeField] private Transform fertilizerEffect;
@@ -46,13 +47,14 @@ public class MenuFarmBackdrop : MonoBehaviour
 
     private void Start()
     {
+        if (farmerAnimator == null && farmerVisual != null) farmerAnimator = farmerVisual.GetComponentInChildren<Animator>();
         InitializeSequence();
     }
 
     private void Update()
     {
         TickSequence(Time.unscaledDeltaTime);
-        UpdateFarmerVisual();
+        UpdateAnimation();
         UpdateActionEffects();
         UpdateCameraOrbit();
     }
@@ -130,6 +132,11 @@ public class MenuFarmBackdrop : MonoBehaviour
     {
         phase = next;
         actionTimer = 0f;
+        if (next != WorkPhase.Walking && farmerAnimator != null)
+        {
+            farmerAnimator.SetBool("Moving", false);
+            farmerAnimator.SetTrigger("Plant");
+        }
     }
 
     private void FacePoint(Vector3 point, float seconds)
@@ -140,46 +147,29 @@ public class MenuFarmBackdrop : MonoBehaviour
             farmer.rotation = Quaternion.Slerp(farmer.rotation, Quaternion.LookRotation(direction), seconds * 10f);
     }
 
-    private void UpdateFarmerVisual()
+    private void UpdateAnimation()
     {
-        if (farmerVisual == null) return;
-        bool walking = phase == WorkPhase.Walking;
-        float bend = walking ? 0f : Mathf.Abs(Mathf.Sin(actionTimer * 6f)) * 24f;
-        farmerVisual.localRotation = Quaternion.Euler(bend, 0f, 0f);
-        farmerVisual.localPosition = Vector3.up * (walking ? Mathf.Abs(Mathf.Sin(Time.unscaledTime * 11f)) * 0.04f : 0f);
+        if (farmerAnimator != null) farmerAnimator.SetBool("Moving", phase == WorkPhase.Walking);
     }
 
     private void UpdateActionEffects()
     {
         if (plots.Length == 0) return;
-        AnimateEffect(waterEffect, phase == WorkPhase.Watering, false);
-        AnimateEffect(harvestEffect, phase == WorkPhase.Harvesting, true);
-        AnimateEffect(fertilizerEffect, phase == WorkPhase.Fertilizing, true);
+        SetEffect(waterEffect, phase == WorkPhase.Watering);
+        SetEffect(harvestEffect, phase == WorkPhase.Harvesting);
+        SetEffect(fertilizerEffect, phase == WorkPhase.Fertilizing);
     }
 
-    private void AnimateEffect(Transform effect, bool visible, bool rising)
+    private void SetEffect(Transform effect, bool visible)
     {
         if (effect == null) return;
         var particles = effect.GetComponent<ParticleSystem>();
-        if (particles != null)
-        {
-            effect.position = plots[plotIndex].cropAnchor.position;
-            if (effect.gameObject.activeSelf == visible) return;
-            effect.gameObject.SetActive(visible);
-            particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-            if (visible) particles.Play(true);
-            return;
-        }
-        effect.gameObject.SetActive(visible);
-        if (!visible) return;
         effect.position = plots[plotIndex].cropAnchor.position;
-        for (int index = 0; index < effect.childCount; index++)
-        {
-            float progress = Mathf.Repeat(actionTimer * 1.8f + index * 0.22f, 1f);
-            float angle = index * Mathf.PI * 0.65f;
-            effect.GetChild(index).localPosition = new Vector3(Mathf.Cos(angle) * 0.45f,
-                rising ? 0.5f + progress * 1.3f : 1.8f - progress * 1.5f, Mathf.Sin(angle) * 0.45f);
-        }
+        if (effect.gameObject.activeSelf == visible) return;
+        effect.gameObject.SetActive(visible);
+        if (particles == null) return;
+        particles.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        if (visible) particles.Play(true);
     }
 
     private void UpdateCameraOrbit()
