@@ -19,11 +19,11 @@ MonoBehaviour:
   sellPrice: 20
   harvestAmount: 10
   plantedSeconds: 60
-  growingSeconds: 60
+  growingSeconds: 40
   initialHydration: 2
   hydrationLossPerSecond: 2
   waterCost: 24
-  hydrationPerWatering: 50
+  hydrationPerWatering: 64
   plantedPrefab: {fileID: 5804734032518101693, guid: a8b57f2dc3993764291115fa767f203b, type: 3}
   growingPrefab: {fileID: 8197255440547200452, guid: 3026aea24a2e1f0499d62a344daee52f, type: 3}
   grownPrefab: {fileID: 822618079964825350, guid: 9ba75ddb3b70a974a8d9a154aaa8e529, type: 3}

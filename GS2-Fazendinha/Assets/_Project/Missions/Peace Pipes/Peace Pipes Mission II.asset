@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
-  m_Name: Community 3 Mission IV
+  m_Name: Peace Pipes Mission II
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
-  saveId: a620a0a5d36e0b64298ea14d3b3618c4
-  communityName: Crystal Waters
+  saveId: 107a923c1c5db9d4fbcd850eecbb3bc3
+  communityName: Peace Pipes
   requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
-  requiredAmount: 20
-  rewardCoins: 90
-  rewardTechnology: {fileID: 11400000, guid: df4d7992e7fd3d54a9f3ab4d9b757c16, type: 2}
+  requiredAmount: 12
+  rewardCoins: 60
+  rewardTechnology: {fileID: 11400000, guid: f45761f633eaa314c93a2bb28f063d70, type: 2}

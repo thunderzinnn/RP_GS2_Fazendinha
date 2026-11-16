@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
-  m_Name: Community 3 Mission II
+  m_Name: Crystal Waters Mission IV
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
-  saveId: e2ad1ba5760591c44a190f91bdae09a9
+  saveId: a620a0a5d36e0b64298ea14d3b3618c4
   communityName: Crystal Waters
-  requiredCrop: {fileID: 11400000, guid: 42526acad3ae4cb89e5cb170358f9722, type: 2}
-  requiredAmount: 4
-  rewardCoins: 45
-  rewardTechnology: {fileID: 11400000, guid: c3c96d24a23ee9749a2d4b2a215f6c98, type: 2}
+  requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
+  requiredAmount: 20
+  rewardCoins: 90
+  rewardTechnology: {fileID: 11400000, guid: df4d7992e7fd3d54a9f3ab4d9b757c16, type: 2}

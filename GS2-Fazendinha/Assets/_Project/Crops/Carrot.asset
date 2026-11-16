@@ -19,8 +19,8 @@ MonoBehaviour:
   sellPrice: 10
   harvestAmount: 4
   plantedSeconds: 20
-  growingSeconds: 35
-  initialHydration: 12
+  growingSeconds: 30
+  initialHydration: 22.9
   hydrationLossPerSecond: 1.5
   waterCost: 12
   hydrationPerWatering: 40

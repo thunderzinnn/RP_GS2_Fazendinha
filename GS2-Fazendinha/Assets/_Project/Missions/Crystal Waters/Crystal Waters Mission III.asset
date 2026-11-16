@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
-  m_Name: Ghoon Mission I
+  m_Name: Crystal Waters Mission III
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
-  saveId: a53bc5aabd86ca442890b82d1298ad11
-  communityName: Peace Pipes
-  requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
-  requiredAmount: 12
-  rewardCoins: 60
-  rewardTechnology: {fileID: 11400000, guid: 0b70b0c18384e854fbd6f13f38393261, type: 2}
+  saveId: 41b52aa972ac4b240b6b0d28eb8436ea
+  communityName: Crystal Waters
+  requiredCrop: {fileID: 11400000, guid: 431a7c7b768eba340976fed03fed2f50, type: 2}
+  requiredAmount: 2
+  rewardCoins: 70
+  rewardTechnology: {fileID: 11400000, guid: e793d12e38bae134fb2e15e5e0c6ff5b, type: 2}

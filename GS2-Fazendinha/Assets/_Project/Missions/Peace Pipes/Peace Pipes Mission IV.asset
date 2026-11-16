@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
-  m_Name: Ghoon Mission II
+  m_Name: Peace Pipes Mission IV
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
-  saveId: 107a923c1c5db9d4fbcd850eecbb3bc3
+  saveId: 02c8b718ca2c50d4bb2b85f313463050
   communityName: Peace Pipes
   requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
   requiredAmount: 12
   rewardCoins: 60
-  rewardTechnology: {fileID: 11400000, guid: f45761f633eaa314c93a2bb28f063d70, type: 2}
+  rewardTechnology: {fileID: 11400000, guid: bf1a4f2edb316a148b75e3a6e4080570, type: 2}

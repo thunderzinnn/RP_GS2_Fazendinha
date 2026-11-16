@@ -23,7 +23,7 @@ MonoBehaviour:
   initialHydration: 12
   hydrationLossPerSecond: 1.5
   waterCost: 12
-  hydrationPerWatering: 37
+  hydrationPerWatering: 89
   plantedPrefab: {fileID: 5712267591551209936, guid: c9df2643d0e05e249be1076a96a94756, type: 3}
   growingPrefab: {fileID: 4530910142163059092, guid: 999c7a7f7a1fc12469cb6fd021d80ba8, type: 3}
   grownPrefab: {fileID: 4408530778425967912, guid: c39c82fcd69ac574e8284684a01fed2b, type: 3}

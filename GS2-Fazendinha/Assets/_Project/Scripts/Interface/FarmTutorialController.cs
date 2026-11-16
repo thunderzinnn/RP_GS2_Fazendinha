@@ -70,7 +70,11 @@ public class FarmTutorialController : MonoBehaviour
 
         if (missions.CompletedMissionCount > 0)
         {
-            CurrentStep = FarmTutorialStep.Completed;
+            if (CurrentStep != FarmTutorialStep.Completed)
+            {
+                CurrentStep = FarmTutorialStep.Completed;
+                if (FarmSaveManager.Instance != null) FarmSaveManager.Instance.CompleteTutorial();
+            }
         }
         else
         {

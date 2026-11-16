@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: df97619f700975947ab784a92ec1e65c, type: 3}
-  m_Name: Ghoon Mission III
+  m_Name: Peace Pipes Mission III
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   saveId: df892985d2dbdfa4f989d8864db64369
   communityName: Peace Pipes

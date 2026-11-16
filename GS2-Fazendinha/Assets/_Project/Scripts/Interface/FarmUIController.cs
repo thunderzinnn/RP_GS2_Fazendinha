@@ -64,8 +64,8 @@ public class FarmUIController : MonoBehaviour
     {
         PlayClick();
         Time.timeScale = 1f;
-        TutorialCompleted = false;
-        SceneManager.LoadScene(tutorialScene);
+        TutorialCompleted = FarmSaveManager.Instance != null && FarmSaveManager.Instance.HasCompletedTutorial;
+        SceneManager.LoadScene(TutorialCompleted ? "MainLevel" : tutorialScene);
     }
 
     public void PauseGame()

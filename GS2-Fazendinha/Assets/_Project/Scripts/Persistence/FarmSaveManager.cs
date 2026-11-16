@@ -39,6 +39,7 @@ public class FarmSaveManager : MonoBehaviour
     public bool IsReady { get; private set; }
     public bool CanSaveProgress => !tutorialProfile && wallet != null;
     public bool HasSavedProgress => CanSaveProgress && PlayerPrefs.HasKey(ProfilePrefix + ".HasSave") && PlayerPrefs.GetInt(ProfilePrefix + ".HasSave", 0) == 1;
+    public bool HasCompletedTutorial => PlayerPrefs.GetInt(KeyPrefix + ".TutorialCompleted", 0) == 1;
 
     private void Awake()
     {
@@ -172,6 +173,11 @@ public class FarmSaveManager : MonoBehaviour
     public void CompleteTutorial()
     {
         if (!tutorialProfile || tutorial == null || tutorial.CurrentStep != FarmTutorialStep.Completed) return;
+        if (!HasCompletedTutorial)
+        {
+            PlayerPrefs.SetInt(KeyPrefix + ".TutorialCompleted", 1);
+            PlayerPrefs.Save();
+        }
         FarmUIController.TutorialCompleted = true;
     }
 
