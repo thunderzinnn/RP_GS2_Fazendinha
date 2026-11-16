@@ -23,6 +23,10 @@ public class PlayerFarmController : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator animator;
 
+    [Header("Model Position")]
+    [SerializeField] private Transform modelRoot;
+    [SerializeField] private Collider groundCollider;
+
     [Header("Click and Navigation")]
     [SerializeField] private LayerMask clickableLayers = ~0;
 
@@ -102,6 +106,29 @@ public class PlayerFarmController : MonoBehaviour
         if (animator == null) return;
         bool moving = Agent.isActiveAndEnabled && Agent.isOnNavMesh && !Agent.isStopped && Agent.velocity.sqrMagnitude > 0.01f;
         animator.SetBool("Moving", moving);
+        float speed = moving ? Agent.velocity.magnitude / Agent.speed : 1f;
+        animator.SetFloat("MoveSpeed", speed, 0.1f, Time.deltaTime);
+    }
+
+    private void LateUpdate()
+    {
+        AlignModel();
+    }
+
+    private void AlignModel()
+    {
+        if (modelRoot == null || groundCollider == null ||
+            !Agent.isActiveAndEnabled || !Agent.isOnNavMesh)
+            return;
+
+        // Usa o chão real, pois a altura aproximada do NavMesh varia perto da cerca.
+        var ray = new Ray(transform.position + Vector3.up * Agent.height, Vector3.down);
+        if (!groundCollider.Raycast(ray, out RaycastHit hit, Agent.height * 4f))
+            return;
+
+        Vector3 position = modelRoot.position;
+        position.y = hit.point.y;
+        modelRoot.position = position;
     }
 
     private void HandleInput()

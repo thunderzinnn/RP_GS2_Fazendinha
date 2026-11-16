@@ -62,8 +62,7 @@ public class MenuFarmBackdrop : MonoBehaviour
     private void InitializeSequence()
     {
         plotIndex = 0;
-        actionTimer = 0f;
-        phase = WorkPhase.Walking;
+        BeginPhase(WorkPhase.Walking);
         foreach (var plot in plots)
         {
             plot.growing = plot.grown = false;
@@ -132,11 +131,17 @@ public class MenuFarmBackdrop : MonoBehaviour
     {
         phase = next;
         actionTimer = 0f;
-        if (next != WorkPhase.Walking && farmerAnimator != null)
+        if (farmerAnimator == null) return;
+
+        bool walking = next == WorkPhase.Walking;
+        farmerAnimator.SetBool("Moving", walking);
+        if (walking)
         {
-            farmerAnimator.SetBool("Moving", false);
-            farmerAnimator.SetTrigger("Plant");
+            farmerAnimator.ResetTrigger("Plant");
+            farmerAnimator.CrossFadeInFixedTime("Base Layer.Walk", 0.1f, 0, 0f);
         }
+        else
+            farmerAnimator.SetTrigger("Plant");
     }
 
     private void FacePoint(Vector3 point, float seconds)
@@ -149,7 +154,9 @@ public class MenuFarmBackdrop : MonoBehaviour
 
     private void UpdateAnimation()
     {
-        if (farmerAnimator != null) farmerAnimator.SetBool("Moving", phase == WorkPhase.Walking);
+        if (farmerAnimator == null) return;
+        farmerAnimator.SetBool("Moving", phase == WorkPhase.Walking);
+        farmerAnimator.SetFloat("MoveSpeed", phase == WorkPhase.Walking ? walkingSpeed / 2.2f : 1f);
     }
 
     private void UpdateActionEffects()

@@ -7,7 +7,8 @@ public class FarmWormComposter : MonoBehaviour
     [SerializeField] private FarmFertilizerStorage fertilizerStorage;
     [SerializeField] private TechnologyData unlockTechnology;
 
-    [Header("Worm Composter Visual")]
+    [Header("Compost Visuals")]
+    [SerializeField] private GameObject basicComposterModel;
     [SerializeField] private GameObject composterModel;
 
     [Header("Fertilizer Generation")]
@@ -64,6 +65,8 @@ public class FarmWormComposter : MonoBehaviour
 
     private void UpdateUnlockState()
     {
+        if (basicComposterModel != null && basicComposterModel.activeSelf == IsUnlocked)
+            basicComposterModel.SetActive(!IsUnlocked);
         if (composterModel != null && composterModel.activeSelf != IsUnlocked)
             composterModel.SetActive(IsUnlocked);
     }

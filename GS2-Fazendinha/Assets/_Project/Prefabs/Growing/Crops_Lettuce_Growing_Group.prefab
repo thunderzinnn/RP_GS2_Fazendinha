@@ -62,15 +62,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.5023102
+      value: -1.50231
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04459154
+      value: 0.12785223
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1448643
+      value: 1.1448646
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -100,9 +100,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_07
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -136,15 +144,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.35608616
+      value: 0.3560865
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04154239
+      value: 0.16664577
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.20511293
+      value: -0.2051127
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -174,9 +182,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_05
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -210,15 +226,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.2816348
+      value: -1.2816346
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04154239
+      value: 0.12809533
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.903813
+      value: -0.90381265
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -248,9 +264,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_09
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -284,15 +308,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.92886364
+      value: 0.9288639
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04154239
+      value: 0.1156209
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.2727685
+      value: -1.272769
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -322,9 +346,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -358,15 +390,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.18008278
+      value: -0.18008232
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04154239
+      value: 0.14118925
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.473829
+      value: -1.4738286
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -396,9 +428,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -432,15 +472,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0575633
+      value: 0.05756378
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04459154
+      value: 0.10878723
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.335247
+      value: 1.3352472
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -470,9 +510,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -510,11 +558,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04154239
+      value: 0.07793132
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.043267734
+      value: -0.043268204
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -544,9 +592,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -580,15 +636,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.80746126
+      value: -0.80746174
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04722338
+      value: 0.15922226
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.24601819
+      value: 0.24601817
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -618,9 +674,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_08
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -654,15 +718,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.1176895
+      value: 1.1176896
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.04459154
+      value: 0.13260815
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.1838266
+      value: 1.1838263
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_LocalRotation.w
@@ -692,9 +756,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Lettuce_Stage_Growing_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: bb1934890cc077b4b9c3648bb41150f8, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

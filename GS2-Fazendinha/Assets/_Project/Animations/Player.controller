@@ -17,13 +17,13 @@ AnimatorState:
   m_IKOnFeet: 0
   m_WriteDefaultValues: 1
   m_Mirror: 0
-  m_SpeedParameterActive: 0
+  m_SpeedParameterActive: 1
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 8349542763059015795, guid: 9aab5cd318c49b443944a194bdf51b7f, type: 3}
+  m_Motion: {fileID: 7400000, guid: c1d8be414138bbe4a9fb7b4366186f36, type: 2}
   m_Tag: 
-  m_SpeedParameter: 
+  m_SpeedParameter: MoveSpeed
   m_MirrorParameter: 
   m_CycleOffsetParameter: 
   m_TimeParameter: 
@@ -74,7 +74,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 213856876459495052, guid: 9aab5cd318c49b443944a194bdf51b7f, type: 3}
+  m_Motion: {fileID: 7400000, guid: fd119fb3cdcfb8c44baf5acc13dd68ba, type: 2}
   m_Tag: Idle
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -127,7 +127,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -2783173183761764002, guid: 9aab5cd318c49b443944a194bdf51b7f, type: 3}
+  m_Motion: {fileID: 7400000, guid: 7b18d474392ede34bb8de5c2c71e9eae, type: 2}
   m_Tag: Idle
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -152,8 +152,8 @@ AnimatorStateTransition:
   serializedVersion: 3
   m_TransitionDuration: 0.12
   m_TransitionOffset: 0
-  m_ExitTime: 0
-  m_HasExitTime: 0
+  m_ExitTime: 1
+  m_HasExitTime: 1
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -201,6 +201,12 @@ AnimatorController:
   - m_Name: Plant
     m_Type: 9
     m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 9100000}
+  - m_Name: MoveSpeed
+    m_Type: 1
+    m_DefaultFloat: 1
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
@@ -265,7 +271,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 2789604289822619476, guid: 9aab5cd318c49b443944a194bdf51b7f, type: 3}
+  m_Motion: {fileID: 7400000, guid: 66384b039db70524996b0aa885166d0b, type: 2}
   m_Tag: Idle
   m_SpeedParameter: 
   m_MirrorParameter: 
@@ -328,7 +334,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: -1164051611903617281, guid: 9aab5cd318c49b443944a194bdf51b7f, type: 3}
+  m_Motion: {fileID: 7400000, guid: fe84667a2b275f14292e26f146c4643e, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 

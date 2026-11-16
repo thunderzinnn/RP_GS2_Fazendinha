@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Community 3 Mission II
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   saveId: e2ad1ba5760591c44a190f91bdae09a9
-  communityName: Community 3
+  communityName: Crystal Waters
   requiredCrop: {fileID: 11400000, guid: 42526acad3ae4cb89e5cb170358f9722, type: 2}
   requiredAmount: 4
   rewardCoins: 45

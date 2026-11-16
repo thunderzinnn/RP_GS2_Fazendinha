@@ -1,0 +1,151 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8157539703993113660
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3534678754032598916}
+  - component: {fileID: 3741860168095165890}
+  - component: {fileID: 4193708799376245938}
+  m_Layer: 0
+  m_Name: FarmComposter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3534678754032598916
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8157539703993113660}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1601910047664914037}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &3741860168095165890
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8157539703993113660}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9331467, y: 1.2999998, z: 1.807363}
+  m_Center: {x: 0.00000011920929, y: 0.6499999, z: 0}
+--- !u!208 &4193708799376245938
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8157539703993113660}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.96657336, y: 0.6499999, z: 0.9036815}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0.00000011920929, y: 0.6499999, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!1001 &1274969279691708830
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 3534678754032598916}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6219401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5081716
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6219401
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.0017461777
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.50817156
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.021842778
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
+    - target: {fileID: 919132149155446097, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+      propertyPath: m_Name
+      value: SM_Farm_Building_Minhocario
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+--- !u!4 &1601910047664914037 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 35e740f7b0473ac429a18ecac1b570de, type: 3}
+  m_PrefabInstance: {fileID: 1274969279691708830}
+  m_PrefabAsset: {fileID: 0}

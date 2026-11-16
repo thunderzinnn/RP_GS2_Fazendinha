@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Ghoon Mission II
   m_EditorClassIdentifier: Assembly-CSharp::MissionData
   saveId: 107a923c1c5db9d4fbcd850eecbb3bc3
-  communityName: Le Fezende Ghoon'd
+  communityName: Peace Pipes
   requiredCrop: {fileID: 11400000, guid: 3fb486bac1ed71f488bc59765d7dbfab, type: 2}
   requiredAmount: 12
   rewardCoins: 60

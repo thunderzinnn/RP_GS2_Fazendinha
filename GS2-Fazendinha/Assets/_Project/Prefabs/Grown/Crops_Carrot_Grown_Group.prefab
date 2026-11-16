@@ -61,11 +61,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5101969
+      value: 0.5781168
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.74388367
+      value: -0.74388385
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalRotation.w
@@ -95,9 +95,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Carrot_Stage_Grown_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -131,15 +139,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.7418797
+      value: -0.74188006
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5101969
+      value: 0.55430865
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.77841634
+      value: -0.77841663
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalRotation.w
@@ -169,9 +177,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Carrot_Stage_Grown_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -205,11 +221,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.6713064
+      value: -0.67130667
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5101969
+      value: 0.56161577
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.z
@@ -243,9 +259,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Carrot_Stage_Grown_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -279,15 +303,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.74079895
+      value: 0.74079883
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5101969
+      value: 0.55515736
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.7747273
+      value: 0.77472717
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_LocalRotation.w
@@ -317,9 +341,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Carrot_Stage_Grown_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 6dd8c9d345960c649bf9f35ee673c482, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

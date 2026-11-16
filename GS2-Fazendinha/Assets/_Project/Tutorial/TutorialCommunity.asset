@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: TutorialCommunity
   m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
   saveId: d1c10a6497123df43a4d18502eafbad8
-  communityName: Peace Woods
+  communityName: Peace Pipes
   technologyFocus: Learn to grow food and deliver it to a community
   missions:
   - {fileID: 11400000, guid: ff1c2c83f58c7fe4c9c4546aba185603, type: 2}

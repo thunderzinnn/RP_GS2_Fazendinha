@@ -27,4 +27,4 @@ MonoBehaviour:
   plantedPrefab: {fileID: 2192928515318517357, guid: dcfed30603174164888893759b12cb6e, type: 3}
   growingPrefab: {fileID: 3617306378168150939, guid: 118343bdcce4e7a43924c5029fb28493, type: 3}
   grownPrefab: {fileID: 4182759552604225300, guid: e3a5b71301693bd47adba579c7239c5d, type: 3}
-  deadPrefab: {fileID: 6957711933984637744, guid: 08a0adea697e17747a7367d791f44944, type: 3}
+  deadPrefab: {fileID: 8072778528268931699, guid: 2612fce2239293645b3f09b12b6a6098, type: 3}

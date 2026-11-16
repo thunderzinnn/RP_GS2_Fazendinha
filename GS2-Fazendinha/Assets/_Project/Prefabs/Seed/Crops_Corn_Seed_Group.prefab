@@ -56,15 +56,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.81953037
+      value: -0.8195305
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.69198585
+      value: 0.75977886
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.120907076
+      value: 0.12090683
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -94,9 +94,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Corn_Stage_Seed_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -130,15 +138,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4567258
+      value: 0.45672607
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.69198585
+      value: 0.7639439
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.62123877
+      value: 0.6212387
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -168,9 +176,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Corn_Stage_Seed_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -204,15 +220,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.231977
+      value: 0.23197746
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.69198585
+      value: 0.79726624
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.737939
+      value: -0.7379389
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -242,9 +258,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5dc3fcfaf0b0e9a46af9569b9dd7eb4b, type: 2}
     - target: {fileID: 919132149155446097, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
       propertyPath: m_Name
       value: SM_Crop_Corn_Stage_Seed_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 31f715f6772146c45bed71731c47e0f5, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ed9b358f3f7ff149b54813a74c5693f, type: 3}
+  m_Name: Crystal Waters
+  m_EditorClassIdentifier: Assembly-CSharp::FarmCommunityData
+  saveId: fd6e94b5d1d795e458fb7518fecca656
+  communityName: Crystal Waters
+  technologyFocus: Irrigation
+  missions:
+  - {fileID: 11400000, guid: 50a3e0458b6ce7d4e81653ca472021f4, type: 2}
+  - {fileID: 11400000, guid: e2ad1ba5760591c44a190f91bdae09a9, type: 2}
+  - {fileID: 11400000, guid: 41b52aa972ac4b240b6b0d28eb8436ea, type: 2}
+  - {fileID: 11400000, guid: a620a0a5d36e0b64298ea14d3b3618c4, type: 2}
+  missionDurationSeconds: 1200
+  missionCooldownSeconds: 400

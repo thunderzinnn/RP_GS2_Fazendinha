@@ -127,7 +127,7 @@ public class FarmTutorialController : MonoBehaviour
             case FarmTutorialStep.FertilizeCrop: instructionText.text = "Use Fertilize on a growing crop to speed it up. You can fertilize once per planting. Keep watering too."; break;
             case FarmTutorialStep.CollectProduce: instructionText.text = "Grow and harvest until you have 12 carrots. Keep them for the community mission. Carrots: " + inventory.ProduceCount(tutorialCrop) + "/12"; break;
             case FarmTutorialStep.OpenMap: instructionText.text = "You have 12 carrots! Open the map using the map icon at the bottom."; break;
-            case FarmTutorialStep.DeliverMission: instructionText.text = "Choose Le Fezende Ghoon'd and press Deliver. The mission needs 12 carrots."; break;
+            case FarmTutorialStep.DeliverMission: instructionText.text = "Choose Peace Pipes and press Deliver. The mission needs 12 carrots."; break;
             case FarmTutorialStep.Completed: instructionText.text = "Delivery complete! You learned to grow, water, fertilize and help a community. Start farming to explore all three regions."; break;
         }
         RefreshRecoveryHint();
