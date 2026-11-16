@@ -73,6 +73,10 @@ public class PlayerFarmController : MonoBehaviour
     private FarmTool queuedTool;
     private CropData queuedCrop;
     private float requestedAt;
+    private bool actionApplied;
+    private bool actionStarted;
+
+    public bool IsInteracting { get; private set; }
 
     private void Awake()
     {
@@ -133,6 +137,9 @@ public class PlayerFarmController : MonoBehaviour
 
     private void HandleInput()
     {
+        if (IsInteracting)
+            return;
+
         if (Input.GetMouseButtonDown(0))
             HandleClick();
     }
@@ -195,6 +202,12 @@ public class PlayerFarmController : MonoBehaviour
         FarmTool tool,
         CropData crop = null)
     {
+        if (IsInteracting)
+        {
+            Show("Wait for the current action to finish.");
+            return false;
+        }
+
         if (plot == null)
             return false;
 
@@ -309,29 +322,71 @@ public class PlayerFarmController : MonoBehaviour
 
     public void PerformQueuedInteraction()
     {
-        FarmPlot plot = TargetPlot;
-        FarmTool tool = queuedTool;
-        CropData crop = queuedCrop;
-
-        StopAndClear();
-
-        if (plot == null)
+        if (TargetPlot == null)
             return;
 
-        bool success = plot.Interact(
-            tool,
-            crop,
+        if (!TargetPlot.CanPerform(
+            queuedTool,
+            queuedCrop,
             inventory,
             tank,
-            out string message);
-
-        if (success)
+            out string reason))
         {
-            FacePlot(plot);
-            PlayAction();
+            Show(reason);
+            StopAndClear();
+            return;
         }
 
+        StopMovement();
+        FacePlot(TargetPlot);
+        IsInteracting = true;
+        actionApplied = false;
+        actionStarted = false;
+
+        if (animator == null || !animator.isActiveAndEnabled ||
+            !animator.HasState(0, Animator.StringToHash("Base Layer.Planting2")))
+        {
+            ApplyQueuedInteraction();
+            StopAndClear();
+            return;
+        }
+
+        PlayAction();
+    }
+
+    public void ApplyQueuedInteraction()
+    {
+        if (!IsInteracting || actionApplied)
+            return;
+
+        // O evento pode ser avaliado novamente durante uma transição do Animator.
+        actionApplied = true;
+        if (TargetPlot == null || !TargetPlot.isActiveAndEnabled)
+            return;
+
+        TargetPlot.Interact(queuedTool, queuedCrop, inventory, tank, out string message);
         Show(message);
+    }
+
+    public void TickInteraction()
+    {
+        if (!IsInteracting)
+            return;
+
+        if (animator == null || !animator.isActiveAndEnabled)
+        {
+            StopAndClear();
+            return;
+        }
+
+        bool playing = animator.GetCurrentAnimatorStateInfo(0).IsName("Planting2") ||
+            (animator.IsInTransition(0) &&
+             animator.GetNextAnimatorStateInfo(0).IsName("Planting2"));
+
+        if (playing)
+            actionStarted = true;
+        else if (actionStarted)
+            StopAndClear();
     }
 
     private void FacePlot(FarmPlot plot)
@@ -352,15 +407,23 @@ public class PlayerFarmController : MonoBehaviour
 
     public void StopAndClear()
     {
+        IsInteracting = false;
+        actionApplied = false;
+        actionStarted = false;
         TargetPlot = null;
         queuedCrop = null;
         queuedTool = default;
 
+        StopMovement();
+    }
+
+    private void StopMovement()
+    {
         if (Agent.isActiveAndEnabled && Agent.isOnNavMesh)
         {
             Agent.updateRotation = false;
-            Agent.isStopped = true;
             Agent.ResetPath();
+            Agent.isStopped = true;
             Agent.velocity = Vector3.zero;
         }
     }

@@ -188,7 +188,13 @@ public class FarmPlotContextMenu : MonoBehaviour
         {
             fertilizeButtonText.text = selectedPlot.IsFertilized
                 ? "Already fertilized"
+                : !fertilizerStorage.CanApply
+                    ? "Need " + fertilizerStorage.ApplicationCost.ToString("0.#") + " fertilizer"
                 : "Fertilize (" + fertilizerStorage.ApplicationCost.ToString("0.#") + ")";
+        }
+        else if (fertilizeButtonText != null)
+        {
+            fertilizeButtonText.text = "Fertilizer unavailable";
         }
 
         if (waterButtonText != null &&
@@ -196,10 +202,16 @@ public class FarmPlotContextMenu : MonoBehaviour
             selectedPlot.CurrentCrop != null &&
             player.Tank != null)
         {
-            waterButtonText.text = "Water (" +
-                player.Tank.WaterCost(
-                    selectedPlot.CurrentCrop).ToString("0.#") +
-                " water)";
+            float cost = player.Tank.WaterCost(selectedPlot.CurrentCrop);
+            waterButtonText.text = selectedPlot.Hydration >= 99.9f
+                ? "Fully watered"
+                : !player.Tank.CanWater(selectedPlot.CurrentCrop)
+                    ? "Need " + cost.ToString("0.#") + " water"
+                    : "Water (" + cost.ToString("0.#") + " water)";
+        }
+        else if (waterButtonText != null && growing)
+        {
+            waterButtonText.text = "Water unavailable";
         }
     }
 

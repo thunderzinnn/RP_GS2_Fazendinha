@@ -12,6 +12,12 @@ public class FarmDemoEndController : MonoBehaviour
     private float previousTimeScale = 1f;
     public bool IsOpen => endPanel != null && endPanel.activeInHierarchy;
 
+    private void Awake()
+    {
+        if (endPanel != null && !transform.IsChildOf(endPanel.transform))
+            endPanel.SetActive(false);
+    }
+
     private void Update()
     {
         CheckDemoCompletion();

@@ -28,8 +28,7 @@ public class FarmPlotExpansion : MonoBehaviour
     {
         int limit = extraPlots != null && plotPrices != null ? Mathf.Min(extraPlots.Length, plotPrices.Length) : 0;
         purchasedPlots = Mathf.Clamp(PlayerPrefs.GetInt(prefix + ".PurchasedPlots", 0), 0, limit);
-        for (int index = 0; index < limit; index++)
-            if (extraPlots[index] != null) extraPlots[index].SetActive(index < purchasedPlots);
+        ApplyPlotState();
         RefreshUpgradeUI();
     }
     public int PurchasedPlots => purchasedPlots;
@@ -39,9 +38,35 @@ public class FarmPlotExpansion : MonoBehaviour
     public int NextPlotPrice => !AllPlotsUnlocked && purchasedPlots < plotPrices.Length
         ? plotPrices[purchasedPlots] : 0;
 
+    private void Awake()
+    {
+        ApplyPlotState();
+    }
+
     private void Start()
     {
+        ApplyPlotState();
         RefreshUpgradeUI();
+    }
+
+    private void ApplyPlotState()
+    {
+        int limit = extraPlots != null && plotPrices != null
+            ? Mathf.Min(extraPlots.Length, plotPrices.Length)
+            : 0;
+        purchasedPlots = Mathf.Clamp(purchasedPlots, 0, limit);
+
+        if (extraPlots == null)
+            return;
+
+        for (int index = 0; index < extraPlots.Length; index++)
+        {
+            GameObject plot = extraPlots[index];
+            if (plot == null || transform.IsChildOf(plot.transform))
+                continue;
+
+            plot.SetActive(index < purchasedPlots);
+        }
     }
 
     private void Update()
@@ -81,14 +106,53 @@ public class FarmPlotExpansion : MonoBehaviour
 
     private void RefreshUpgradeUI()
     {
+        bool canBuy = CanBuyPlot(out string reason);
+
         if (plotExpansionText != null)
+        {
+            string details = AllPlotsUnlocked
+                ? "All spaces unlocked."
+                : "Next space: " + NextPlotPrice + " coins.";
+
             plotExpansionText.text = "PLANTING SPACES: " + TotalAvailablePlots + "/4\n" +
-                (AllPlotsUnlocked ? "All spaces unlocked." : "Next space costs " + NextPlotPrice + " coins.");
+                (canBuy || AllPlotsUnlocked ? details : reason);
+        }
+
         if (buyPlotButtonText != null)
-            buyPlotButtonText.text = AllPlotsUnlocked ? "ALL SPACES UNLOCKED" : "UNLOCK PLOT / " + NextPlotPrice + " COINS";
+        {
+            buyPlotButtonText.text = AllPlotsUnlocked
+                ? "ALL SPACES UNLOCKED"
+                : canBuy
+                    ? "UNLOCK PLOT / " + NextPlotPrice + " COINS"
+                    : reason.ToUpperInvariant();
+        }
+
         if (buyPlotButton != null)
-            buyPlotButton.interactable = !AllPlotsUnlocked &&
-                extraPlots[purchasedPlots] != null && NextPlotPrice > 0 &&
-                coinWallet != null && coinWallet.Coins >= NextPlotPrice;
+            buyPlotButton.interactable = canBuy;
+    }
+
+    private bool CanBuyPlot(out string reason)
+    {
+        if (AllPlotsUnlocked)
+        {
+            reason = "All spaces unlocked.";
+            return false;
+        }
+
+        if (extraPlots[purchasedPlots] == null || NextPlotPrice <= 0 || coinWallet == null)
+        {
+            reason = "Planting space unavailable.";
+            return false;
+        }
+
+        int missing = NextPlotPrice - coinWallet.Coins;
+        if (missing > 0)
+        {
+            reason = "Need " + missing + " more coins (" + coinWallet.Coins + "/" + NextPlotPrice + ").";
+            return false;
+        }
+
+        reason = "";
+        return true;
     }
 }

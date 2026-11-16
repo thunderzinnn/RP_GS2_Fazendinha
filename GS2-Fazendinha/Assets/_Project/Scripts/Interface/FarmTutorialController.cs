@@ -142,6 +142,12 @@ public class FarmTutorialController : MonoBehaviour
         if (CurrentStep == FarmTutorialStep.Completed || plot == null || plot.Machine == null) return;
         if (plot.Machine.CurrentState == plot.Dead)
             instructionText.text = "This crop dried out. Wait for the plot to clear, plant again and keep it watered.";
+        else if ((plot.Machine.CurrentState == plot.Planted ||
+            plot.Machine.CurrentState == plot.Growing) && plot.Hydration <= 0f)
+        {
+            instructionText.text = "Water now! " + plot.DryTimeRemaining.ToString("0.0") +
+                "s before this crop dies.";
+        }
         else if (plot.CurrentCrop == null && inventory.SeedCount(tutorialCrop) == 0)
             instructionText.text = "Out of seeds? Open the map, visit the market and buy more carrot seeds to continue.";
         else if (CurrentStep == FarmTutorialStep.FertilizeCrop && plot.Machine.CurrentState == plot.Grown)

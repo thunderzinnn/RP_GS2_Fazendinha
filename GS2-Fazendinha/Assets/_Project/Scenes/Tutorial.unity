@@ -693,6 +693,15 @@ MonoBehaviour:
   optionsPanel: {fileID: 1290434277}
   pauseStatusText: {fileID: 94346371}
   resetConfirmationPanel: {fileID: 0}
+  startupPanels:
+  - {fileID: 314075034}
+  - {fileID: 1977505367}
+  - {fileID: 1135098514}
+  - {fileID: 1528107503}
+  - {fileID: 462286103}
+  - {fileID: 657806534}
+  - {fileID: 308577428}
+  - {fileID: 235678935}
   musicSlider: {fileID: 212307306}
   effectsSlider: {fileID: 160830960}
   musicValueText: {fileID: 276364559}

@@ -15,6 +15,6 @@ MonoBehaviour:
   saveId: 41b52aa972ac4b240b6b0d28eb8436ea
   communityName: Crystal Waters
   requiredCrop: {fileID: 11400000, guid: 431a7c7b768eba340976fed03fed2f50, type: 2}
-  requiredAmount: 2
-  rewardCoins: 70
+  requiredAmount: 8
+  rewardCoins: 160
   rewardTechnology: {fileID: 11400000, guid: e793d12e38bae134fb2e15e5e0c6ff5b, type: 2}

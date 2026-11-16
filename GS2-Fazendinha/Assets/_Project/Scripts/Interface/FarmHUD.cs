@@ -96,6 +96,15 @@ public class FarmHUD : MonoBehaviour
     private int lastMarketRevision = -1;
     private TechnologyData selectedMarketTechnology;
 
+    private void Awake()
+    {
+        if (actionMessageText != null &&
+            !transform.IsChildOf(actionMessageText.transform))
+        {
+            actionMessageText.gameObject.SetActive(false);
+        }
+    }
+
     private void Start()
     {
         InitializeMarketUI();
@@ -358,9 +367,8 @@ public class FarmHUD : MonoBehaviour
         shopCropDetailsText.text =
             $"{crop.CropName}\n" +
             $"Seeds: {seeds} | Produce: {produce}\n\n" +
-            $"Buy {seedsPerPurchase} {(seedsPerPurchase == 1 ? "seed" : "seeds")}: " +
-            $"{crop.seedPrice * seedsPerPurchase} coins\n" +
-            $"Buy 5 seeds: {crop.seedPrice * 5} coins\n" +
+            DescribeSeedPrice(seedsPerPurchase, inSeason) + "\n" +
+            DescribeSeedPrice(5, inSeason) + "\n" +
             $"Seeds: {availability}\n" +
             $"Sell {producePerSale}: " +
             $"{salePrice * producePerSale} coins{demand}\n\n" +
@@ -373,6 +381,18 @@ public class FarmHUD : MonoBehaviour
                 "\nMarket refresh: " +
                 FormatTime(shop.RefreshTimeRemaining);
         }
+    }
+
+    private string DescribeSeedPrice(int amount, bool inSeason)
+    {
+        int price = crop.seedPrice * amount;
+        if (inSeason && coinWallet != null && coinWallet.Coins < price)
+        {
+            int missing = price - coinWallet.Coins;
+            return "Buy " + amount + ": " + price + " | need " + missing + " more coins";
+        }
+
+        return "Buy " + amount + (amount == 1 ? " seed: " : " seeds: ") + price + " coins";
     }
 
     private void UpdateSeasonalMarketUI()
@@ -518,9 +538,7 @@ public class FarmHUD : MonoBehaviour
         {
             marketTechnologyDetailsText.text =
                 selectedMarketTechnology.DisplayName +
-                "\nPrice: " +
-                selectedMarketTechnology.price +
-                " coins";
+                "\n" + DescribeTechnologyPrice(selectedMarketTechnology);
 
             if (!string.IsNullOrEmpty(selectedMarketTechnology.EffectDescription))
                 marketTechnologyDetailsText.text += "\n\n" + selectedMarketTechnology.EffectDescription;
@@ -541,6 +559,23 @@ public class FarmHUD : MonoBehaviour
         marketTechnologyDetailsText.text = shop.HasExclusiveCatalog
             ? "No seasonal technology available. Check the next refresh."
             : "Configure the exclusive technology catalog in FarmShop.";
+    }
+
+    private string DescribeTechnologyPrice(TechnologyData technology)
+    {
+        string price = "Price: " + technology.price + " coins";
+
+        if (technologies != null && technologies.Has(technology))
+            return price + " | purchased";
+
+        if (shop == null || technologies == null || coinWallet == null)
+            return "Technology unavailable";
+
+        if (!shop.IsTechnologyAvailable(technology))
+            return "Not offered this season";
+
+        int missing = technology.price - coinWallet.Coins;
+        return missing > 0 ? price + " | need " + missing + " more" : price;
     }
 
     public void BuySelectedMarketTechnology()
@@ -629,7 +664,12 @@ public class FarmHUD : MonoBehaviour
         if (buttonText != null)
         {
             buttonText.text = technology == null ? "NOT CONFIGURED" :
-                unlocked ? "PURCHASED" : "BUY / " + technology.price + " COINS";
+                unlocked ? "PURCHASED" :
+                technology.marketExclusive ? "MARKET ONLY" :
+                shop == null || technologies == null || coinWallet == null ? "UNAVAILABLE" :
+                coinWallet.Coins < technology.price
+                    ? "NEED " + (technology.price - coinWallet.Coins) + " MORE COINS"
+                    : "BUY / " + technology.price + " COINS";
         }
     }
 

@@ -17,6 +17,7 @@ public class FarmUIController : MonoBehaviour
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private TMP_Text pauseStatusText;
     [SerializeField] private GameObject resetConfirmationPanel;
+    [SerializeField] private GameObject[] startupPanels = new GameObject[0];
 
     [Header("Audio Controls")]
     [SerializeField] private Slider musicSlider;
@@ -27,9 +28,14 @@ public class FarmUIController : MonoBehaviour
     private float previousTimeScale = 1f;
     public bool IsPaused { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         InitializeMenus();
+    }
+
+    private void Start()
+    {
+        InitializeAudio();
     }
 
     private void Update()
@@ -50,10 +56,26 @@ public class FarmUIController : MonoBehaviour
 
     private void InitializeMenus()
     {
-        if (optionsPanel != null) optionsPanel.SetActive(false);
-        if (pausePanel != null) pausePanel.SetActive(false);
-        if (mainMenuPanel != null) mainMenuPanel.SetActive(mainMenu);
-        if (resetConfirmationPanel != null) resetConfirmationPanel.SetActive(false);
+        if (startupPanels != null)
+            foreach (GameObject panel in startupPanels)
+                SetInitialState(panel, false);
+
+        SetInitialState(optionsPanel, false);
+        SetInitialState(pausePanel, false);
+        SetInitialState(resetConfirmationPanel, false);
+        SetInitialState(mainMenuPanel, mainMenu);
+    }
+
+    private void SetInitialState(GameObject panel, bool active)
+    {
+        if (panel == null || (!active && transform.IsChildOf(panel.transform)))
+            return;
+
+        panel.SetActive(active);
+    }
+
+    private void InitializeAudio()
+    {
         var audio = AudioManager.Instance;
         if (musicSlider != null) musicSlider.SetValueWithoutNotify(audio != null ? audio.MusicVolume : 0.7f);
         if (effectsSlider != null) effectsSlider.SetValueWithoutNotify(audio != null ? audio.EffectsVolume : 1f);

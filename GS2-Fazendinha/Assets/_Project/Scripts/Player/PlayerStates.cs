@@ -61,7 +61,12 @@ public class PlayerInteractState : IPlayerState
 
     public void Enter() => player.PerformQueuedInteraction();
 
-    public void Tick() => player.Machine.ChangeState(player.Idle);
+    public void Tick()
+    {
+        player.TickInteraction();
+        if (!player.IsInteracting)
+            player.Machine.ChangeState(player.Idle);
+    }
 
     public void FixedTick() { }
 

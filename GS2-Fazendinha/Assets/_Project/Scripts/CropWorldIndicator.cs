@@ -21,6 +21,8 @@ public class CropWorldIndicator : MonoBehaviour
     {
         if (gameCamera == null)
             gameCamera = Camera.main;
+
+        UpdateIndicator();
     }
 
     private void LateUpdate()

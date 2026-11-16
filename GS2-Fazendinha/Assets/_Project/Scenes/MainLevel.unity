@@ -703,6 +703,15 @@ MonoBehaviour:
   optionsPanel: {fileID: 1290434277}
   pauseStatusText: {fileID: 94346371}
   resetConfirmationPanel: {fileID: 0}
+  startupPanels:
+  - {fileID: 314075034}
+  - {fileID: 1977505367}
+  - {fileID: 1135098514}
+  - {fileID: 1528107503}
+  - {fileID: 462286103}
+  - {fileID: 657806534}
+  - {fileID: 308577428}
+  - {fileID: 235678935}
   musicSlider: {fileID: 212307306}
   effectsSlider: {fileID: 160830960}
   musicValueText: {fileID: 276364559}
@@ -11207,19 +11216,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -11227,7 +11236,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3995668421005908891, guid: 8afac3479932a7e4f809b7f3b0ae85ac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -12500,6 +12509,10 @@ PrefabInstance:
     - target: {fileID: 8157539703993113660, guid: d83272395a85e734ebededd0be78eb75, type: 3}
       propertyPath: m_Name
       value: FarmComposter
+      objectReference: {fileID: 0}
+    - target: {fileID: 8157539703993113660, guid: d83272395a85e734ebededd0be78eb75, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
